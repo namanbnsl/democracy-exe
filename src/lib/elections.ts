@@ -9,48 +9,9 @@ export type RunoffResult = Result & { rounds: RunoffRound[]; eliminationTie: Can
 
 // School context comes from npskrm.com; these campaigns and ballots are invented.
 export const candidates = [
-  {
-    id: "A" as const, name: "Aarav", surname: "Shah", classLine: "Class 11 · Football vice-captain",
-    slogan: "Everyone gets a turn.", ballotLine: "Open trials and fair turns",
-    traits: ["Organiser", "Fair-minded", "Sporty"],
-    quote: "You shouldn’t have to be the loudest person to get a turn.",
-    about: "Aarav runs the Saturday football sign-up sheet. He noticed the same twelve names every week, so he started a rota. Now over twenty people get to play.",
-    funFact: "Keeps a notebook of who hasn’t had a turn yet.",
-    pledges: [
-      { title: "Open trials for every house team", how: "Trials posted on the notice board a week ahead, so anyone can try out." },
-      { title: "A fair-turns rota", how: "For assembly duties and event roles, so it isn’t always the same volunteers." },
-      { title: "A first-timer spot at every event", how: "At least one place for someone who has never performed or competed before." },
-    ],
-    tradeoff: "Rotas and trials take time to organise, and teachers still pick the final teams. I can push for fair chances, not promise anyone a place.",
-  },
-  {
-    id: "B" as const, name: "Meera", surname: "Rao", classLine: "Class 11 · Debate club",
-    slogan: "A voice for your class.", ballotLine: "Your concerns, followed up",
-    traits: ["Good listener", "Persistent", "Keeps promises"],
-    quote: "If I speak for you, I’ll listen first, and keep you in the loop.",
-    about: "As class rep in Class 9, Meera heard that the second floor had no water cooler. She raised it at every council meeting for four months until one was installed.",
-    funFact: "Answers every message with a checklist.",
-    pledges: [
-      { title: "A suggestion box in every class", how: "Opened every Friday, and every note gets read." },
-      { title: "“You asked, here’s what happened”", how: "A monthly update on the notice board for every request, even the ones that were turned down." },
-      { title: "Prefect open hour", how: "Every Wednesday lunch, come and talk to me." },
-    ],
-    tradeoff: "I can carry your requests to the council and report back honestly. I can’t promise every request will be approved.",
-  },
-  {
-    id: "C" as const, name: "Kabir", surname: "Sen", classLine: "Class 11 · Art club",
-    slogan: "Nobody feels left out.", ballotLine: "Buddies and a friendly welcome",
-    traits: ["Friendly", "Patient", "Creative"],
-    quote: "Being new is easier when you know one friendly face.",
-    about: "Kabir joined the school in Class 8 and ate lunch alone for his first week. Now he’s usually the first to say hello when someone new arrives.",
-    funFact: "Knows the name of almost every Class 6 student.",
-    pledges: [
-      { title: "A buddy for every new student", how: "An older student to show them around for their first month." },
-      { title: "A friendly bench by the canteen", how: "Sit there and someone will come and include you. No questions asked." },
-      { title: "Weekly homework club", how: "Seniors helping juniors, every Thursday after school." },
-    ],
-    tradeoff: "Buddies and helpers only work if volunteers keep showing up. For serious worries, a teacher or counsellor is the right person, and I’ll help you find them.",
-  },
+  { id: "A" as const, name: "Aarav", surname: "Shah", quality: "Fair-minded organiser", policies: ["Open trials for house teams", "A fair-turns rota", "Spots for first-timers"] },
+  { id: "B" as const, name: "Meera", surname: "Rao", quality: "Listens and follows through", policies: ["Suggestion box in every class", "Monthly updates", "Weekly open hour"] },
+  { id: "C" as const, name: "Kabir", surname: "Sen", quality: "Makes everyone feel welcome", policies: ["Buddies for new students", "A friendly bench", "Homework club"] },
 ];
 
 export const scenarios: Record<string, { name: string; description: string; groups: BallotGroup[] }> = {
