@@ -7,7 +7,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { FieldLegend, FieldSet } from "@/components/ui/field";
 import { Portrait } from "@/components/portrait";
-import { AlgorithmCard, BallotPiles, CandidateName, CountChart, PointsTable, Ranking } from "@/components/election-visuals";
+import { CandidateName, CountChart, PointsTable, Ranking } from "@/components/election-visuals";
 import { SimulationLab } from "@/components/simulation-lab";
 import { Playground } from "@/components/playground";
 import { candidateIds, candidates, firstChoiceWithVisitor, nameOf, pairwise, positional, runoff, scenarios, withVisitor, type CandidateId } from "@/lib/elections";
@@ -110,7 +110,7 @@ export function ElectionExperience() {
   const [rankFirst, setRankFirst] = useState<CandidateId | null>(null);
   const [rankBackup, setRankBackup] = useState<CandidateId | null>(null);
   const [ballot, setBallot] = useState<CandidateId[] | null>(null);
-  // 0: rank your choices, 1: round 1, 2: round 2, 3: the same ballots counted with points.
+  // 0: rank your choices, 1: the same ballots counted with points.
   const [rankStage, setRankStage] = useState(0);
   const [arrowIndex, setArrowIndex] = useState(0);
   const [arrowReached, setArrowReached] = useState(0);
@@ -146,7 +146,6 @@ export function ElectionExperience() {
     if (step === 0) cast();
     else if (step === 1 && !withdrawn) setWithdrawn(true);
     else if (step === 2 && rankStage === 0) countRanking();
-    else if (step === 2 && rankStage < 3) setRankStage(rankStage + 1);
     else if (step === 3 && arrowIndex < conditions.length) {
       const index = arrowIndex + 1;
       setArrowIndex(index); setArrowReached(Math.max(arrowReached, index));
@@ -165,9 +164,6 @@ export function ElectionExperience() {
   const withdrawalWinner = withdrawalCount?.winners.length === 1 ? withdrawalCount.winners[0] : null;
   const rankGroups = withVisitor(scenarios.original.groups, ballot);
   const ranked = runoff(rankGroups);
-  const firstRound = ranked.rounds[0];
-  const finalRound = ranked.rounds[ranked.rounds.length - 1];
-  const eliminated = firstRound.eliminated;
   const runoffWinner = ranked.winners.length === 1 ? ranked.winners[0] : null;
   const points = positional(rankGroups);
   const bordaWinner = points.winners.length === 1 ? points.winners[0] : null;
@@ -175,9 +171,9 @@ export function ElectionExperience() {
   const arrowSummary = step === 3 && arrowIndex === conditions.length;
   const winnerText = (id: CandidateId | null) => id ? <CandidateName id={id} /> : "A tie";
   const canContinue = step === 0 ? !!favourite : step === 1 ? !withdrawn || !!withdrawalCount : step === 2 ? rankStage > 0 || (!!rankFirst && !!rankBackup) : true;
-  const nextLabel = step === 0 ? favourite ? `Vote for ${nameOf(favourite)}` : "Pick a candidate" : step === 1 ? withdrawn ? withdrawalCount ? "Try ranking instead" : "Pick a candidate" : "What if Kabir drops out?" : step === 2 ? ["Count the votes", "Next round", "Count with points instead", "Which way is fair?"][rankStage] : step === 3 ? arrowSummary ? "Run a simulation" : arrowIndex === conditions.length - 1 ? "What Arrow proved" : "Next check" : step === 4 ? "Last step" : "Start a new election";
+  const nextLabel = step === 0 ? favourite ? `Vote for ${nameOf(favourite)}` : "Pick a candidate" : step === 1 ? withdrawn ? withdrawalCount ? "Try ranking instead" : "Pick a candidate" : "What if Kabir drops out?" : step === 2 ? ["Count with points", "Which way is fair?"][rankStage] : step === 3 ? arrowSummary ? "Run a simulation" : arrowIndex === conditions.length - 1 ? "What Arrow proved" : "Next check" : step === 4 ? "Last step" : "Start a new election";
   const title = step === 1 ? (withdrawn ? withdrawalCount ? `Without Kabir, ${withdrawalWinner ? nameOf(withdrawalWinner) : "nobody"} wins` : "Kabir dropped out. Who gets your vote now?" : chapters[1].title)
-    : step === 2 ? [chapters[2].title, "Round 1", "Round 2", "The same ballots, counted with points"][rankStage]
+    : step === 2 ? [chapters[2].title, "Your ballots, counted with points"][rankStage]
     : step === 3 ? arrowSummary ? "No ranking rule passes all five checks" : condition.name
     : chapters[step].title;
 
@@ -215,16 +211,8 @@ export function ElectionExperience() {
             <FieldSet><FieldLegend>First choice</FieldLegend><CandidateChoices value={rankFirst} label="My favourite" onChange={id => { setRankFirst(id); setRankBackup(null); }} /></FieldSet>
             <FieldSet><FieldLegend>Second choice</FieldLegend>{rankFirst ? <CandidateChoices value={rankBackup} exclude={rankFirst} label="My backup" onChange={setRankBackup} /> : <p className="note">Pick your first choice first.</p>}</FieldSet>
           </div> : <div className="stage round-stage" aria-live="polite">
-            {rankStage < 3 ? <>
-              <BallotPiles groups={scenarios.original.groups} visitor={ballot} active={rankStage === 1 ? firstRound.active : finalRound.active} />
-              <div className="round-side">
-                {rankStage === 1 ? <CountChart majority result={firstRound} eligible={firstRound.active} /> : <CountChart majority result={finalRound} eligible={finalRound.active} moved={firstRound.transfers} movedFrom={eliminated} />}
-                <AlgorithmCard active={rankStage === 1 ? ranked.rounds.length > 1 ? [2, 4] : [2, 3] : [2, 3]} />
-              </div>
-            </> : <>
-              <PointsTable groups={rankGroups} />
-              <div className="round-side"><CountChart result={points} unit="points" /></div>
-            </>}
+            <PointsTable groups={rankGroups} />
+            <div className="round-side"><CountChart result={points} unit="points" /></div>
           </div>)}
 
           {step === 3 && (arrowSummary ? <div className="stage">
