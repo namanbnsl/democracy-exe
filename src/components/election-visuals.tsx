@@ -50,7 +50,7 @@ export function CountChart({ result, unit = "votes", eligible = [...candidateIds
   const leaders = result.winners.length === 1 ? result.winners : [];
   return <div className="count-chart" data-compact={compact} data-majority={majority} aria-label={`Election result in ${unit}`}>
     {eligible.map(id => <div className="count-row" key={id} data-candidate={id} data-leading={leaders.includes(id)}>
-      <div className="count-label"><CandidateName id={id} portrait={!compact} /><span className="count-number">{result.counts[id]} <span>{majority ? `${unit} (${Math.round(result.counts[id] / result.total * 100)}%)` : unit}</span></span></div>
+      <div className="count-label"><CandidateName id={id} portrait={!compact} /><span className="count-number"><AnimatedNumber value={result.counts[id]} duration={600} /> <span>{majority ? `${unit} (${Math.round(result.counts[id] / result.total * 100)}%)` : unit}</span></span></div>
       <div className="count-track"><div className="count-fill" data-candidate={id} style={{ width: `${result.counts[id] / max * 100}%` }}>{moved && movedFrom && moved[id] > 0 && <span className="count-moved" data-candidate={movedFrom} style={{ width: `${moved[id] / result.counts[id] * 100}%` }} />}</div>{majority && <span className="majority-line" aria-hidden="true" />}</div>
       {moved && movedFrom && moved[id] > 0 && <p className="count-moved-note"><span className="count-moved-key" data-candidate={movedFrom} aria-hidden="true" />{moved[id]} of these came from {nameOf(movedFrom)}</p>}
     </div>)}

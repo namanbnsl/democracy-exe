@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { ArrowRight, ChevronDown, Dices, Play, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Dices, Play, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { AnimatedNumber, CandidateName } from "@/components/election-visuals";
@@ -28,6 +28,21 @@ const single = (winners: CandidateId[]) => winners.length === 1 ? winners[0] : n
 const jitter = (i: number) => ((i * 2654435761) >>> 0) / 4294967296;
 
 const W = 560, H = 230;
+
+// Small goals that send you back to the controls. Each one checks the school on screen.
+const challenges: { id: string; text: string; met: (election: SimulatedElection) => boolean }[] = [
+  { id: "agree", text: "Make all three methods pick the same winner", met: e => e.sameWinner },
+  { id: "split", text: "Make the methods disagree", met: e => changedWinner(e) },
+  { id: "kabir", text: "Make Kabir win on points but lose with one name each", met: e => single(e.winners.borda) === "C" && single(e.winners.plurality) !== null && single(e.winners.plurality) !== "C" },
+  { id: "three", text: "Make each method pick someone different", met: e => !e.tie && new Set([e.winners.plurality[0], e.winners.runoff[0], e.winners.borda[0]]).size === 3 },
+];
+
+function Challenges({ done }: { done: Set<string> }) {
+  return <section className="pg-challenges" aria-label="Challenges">
+    <h3>Challenges <span>{done.size} of {challenges.length}</span></h3>
+    <ul>{challenges.map(c => <li key={c.id} data-done={done.has(c.id)}><span className="pg-check" aria-hidden="true">{done.has(c.id) && <Check />}</span>{c.text}<span className="sr-only">{done.has(c.id) ? " (done)" : ""}</span></li>)}</ul>
+  </section>;
+}
 
 function SchoolPicture({ school, model, hovered, onMove }: { school: School; model: SchoolModel; hovered: number | null; onMove: (spots: Record<CandidateId, number>) => void }) {
   const svg = useRef<SVGSVGElement>(null);
@@ -89,6 +104,7 @@ function SchoolPicture({ school, model, hovered, onMove }: { school: School; mod
       onPointerDown={event => down(event, id)} onPointerMove={event => move(event, id)} onPointerUp={() => setDragging(null)} onPointerCancel={() => setDragging(null)} onKeyDown={event => key(event, id)}
       style={{ transform: `translateX(${x(spots[id])}px)` }}>
       <line x1="0" x2="0" y1={line} y2={line + 14 + rows[id]! * 18} className="pg-handle-stem" />
+      <circle cy={line} r="26" className="pg-handle-hit" />
       <circle cy={line} r="13" fill={colour(id)} className="pg-handle-knob" />
       <text y={line + 4.5} textAnchor="middle" className="pg-handle-letter">{nameOf(id)[0]}</text>
       <text y={line + 30 + rows[id]! * 18} textAnchor="middle" className="pg-handle-name">{nameOf(id)}</text>
@@ -195,6 +211,16 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
 
   const school = useMemo(() => makeSchool(seed, size, kind, spots ?? undefined), [seed, size, kind, spots]);
   const election = useMemo(() => judge(school.groups), [school]);
+  const [done, setDone] = useState<Set<string>>(() => new Set());
+  // Only schools the visitor makes count, not the one shown on arrival.
+  const opening = useRef(election);
+  useEffect(() => {
+    if (election === opening.current) return;
+    const met = challenges.filter(c => c.met(election) && !done.has(c.id));
+    // Marks a challenge as done the moment the school on screen meets it.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (met.length) setDone(old => new Set([...old, ...met.map(c => c.id)]));
+  }, [election, done]);
 
   function stop() { if (frame.current !== null) cancelAnimationFrame(frame.current); frame.current = null; }
   function clearRuns() { stop(); setRuns([]); setPhase("ready"); setLoaded(null); }
@@ -253,6 +279,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
       <section className="pg-count" aria-label="Three ways to count">
         <div className="pg-school-head"><h3>Who wins?</h3></div>
         <Methods school={school} election={election} />
+        <Challenges done={done} />
       </section>
     </div>
 

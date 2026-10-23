@@ -104,6 +104,20 @@
 .pg-history h4 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
 .pg-history li { display: flex; gap: 12px; font-size: 13px; animation: pg-open 260ms ease-out both; }
 
+.pg-handle-hit { fill: transparent; }
+
+.pg-count { display: flex; flex-direction: column; }
+.pg-challenges { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
+.pg-challenges h3 { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 8px; font-size: 14px; font-weight: 600; }
+.pg-challenges h3 span { font-size: 13px; font-weight: 500; color: var(--muted-foreground); font-variant-numeric: tabular-nums; }
+.pg-challenges ul { display: grid; grid-template-columns: 1fr; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.pg-challenges li { display: flex; align-items: center; gap: 10px; font-size: 13px; transition: color 200ms; }
+.pg-challenges li[data-done="true"] { color: var(--muted-foreground); }
+.pg-check { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; border: 1.5px solid var(--input); border-radius: 50%; transition: background 200ms, border-color 200ms; }
+.pg-check svg { width: 12px; height: 12px; color: white; animation: pg-pop 420ms cubic-bezier(.3,1.6,.5,1) both; }
+li[data-done="true"] .pg-check { background: var(--signal-good); border-color: var(--signal-good); animation: pg-ring 600ms ease-out; }
+@keyframes pg-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal-good) 50%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+
 @media (max-width: 860px) {
   .pg-board, .pg-thousand-body { grid-template-columns: 1fr; }
   .pg-grid { --pg-columns: 25; }

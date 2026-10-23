@@ -456,3 +456,5 @@
   .points-table th, .points-table td { padding: 10px 10px; font-size: 13px; }
   .points-table td span { display: block; font-size: 12px; }
 }
+.story-explainer, .result-signal { animation: stage-in 420ms cubic-bezier(.2,.7,.2,1) both; }
+.count-row { animation: stage-in 420ms cubic-bezier(.2,.7,.2,1) both; }

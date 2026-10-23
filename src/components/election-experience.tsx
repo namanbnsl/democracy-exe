@@ -106,7 +106,7 @@ export function ElectionExperience() {
     </header>
     <div className="workspace"><main id="experience" ref={mainRef} tabIndex={-1} className="experience-main">
         <div className="chapter-intro"><h1 className="chapter-question">{title}</h1></div>
-        <div className="tour-stage" ref={stageRef} data-step={step}><div className="stage-enter" key={`${step}-${kabirEntered}-${rankStage}`}>
+        <div className="tour-stage" ref={stageRef} data-step={step}><div className="stage-enter" key={`${step}-${rankStage}`}>
           {step === 0 && <ToggleGroup type="single" variant="campaign" size="campaign" value={favourite ?? ""} onValueChange={v => setFavourite((v || null) as CandidateId | null)} className="candidate-options" aria-label="Choose your prefect">
             {candidates.filter(c => c.id !== "C").map(c => <ToggleGroupItem key={c.id} value={c.id} aria-label={`Choose ${c.name}`} aria-describedby={`campaign-${c.id}`}>
               <span className="campaign-portrait"><Portrait id={c.id} /></span>
@@ -124,10 +124,10 @@ export function ElectionExperience() {
             <div className="story-chapter"><h2>{kabirEntered ? "With Kabir" : "Without Kabir"}</h2><span className="story-electorate">{twoCandidateCount.total} voters · one name each</span></div>
             <div className="story-grid">
               <section className="story-results" aria-label={kabirEntered ? "After Kabir joins" : "Before Kabir joins"}>
-                <p className="result-signal" data-signal={kabirEntered ? "bad" : "good"}>{kabirEntered ? "Winner changed: Aarav wins" : "Meera wins"}</p>
+                <p className="result-signal" key={String(kabirEntered)} data-signal={kabirEntered ? "bad" : "good"}>{kabirEntered ? "Winner changed: Aarav wins" : "Meera wins"}</p>
                 <CountChart majority result={kabirEntered ? initialCount : twoCandidateCount} eligible={kabirEntered ? [...candidateIds] : ["A", "B"]} />
               </section>
-              <aside className="story-explainer">
+              <aside className="story-explainer" key={String(kabirEntered)}>
                 {kabirEntered ? <><h2 className="story-candidate"><span className="mini-portrait"><Portrait id="C" small /></span>Kabir Sen</h2><p>Runs the peer tutoring club.</p><p>136 students now choose Kabir.</p><div className="entry-flows"><p><strong>89</strong><span>from Meera’s side</span><ArrowRight aria-hidden="true" /><CandidateName id="C" /></p><p><strong>47</strong><span>from Aarav’s side</span><ArrowRight aria-hidden="true" /><CandidateName id="C" /></p></div><p className="fine-print">Kabir doesn’t win. But Meera loses enough votes for Aarav to take the lead. That’s the <strong>spoiler effect</strong>.</p></>
                   : <><div className="story-pair"><CandidateName id="A" portrait /><span>vs</span><CandidateName id="B" portrait /></div><h2>One name on each ballot</h2><p>Meera has more than half the votes, so she wins.</p></>}
               </aside>
