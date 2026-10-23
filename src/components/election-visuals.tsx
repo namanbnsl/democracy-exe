@@ -1,10 +1,31 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Check } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Portrait } from "@/components/portrait";
-import { candidateIds, nameOf, type BallotGroup, type CandidateId, type Counts, type Result } from "@/lib/elections";
+import { candidateIds, nameOf, positional, type BallotGroup, type CandidateId, type Counts, type Result, type RunoffResult } from "@/lib/elections";
+
+// Counts up (or down) to `value` so changes are easy to follow. Jumps straight there with reduced motion.
+export function AnimatedNumber({ value, duration = 450 }: { value: number; duration?: number }) {
+  const [shown, setShown] = useState(value);
+  const from = useRef(value);
+  useEffect(() => {
+    const start = from.current;
+    if (start === value || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { from.current = value; setShown(value); return; }
+    const began = performance.now();
+    let frame = requestAnimationFrame(function tick(now) {
+      const t = Math.min(1, (now - began) / duration);
+      const next = Math.round(start + (value - start) * (1 - (1 - t) ** 3));
+      from.current = next; setShown(next);
+      if (t < 1) frame = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [value, duration]);
+  return <>{shown.toLocaleString()}</>;
+}
 
 export function CandidateName({ id, portrait = false }: { id: CandidateId; portrait?: boolean }) {
   return <span className="candidate-name">{portrait ? <span className="mini-portrait"><Portrait id={id} small /></span> : <span className="candidate-dot" data-candidate={id} />}<span>{nameOf(id)}</span></span>;
@@ -29,12 +50,23 @@ export function CountChart({ result, unit = "votes", eligible = [...candidateIds
   const leaders = result.winners.length === 1 ? result.winners : [];
   return <div className="count-chart" data-compact={compact} data-majority={majority} aria-label={`Election result in ${unit}`}>
     {eligible.map(id => <div className="count-row" key={id} data-candidate={id} data-leading={leaders.includes(id)}>
-      <div className="count-label"><CandidateName id={id} portrait={!compact} /><span className="count-number">{result.counts[id]} <span>{majority ? `${unit} (${Math.round(result.counts[id] / result.total * 100)}%)` : unit}</span></span></div>
+      <div className="count-label"><CandidateName id={id} portrait={!compact} /><span className="count-number"><AnimatedNumber value={result.counts[id]} duration={600} /> <span>{majority ? `${unit} (${Math.round(result.counts[id] / result.total * 100)}%)` : unit}</span></span></div>
       <div className="count-track"><div className="count-fill" data-candidate={id} style={{ width: `${result.counts[id] / max * 100}%` }}>{moved && movedFrom && moved[id] > 0 && <span className="count-moved" data-candidate={movedFrom} style={{ width: `${moved[id] / result.counts[id] * 100}%` }} />}</div>{majority && <span className="majority-line" aria-hidden="true" />}</div>
       {moved && movedFrom && moved[id] > 0 && <p className="count-moved-note"><span className="count-moved-key" data-candidate={movedFrom} aria-hidden="true" />{moved[id]} of these came from {nameOf(movedFrom)}</p>}
     </div>)}
     {majority && <p className="majority-legend"><span aria-hidden="true" />Over this line is more than half the votes</p>}
   </div>;
+}
+
+// Kabir's supporters, split by who they ranked next. Each segment is coloured by where those votes went.
+export function KabirSplit({ split }: { split: Counts }) {
+  const total = split.A + split.B;
+  const goes = (["B", "A"] as CandidateId[]).filter(id => split[id] > 0);
+  return <figure className="kabir-split" aria-label={`Kabir’s ${total} votes: ${split.B} went to Meera, ${split.A} went to Aarav`}>
+    <figcaption><CandidateName id="C" portrait /><span>Kabir’s {total} votes had to go somewhere</span></figcaption>
+    <div className="split-bar">{goes.map(id => <span key={id} data-candidate={id} style={{ width: `${split[id] / total * 100}%` }}>{Math.round(split[id] / total * 100)}%</span>)}</div>
+    <div className="split-legend">{goes.map(id => <p key={id} data-candidate={id}><span className="candidate-dot" data-candidate={id} /><strong>{split[id]}</strong> ranked {nameOf(id)} next</p>)}</div>
+  </figure>;
 }
 
 export function ResultCard({ result, method, description, unit = "votes", children }: { result: Result; method: string; description: string; unit?: string; children?: React.ReactNode }) {
@@ -74,16 +106,62 @@ export function BallotPiles({ groups, visitor, active }: { groups: BallotGroup[]
   </ul>;
 }
 
-// Borda working: each candidate's 1st- and 2nd-choice ballots, times their points.
-export function PointsTable({ groups, weights = [2, 1, 0] }: { groups: BallotGroup[]; weights?: number[] }) {
+// Borda: your own ballot shows how points are handed out, then every candidate's points are added up.
+export function PointsExplainer({ groups, ballot, weights = [2, 1, 0] }: { groups: BallotGroup[]; ballot: CandidateId[] | null; weights?: number[] }) {
   const tally = (id: CandidateId, rank: number) => groups.reduce((sum, g) => sum + (g.ranking[rank] === id ? g.count : 0), 0);
-  return <div className="ballot-table-scroll"><table className="points-table">
-    <thead><tr><th scope="col">Candidate</th><th scope="col">First choices × {weights[0]}</th><th scope="col">Second choices × {weights[1]}</th><th scope="col">Points</th></tr></thead>
-    <tbody>{candidateIds.map(id => {
-      const first = tally(id, 0), second = tally(id, 1);
-      return <tr key={id}><th scope="row"><CandidateName id={id} /></th><td>{first} × {weights[0]} = {first * weights[0]}</td><td>{second} × {weights[1]} = {second * weights[1]}</td><td>{first * weights[0] + second * weights[1]}</td></tr>;
-    })}</tbody>
-  </table></div>;
+  const result = positional(groups, weights);
+  const winner = result.winners.length === 1 ? result.winners[0] : null;
+  const order = [...candidateIds].sort((a, b) => result.counts[b] - result.counts[a]);
+  const firstLeader = [...candidateIds].sort((a, b) => tally(b, 0) - tally(a, 0))[0];
+  const places = ["1st", "2nd", "3rd"];
+  return <div className="points-explainer">
+    {ballot && <section className="points-rule" aria-label="How your ballot gives out points">
+      <h2>Your ballot gives out points</h2>
+      <ol className="points-ballot">{ballot.map((id, rank) => <li key={id} style={{ animationDelay: `${rank * 120}ms` }}>
+        <span className="points-place">{places[rank]}</span><CandidateName id={id} portrait /><strong data-zero={weights[rank] === 0}>+{weights[rank]}</strong>
+      </li>)}</ol>
+    </section>}
+    <table className="points-table">
+      <caption className="sr-only">Points for each candidate from all {result.total} ballots</caption>
+      <thead><tr><th scope="col">Candidate</th><th scope="col">1st choice</th><th scope="col">2nd choice</th><th scope="col">Points</th></tr></thead>
+      <tbody>{order.map((id, i) => <tr key={id} data-winner={id === winner} style={{ animationDelay: `${300 + i * 90}ms` }}>
+        <th scope="row"><CandidateName id={id} portrait /></th>
+        <td>{tally(id, 0)} <span>× {weights[0]} = {tally(id, 0) * weights[0]}</span></td>
+        <td>{tally(id, 1)} <span>× {weights[1]} = {tally(id, 1) * weights[1]}</span></td>
+        <td><span className="points-sum">{id === winner && <Check className="points-check" aria-label="Winner" />}<strong><AnimatedNumber value={result.counts[id]} duration={700} /></strong></span></td>
+      </tr>)}</tbody>
+    </table>
+    {winner && <p className="points-insight">{winner === firstLeader
+      ? `${nameOf(winner)} has the most first choices and the most points.`
+      : tally(winner, 1) > tally(firstLeader, 1)
+        ? `${nameOf(firstLeader)} has the most first choices, but more students put ${nameOf(winner)} second. That’s enough to win on points.`
+        : `${nameOf(winner)} wins on points.`}</p>}
+  </div>;
+}
+
+export function RunoffWalkthrough({ result }: { result: RunoffResult }) {
+  const [roundIndex, setRoundIndex] = useState(0);
+  const index = Math.min(roundIndex, result.rounds.length - 1);
+  const round = result.rounds[index];
+  const previous = result.rounds[index - 1];
+  const winner = !round.eliminated && result.winners.length === 1 ? result.winners[0] : null;
+  return <div className="runoff-walkthrough">
+    <ToggleGroup type="single" variant="outline" size="lg" spacing={0} value={String(index)} onValueChange={value => value && setRoundIndex(Number(value))} aria-label="Instant runoff round" className="round-selector">
+      {result.rounds.map((_, i) => <ToggleGroupItem key={i} value={String(i)}>{i === result.rounds.length - 1 ? "Final count" : "First count"}</ToggleGroupItem>)}
+    </ToggleGroup>
+    <div className="runoff-grid" aria-live="polite">
+      <section className="runoff-count" aria-label={`Round ${index + 1} votes`}>
+        <p className="result-signal" data-signal={winner ? "good" : "neutral"}>{round.eliminated ? `${nameOf(round.eliminated)} is last and is out` : winner ? `${nameOf(winner)} wins with more than half` : "The count ends in a tie"}</p>
+        <CountChart result={round} eligible={round.active} majority moved={previous?.transfers} movedFrom={previous?.eliminated} />
+      </section>
+      <aside className="runoff-explainer">
+        <h2>{previous?.eliminated ? "Their backups now count" : "Does anyone have more than half?"}</h2>
+        <p>{round.eliminated ? `Not yet. ${nameOf(round.eliminated)} has the fewest first choices. Each of those ballots moves to its next choice still in the race.` : winner ? `Every ballot still counts once. ${nameOf(winner)} now has ${round.counts[winner]} of ${round.total} votes.` : "Tied candidates need a separate tie-break rule."}</p>
+        {previous?.transfers && previous.eliminated && <div className="transfer-summary"><span>{nameOf(previous.eliminated)}’s ballots move:</span>{round.active.map(id => <p key={id}><strong>+{previous.transfers![id]}</strong><ArrowRight aria-hidden="true" /><CandidateName id={id} /></p>)}</div>}
+        <AlgorithmCard active={round.eliminated ? [2, 4] : [2, 3]} />
+      </aside>
+    </div>
+  </div>;
 }
 
 const runoffSteps = [

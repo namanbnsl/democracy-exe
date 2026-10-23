@@ -3,14 +3,14 @@ import type { CandidateId } from "@/lib/elections";
 const palette = {
   A: { backdrop: "#b9d9fa", hair: "#252c38", skin: "#e6b69b", shirt: "#4d5c6b" },
   B: { backdrop: "#f6c7d9", hair: "#382b33", skin: "#bc805e", shirt: "#ece1c9" },
-  C: { backdrop: "#bfe8cc", hair: "#26392e", skin: "#cda17b", shirt: "#d6d08f" },
+  C: { backdrop: "#ded3fc", hair: "#26392e", skin: "#cda17b", shirt: "#d6d08f" },
 };
 
 export function Portrait({ id, small = false }: { id: CandidateId; small?: boolean }) {
   const c = palette[id];
   return (
-    <svg viewBox={small ? "50 12 120 120" : "-40 14 300 163"} preserveAspectRatio="xMidYMid slice" aria-hidden="true" className="portrait-svg">
-      <rect x="-100" y="-50" width="420" height="300" fill={c.backdrop} />
+    <svg viewBox={small ? "50 12 120 120" : "-40 14 300 163"} preserveAspectRatio="xMidYMid meet" aria-hidden="true" className="portrait-svg">
+      <rect x="-1000" y="-1000" width="2200" height="2200" fill={c.backdrop} />
       {!small && <><path d={id === "B" ? "M160 24l15 7m-19 5l12-2" : "M24 37l8-9m4 11l12-3"} stroke="#fff" strokeWidth="2" fill="none" opacity=".5" /><circle cx="184" cy="149" r="22" stroke="#fff" strokeWidth="1" fill="none" opacity=".15" /></>}
       <ellipse cx="110" cy="202" rx="79" ry="75" fill={c.shirt} />
       <path d="M94 107h32v39q-16 16-32 0" fill={c.skin} />

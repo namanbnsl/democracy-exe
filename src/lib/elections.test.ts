@@ -3,22 +3,22 @@ import assert from "node:assert/strict";
 import { firstChoiceWithVisitor, approval, approvalGroups, condorcet, pairwise, plurality, positional, ratingGroups, runoff, scenarios, score, strategyGroups, validateGroups, withVisitor, type BallotGroup } from "./elections.ts";
 
 test("plurality counts the original first choices", () => {
-  assert.deepEqual(plurality(scenarios.original.groups), { counts: { A: 40, B: 35, C: 25 }, winners: ["A"], total: 100 });
+  assert.deepEqual(plurality(scenarios.original.groups), { counts: { A: 184, B: 167, C: 136 }, winners: ["A"], total: 487 });
 });
 test("withdrawal preserves voters and redirects their preferences", () => {
-  assert.deepEqual(plurality(scenarios.original.groups, ["A", "B"]), { counts: { A: 40, B: 60, C: 0 }, winners: ["B"], total: 100 });
+  assert.deepEqual(plurality(scenarios.original.groups, ["A", "B"]), { counts: { A: 231, B: 256, C: 0 }, winners: ["B"], total: 487 });
 });
 test("runoff records the elimination and all transferred ballots", () => {
   const result = runoff(scenarios.original.groups);
   assert.deepEqual(result.winners, ["B"]);
   assert.equal(result.rounds.length, 2);
   assert.equal(result.rounds[0].eliminated, "C");
-  assert.deepEqual(result.rounds[0].transfers, { A: 0, B: 25, C: 0 });
-  assert.deepEqual(result.counts, { A: 40, B: 60, C: 0 });
-  for (const round of result.rounds) assert.equal(Object.values(round.counts).reduce((a, b) => a + b), 100);
+  assert.deepEqual(result.rounds[0].transfers, { A: 47, B: 89, C: 0 });
+  assert.deepEqual(result.counts, { A: 231, B: 256, C: 0 });
+  for (const round of result.rounds) assert.equal(Object.values(round.counts).reduce((a, b) => a + b), 487);
 });
 test("Borda awards 2, 1, 0 correctly", () => {
-  assert.deepEqual(positional(scenarios.original.groups).counts, { A: 80, B: 135, C: 85 });
+  assert.deepEqual(positional(scenarios.original.groups).counts, { A: 513, B: 535, C: 413 });
 });
 test("three methods produce three different winners in the disagreement fixture", () => {
   const groups = scenarios.disagreement.groups;
@@ -38,17 +38,17 @@ test("the three different winners survive any one visitor ballot", () => {
 });
 test("the cycle has the correct head-to-head majorities and no Condorcet winner", () => {
   const groups = scenarios.cycle.groups;
-  assert.deepEqual(pairwise(groups, "A", "B").counts, { A: 67, B: 33, C: 0 });
-  assert.deepEqual(pairwise(groups, "B", "C").counts, { A: 0, B: 68, C: 32 });
-  assert.deepEqual(pairwise(groups, "C", "A").counts, { A: 35, B: 0, C: 65 });
+  assert.deepEqual(pairwise(groups, "A", "B").counts, { A: 326, B: 161, C: 0 });
+  assert.deepEqual(pairwise(groups, "B", "C").counts, { A: 0, B: 332, C: 155 });
+  assert.deepEqual(pairwise(groups, "C", "A").counts, { A: 171, B: 0, C: 316 });
   assert.deepEqual(condorcet(groups), []);
 });
 test("a visitor counts as exactly one extra voter", () => {
   const original = structuredClone(scenarios.original.groups);
   const groups = withVisitor(original, ["C", "A", "B"]);
-  assert.equal(plurality(groups).total, 101);
-  assert.deepEqual(plurality(groups).counts, { A: 40, B: 35, C: 26 });
-  assert.deepEqual(plurality(groups, ["A", "B"]).counts, { A: 41, B: 60, C: 0 });
+  assert.equal(plurality(groups).total, 488);
+  assert.deepEqual(plurality(groups).counts, { A: 184, B: 167, C: 137 });
+  assert.deepEqual(plurality(groups, ["A", "B"]).counts, { A: 232, B: 256, C: 0 });
   assert.deepEqual(original, scenarios.original.groups);
 });
 test("first-round majority requires no elimination", () => {
@@ -73,10 +73,10 @@ test("first-only custom points reproduce plurality", () => {
   assert.deepEqual(positional(scenarios.original.groups, [1, 0, 0]), plurality(scenarios.original.groups));
 });
 test("ratings use explicit cardinal data", () => {
-  assert.deepEqual(score(ratingGroups), { counts: { A: 400, B: 870, C: 530 }, winners: ["B"], total: 100 });
+  assert.deepEqual(score(ratingGroups), { counts: { A: 1840, B: 4230, C: 2696 }, winners: ["B"], total: 487 });
 });
 test("approval counts each approved candidate", () => {
-  assert.deepEqual(approval(approvalGroups), { counts: { A: 40, B: 100, C: 60 }, winners: ["B"], total: 100 });
+  assert.deepEqual(approval(approvalGroups), { counts: { A: 184, B: 487, C: 303 }, winners: ["B"], total: 487 });
 });
 test("the strategic-ballot fixture changes the result while the genuine preference stays fixed", () => {
   assert.deepEqual(positional(strategyGroups(false)).counts, { A: 6, B: 7, C: 2 });
@@ -102,7 +102,7 @@ test("invalid rankings, counts, scales and withdrawals are rejected", () => {
 test("first-choice visitors are counted without lower preferences", () => {
   for (const choice of ["A", "B", "C"] as const) {
     const counted = firstChoiceWithVisitor(scenarios.original.groups, choice)!;
-    assert.equal(counted.total, 101);
+    assert.equal(counted.total, 488);
     assert.equal(counted.counts[choice], plurality(scenarios.original.groups).counts[choice] + 1);
     assert.deepEqual(counted.winners, ["A"]);
   }
@@ -113,8 +113,8 @@ test("withdrawal requires an explicit backup only for the withdrawn visitor choi
     const retained = firstChoiceWithVisitor(scenarios.original.groups, choice, ["A", "B"])!;
     const transferred = firstChoiceWithVisitor(scenarios.original.groups, "C", ["A", "B"], choice)!;
     assert.deepEqual(retained, transferred);
-    assert.equal(transferred.total, 101);
-    assert.equal(Object.values(transferred.counts).reduce((a, b) => a + b), 101);
+    assert.equal(transferred.total, 488);
+    assert.equal(Object.values(transferred.counts).reduce((a, b) => a + b), 488);
     assert.deepEqual(transferred.winners, ["B"]);
   }
   assert.throws(() => firstChoiceWithVisitor(scenarios.original.groups, "C", ["A", "B"], "C"));
