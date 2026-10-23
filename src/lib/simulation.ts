@@ -84,3 +84,43 @@ export function judge(groups: BallotGroup[]): SimulatedElection {
 export function simulate(random: () => number, elections: number, voters: number, model: VoterModel): SimulatedElection[] {
   return Array.from({ length: elections }, () => judge(randomClass(random, voters, model)));
 }
+
+// Keep the visible working tied to the same counters that decide the winners.
+export function explainElection(groups: BallotGroup[]) {
+  const firstChoices = plurality(groups);
+  const secondChoices = { A: 0, B: 0, C: 0 };
+  for (const group of groups) secondChoices[group.ranking[1]] += group.count;
+  return {
+    firstChoices,
+    secondChoices,
+    runoff: runoff(groups),
+    points: positional(groups),
+  };
+}
+
+// One school for the playground. The same seed always gives the same students, and a smaller
+// school is the first part of a bigger one, so dragging the size slider only adds or removes students.
+// `spots` overrides where the candidates stand on the line.
+export type SchoolStudent = { order: number; position?: number };
+export type School = { groups: BallotGroup[]; students: SchoolStudent[]; spots?: Record<CandidateId, number> };
+
+export function rankFrom(spots: Record<CandidateId, number>, position: number) {
+  const ranking = [...candidateIds].sort((x, y) => Math.abs(spots[x] - position) - Math.abs(spots[y] - position));
+  return orders.findIndex(order => order.join() === ranking.join());
+}
+
+export function makeSchool(seed: number, voters: number, model: "random" | "spectrum", spots?: Record<CandidateId, number>): School {
+  const random = seededRandom(seed);
+  // Keep candidates apart so their names stay readable on the line.
+  const drawn = { A: .08 + random() * .84, B: .08 + random() * .84, C: .08 + random() * .84 };
+  const stand = spots ?? drawn;
+  const students: SchoolStudent[] = [];
+  for (let i = 0; i < voters; i++) {
+    if (model === "random") students.push({ order: Math.floor(random() * orders.length) });
+    else { const position = random(); students.push({ order: rankFrom(stand, position), position }); }
+  }
+  const counts = orders.map(() => 0);
+  for (const student of students) counts[student.order]++;
+  const groups = orders.map((ranking, i) => ({ count: counts[i], ranking })).filter(group => group.count > 0);
+  return model === "spectrum" ? { groups, students, spots: stand } : { groups, students };
+}

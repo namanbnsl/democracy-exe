@@ -1,7 +1,23 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { candidateIds, pairwise, positional, runoff, scenarios, withVisitor, type CandidateId } from "./elections.ts";
+import { candidateIds, firstChoiceWithVisitor, pairwise, positional, runoff, scenarios, withVisitor, type CandidateId } from "./elections.ts";
 import { orderingExample } from "./voting-lessons.ts";
+
+test("the spoiler story changes the winner when Kabir enters, with the same 488 voters", () => {
+  for (const vote of ["A", "B"] as const) {
+    const before = firstChoiceWithVisitor(scenarios.original.groups, vote, ["A", "B"])!;
+    const after = firstChoiceWithVisitor(scenarios.original.groups, vote)!;
+    assert.deepEqual(before.winners, ["B"]);
+    assert.deepEqual(after.winners, ["A"]);
+    assert.equal(before.total, 488);
+    assert.equal(after.total, before.total);
+    assert.equal(before.counts.A - after.counts.A, 47);
+    assert.equal(before.counts.B - after.counts.B, 89);
+    assert.equal(after.counts.C, 136);
+    assert.ok(before.counts.B > before.total / 2);
+    assert.ok(after.counts.A < after.total / 2);
+  }
+});
 
 test("the ordering example has three individually consistent ballots but cyclic majorities", () => {
   for (const [first, second] of [["A", "B"], ["B", "C"], ["C", "A"]] as [CandidateId, CandidateId][]) {
