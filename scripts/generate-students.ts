@@ -1,17 +1,31 @@
-// Builds src/lib/ai-students.json: fictional students and how likely each is to cast each ranking.
-// Run with `npm run students` after putting CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in .env.local.
-import { writeFile } from "node:fs/promises";
+// Builds src/lib/ai-students.json: fictional students, the ballot each one casts, and why.
+// Each student is given a personality and asked, through the Codex CLI, how they'd rank the candidates.
+// Run with `npm run students` (needs `codex` logged in). `npm run students -- 10 /tmp/trial.json` makes a small trial.
+import { spawn } from "node:child_process";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { candidates } from "../src/lib/elections.ts";
 import { orders, seededRandom } from "../src/lib/simulation.ts";
 
-const MODEL = "clef";
-const STUDENTS = 500;
+const MODEL = "gpt-6-luna";
+const STUDENTS = Number(process.argv[2] ?? 500);
+const OUTPUT = process.argv[3] ? new URL(process.argv[3], `file://${process.cwd()}/`) : new URL("../src/lib/ai-students.json", import.meta.url);
 const PARALLEL = 8;
+const MAX_WORDS = 25;
 
+const names = ["Riya", "Arjun", "Ananya", "Vihaan", "Diya", "Ishaan", "Saanvi", "Reyansh", "Aditi", "Rohan", "Tara", "Dev", "Nisha", "Kiran", "Zara", "Aditya", "Pooja", "Yash", "Anika", "Siddharth", "Leela", "Neel", "Kavya", "Arnav", "Myra", "Om", "Sneha", "Krish", "Ira", "Dhruv", "Aisha", "Rahul", "Tanvi", "Varun", "Shreya", "Kunal", "Meghna", "Farhan", "Nandini", "Pranav", "Ritika", "Samar", "Jiya", "Aryan", "Prisha", "Manav", "Sana", "Vikram", "Avni", "Harsh"];
 const grades = ["Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
-const time = ["new this year", "here since nursery"];
+// About one student in ten is new, as in a real school.
+const time = ["new this year", "here since nursery", "here since Class 1", "here since Class 2", "here since Class 3", "here since Class 4", "here for two years", "here for three years", "here for four years", "here for five years"];
 const interests = ["plays football", "plays cricket", "loves chess", "draws and paints", "sings in the choir", "on the debate team", "learning to code", "always reading", "dances", "in the science club"];
-const traits = ["finds it hard to speak up", "loves organising things", "often left out of teams", "wants to be listened to", "struggles with homework", "cares most about fairness", "wants things to get done", "has lots of friends", "worries about making friends", "never makes the team"];
+// Balanced so no candidate gets a ready-made base: some traits lean towards one candidate's campaign, some lean nowhere.
+const traits = [
+  "finds it hard to speak up", "struggles with homework", "worries about making friends", "often left out of teams",
+  "likes rules and order", "thinks leaders need experience", "gets annoyed when nothing changes", "wants things to get done", "hates the queue at the water tap", "wants a quiet spot to read at lunch",
+  "wants the school to win trophies", "lives for the school fest", "complains about the canteen", "has lots of friends", "thinks school is boring",
+  "cares most about fairness", "wants to be listened to", "loves organising things",
+];
 
 const random = seededRandom(2026);
 function shuffle<T>(items: T[]) {
@@ -24,41 +38,70 @@ function shuffle<T>(items: T[]) {
 }
 
 const profiles = shuffle(grades.flatMap(g => time.flatMap(t => interests.flatMap(i => traits.map(r => [g, t, i, r].join(" · ")))))).slice(0, STUDENTS);
-const name = (id: string) => candidates.find(c => c.id === id)!.name;
+const students = profiles.map(profile => ({ name: names[Math.floor(random() * names.length)], profile }));
+const schema = {
+  type: "object", additionalProperties: false, required: ["first", "reason", "ranking"],
+  properties: { first: { type: "string", enum: candidates.map(c => c.name) }, reason: { type: "string" }, ranking: { type: "array", items: { type: "string", enum: candidates.map(c => c.name) }, minItems: 3, maxItems: 3 } },
+};
 
-// Candidates and options are shuffled per student so list position doesn't favour anyone.
-async function ask(profile: string) {
-  const cards = shuffle(candidates).map(c => `${c.name}, "${c.quality}": ${c.policies.join("; ")}.`).join("\n");
-  const keys = shuffle(orders.map(order => order.join("-")));
-  const body = {
-    model: MODEL,
-    state: `A school student: ${profile}.\n\nThe candidates for school prefect:\n${cards}`,
-    questions: { ranking: { type: "choice", instructions: "How would this student rank the three candidates, from most to least preferred?", criteria: Object.fromEntries(keys.map(key => [key, key.split("-").map(name).join(", then ")])) } },
-  };
-  for (let attempt = 1; ; attempt++) {
-    const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/cloudflare/${MODEL}`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`, "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const json = await response.json();
-    if (response.ok && json.success) {
-      const probabilities: Record<string, number> = json.result.answers.ranking.probabilities;
-      return { profile, p: orders.map(order => Number((probabilities[order.join("-")] ?? 0).toFixed(4))), tokens: json.result.usage.input_tokens as number };
+function codex(dir: string, prompt: string) {
+  return new Promise<void>((resolve, reject) => {
+    // stdin must be closed, or codex waits for more input.
+    const child = spawn("codex", ["exec", "-m", MODEL, "-c", 'model_reasoning_effort="medium"', "--ephemeral", "--skip-git-repo-check", "-s", "read-only", "--output-schema", "schema.json", "-o", "out.json", prompt], { cwd: dir, stdio: ["ignore", "ignore", "pipe"] });
+    let errors = "";
+    child.stderr.on("data", chunk => errors += chunk);
+    child.on("error", reject);
+    child.on("close", code => code === 0 ? resolve() : reject(new Error(errors.slice(-500))));
+  });
+}
+
+// Candidates are shuffled per student so list position doesn't favour anyone.
+async function ask(student: { name: string; profile: string }) {
+  const cards = shuffle(candidates).map(c => `${c.name} (${c.quality}). Slogan: "${c.slogan}". Promises: ${c.policies.join("; ")}. Strength: ${c.strength}. Weakness: ${c.weakness}.`).join("\n");
+  const prompt = `You are ${student.name}, a school student: ${student.profile}.
+
+The candidates for school prefect:
+${cards}
+
+Decide who this student would vote for first, the way they really would: a real kid thinking about what matters to them, not the answer a teacher would like.
+Give one short reason (at most 20 words) for that first choice, in the student's own voice: simple words, first person. No need to mention the others, and never be mean about anyone.
+Then rank all three candidates from most to least preferred, starting with that first choice.
+Never contradict the student's details (for example, don't say they are new if they aren't, or name a hobby they don't have), but only mention a detail if it is why they vote that way.
+Answer only with the JSON. Do not run any commands.`;
+  const dir = await mkdtemp(join(tmpdir(), "students-"));
+  try {
+    await writeFile(join(dir, "schema.json"), JSON.stringify(schema));
+    for (let attempt = 1; ; attempt++) {
+      try {
+        await codex(dir, prompt);
+        const { first, ranking, reason } = JSON.parse(await readFile(join(dir, "out.json"), "utf8")) as { first: string; ranking: string[]; reason: string };
+        // The reason is written for `first`, so it must top the ranking.
+        if (ranking[0] !== first) throw new Error(`Reason is for ${first} but ranking starts with ${ranking[0]}`);
+        const ids = ranking.map(name => candidates.find(c => c.name === name)?.id);
+        const order = orders.findIndex(o => o.join() === ids.join());
+        if (order < 0) throw new Error(`Bad ranking ${ranking.join(", ")}`);
+        if (!reason.trim() || reason.split(/\s+/).length > MAX_WORDS) throw new Error(`Bad reason "${reason}"`);
+        return { ...student, order, reason: reason.trim() };
+      } catch (error) {
+        if (attempt === 3) throw new Error(`Codex failed for "${student.profile}": ${(error as Error).message}`);
+      }
     }
-    if (attempt === 3) throw new Error(`Clef failed for "${profile}": ${JSON.stringify(json.errors ?? json)}`);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
   }
 }
 
-if (!process.env.CLOUDFLARE_ACCOUNT_ID || !process.env.CLOUDFLARE_API_TOKEN) throw new Error("Set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in .env.local.");
-const results: Awaited<ReturnType<typeof ask>>[] = [];
-let next = 0;
+const answers: (Awaited<ReturnType<typeof ask>> | undefined)[] = [];
+let next = 0, done = 0;
+// A student who keeps failing is skipped rather than losing the whole run.
 await Promise.all(Array.from({ length: PARALLEL }, async () => {
-  while (next < profiles.length) {
+  while (next < students.length) {
     const i = next++;
-    results[i] = await ask(profiles[i]);
+    try { answers[i] = await ask(students[i]); } catch (error) { console.error(`\n${(error as Error).message}`); }
+    process.stdout.write(`\r${++done} of ${students.length}`);
   }
 }));
-const tokens = results.reduce((sum, r) => sum + r.tokens, 0);
-await writeFile(new URL("../src/lib/ai-students.json", import.meta.url), JSON.stringify({ model: MODEL, students: results.map(({ profile, p }) => ({ profile, p })) }, null, 1) + "\n");
-console.log(`Wrote ${results.length} students using ${tokens.toLocaleString()} input tokens.`);
+const results = answers.filter(answer => answer !== undefined);
+await writeFile(OUTPUT, JSON.stringify({ model: MODEL, students: results }, null, 1) + "\n");
+const firsts = candidates.map(c => `${c.name} ${results.filter(r => orders[r.order][0] === c.id).length}`).join(", ");
+console.log(`\nWrote ${results.length} students to ${OUTPUT.pathname}. First choices: ${firsts}.`);

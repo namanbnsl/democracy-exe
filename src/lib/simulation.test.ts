@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { orderingExample } from "./voting-lessons.ts";
 import { scenarios } from "./elections.ts";
-import { aiStudentPool, explainElection, generateClass, judge, makeSchool, randomClass, rankFrom, seededRandom, simulate } from "./simulation.ts";
+import { aiStudentPool, explainElection, judge, makeSchool, orders, rankFrom, seededRandom, simulate } from "./simulation.ts";
 
 test("the seeded generator repeats exactly and stays in [0, 1)", () => {
   const a = seededRandom(42), b = seededRandom(42);
@@ -13,9 +13,9 @@ test("the seeded generator repeats exactly and stays in [0, 1)", () => {
   }
 });
 
-test("a random class has the requested number of voters", () => {
+test("a school has the requested number of voters", () => {
   for (const model of ["random", "spectrum", "ai"] as const) {
-    const groups = randomClass(seededRandom(7), 101, model);
+    const { groups } = makeSchool(7, 101, model);
     assert.equal(groups.reduce((sum, g) => sum + g.count, 0), 101);
   }
 });
@@ -31,29 +31,37 @@ test("judge spots a circle and an agreement", () => {
 });
 
 test("random classes produce circles at roughly the known rate of about 9%", () => {
-  const runs = simulate(seededRandom(2026), 3000, 101, "random");
+  const runs = simulate(2026, 3000, 101, "random");
   const rate = runs.filter(r => r.outcome === "circle").length / runs.length;
   assert.ok(rate > 0.06 && rate < 0.12, `circle rate ${rate}`);
 });
 
 test("classes on a spectrum never produce a circle", () => {
-  const runs = simulate(seededRandom(11), 2000, 101, "spectrum");
+  const runs = simulate(11, 2000, 101, "spectrum");
   assert.equal(runs.filter(r => r.outcome === "circle").length, 0);
   assert.ok(runs.every(r => r.headToHead !== null));
 });
 
-test("every AI student has a probability for each of the six orders", () => {
+test("every AI student has a name, a ranking and a short reason", () => {
   assert.ok(aiStudentPool.length > 0);
   for (const student of aiStudentPool) {
-    assert.equal(student.p.length, 6);
-    assert.ok(Math.abs(student.p.reduce((a, b) => a + b, 0) - 1) < 0.01, student.profile);
+    assert.ok(student.name && student.profile, student.profile);
+    assert.ok(Number.isInteger(student.order) && student.order >= 0 && student.order < orders.length, student.profile);
+    assert.ok(student.reason.trim() && student.reason.split(/\s+/).length <= 25, student.reason);
   }
 });
 
-test("an AI class repeats with the same seed and records who cast each ballot", () => {
-  const a = generateClass(seededRandom(3), 101, "ai"), b = generateClass(seededRandom(3), 101, "ai");
-  assert.deepEqual(a, b);
-  assert.equal(a.voters?.length, 101);
+test("an AI school repeats with the same seed and keeps each profile's generated ballot", () => {
+  assert.deepEqual(makeSchool(3, 101, "ai"), makeSchool(3, 101, "ai"));
+  const school = makeSchool(3, 1000, "ai");
+  for (const student of school.students) assert.equal(student.order, aiStudentPool[student.student!].order);
+});
+
+test("AI schools at the pool size can have different ballot totals", () => {
+  const profiles = new Set(aiStudentPool.map(student => student.order));
+  assert.ok(profiles.size > 1);
+  const schools = Array.from({ length: 10 }, (_, seed) => makeSchool(seed, aiStudentPool.length, "ai"));
+  assert.ok(new Set(schools.map(school => JSON.stringify(school.groups))).size > 1);
 });
 
 test("a tie under any method is kept apart from a changed winner", () => {
@@ -89,8 +97,8 @@ test("working keeps a last-place tie distinct from an elimination", () => {
 });
 
 test("all displayed arithmetic and transfers match seeded school results", () => {
-  for (const model of ["random", "spectrum"] as const) {
-    for (const election of simulate(seededRandom(23), 100, 487, model)) {
+  for (const model of ["random", "spectrum", "ai"] as const) {
+    for (const election of simulate(23, 100, 487, model)) {
       const working = explainElection(election.groups);
       assert.deepEqual(working.firstChoices.winners, election.winners.plurality);
       assert.deepEqual(working.runoff.winners, election.winners.runoff);
@@ -106,7 +114,7 @@ test("all displayed arithmetic and transfers match seeded school results", () =>
 });
 
 test("a smaller playground school is the start of a bigger one", () => {
-  for (const model of ["random", "spectrum"] as const) {
+  for (const model of ["random", "spectrum", "ai"] as const) {
     const big = makeSchool(9, 400, model), small = makeSchool(9, 150, model);
     assert.deepEqual(small.students, big.students.slice(0, 150));
     assert.equal(small.groups.reduce((sum, group) => sum + group.count, 0), 150);

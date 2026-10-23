@@ -42,6 +42,14 @@
 .pg-handle-stem { stroke: var(--muted-foreground); stroke-width: 1; opacity: .35; }
 .pg-handle-letter { fill: #1d2433; font-size: 12px; font-weight: 700; pointer-events: none; }
 .pg-handle-name { fill: var(--foreground); font-size: 13px; font-weight: 600; pointer-events: none; }
+.pg-dot[data-picked="true"] { stroke: var(--foreground); stroke-width: 2.5; }
+.pg-picture .pg-dot { cursor: default; }
+.pg-student { display: grid; gap: 4px; margin: 8px 0 6px; padding: 10px 14px; border-radius: 10px; background: var(--muted); animation: pg-open 220ms ease-out both; }
+.pg-student figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.pg-student figcaption strong { font-size: 15px; font-weight: 600; }
+.pg-profile { font-size: 12px; color: var(--muted-foreground); }
+.pg-student blockquote { margin: 0; font-size: 14px; line-height: 1.4; }
+.pg-student .pg-order { font-size: 13px; }
 .pg-axis { display: flex; align-items: baseline; justify-content: space-between; margin-top: 4px; font-size: 12px; color: var(--muted-foreground); }
 
 /* Ballots list */

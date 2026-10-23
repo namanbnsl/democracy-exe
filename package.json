@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "node --import tsx --test --test-isolation=none src/lib/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "students": "node --env-file=.env.local --import tsx scripts/generate-students.ts"
+    "students": "node --import tsx scripts/generate-students.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

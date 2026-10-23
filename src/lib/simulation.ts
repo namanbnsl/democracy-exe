@@ -3,8 +3,8 @@ import aiStudents from "./ai-students.json";
 
 // "random": every student picks one of the six orders at random.
 // "spectrum": students and candidates sit on a line; students prefer whoever is closest.
-// "ai": students come from a pool where Clef read each made-up profile and the candidate cards
-// and gave a probability for each of the six orders (see scripts/generate-students.ts).
+// "ai": students come from a pool where an LLM was given each made-up student and the candidate cards,
+// and said how that student would rank them and why (see scripts/generate-students.ts).
 export type VoterModel = "random" | "spectrum" | "ai";
 export type Outcome = "agree" | "disagree" | "circle";
 export type SimulatedElection = {
@@ -31,46 +31,9 @@ export function seededRandom(seed: number) {
   };
 }
 
-export const aiStudentPool: { profile: string; p: number[] }[] = aiStudents.students;
-
-// Positions (0 to 1) are only filled in for the spectrum model; voters only for the ai model.
-export type AiVoter = { student: number; order: number };
-export type ClassDetail = { groups: BallotGroup[]; spots?: Record<CandidateId, number>; students?: number[]; voters?: AiVoter[] };
-
-function pickOrder(p: number[], roll: number) {
-  let sum = 0;
-  for (let i = 0; i < p.length; i++) if (roll < (sum += p[i])) return i;
-  return p.length - 1;
-}
-
-export function generateClass(random: () => number, voters: number, model: VoterModel): ClassDetail {
-  if (!Number.isSafeInteger(voters) || voters < 1) throw new Error("A class needs at least one voter.");
-  if (model === "ai" && !aiStudentPool.length) throw new Error("No AI students yet. Run npm run students.");
-  const counts = orders.map(() => 0);
-  const spots = { A: random(), B: random(), C: random() };
-  const students: number[] = [];
-  const picked: AiVoter[] = [];
-  for (let i = 0; i < voters; i++) {
-    if (model === "random") counts[Math.floor(random() * orders.length)]++;
-    else if (model === "ai") {
-      const student = Math.floor(random() * aiStudentPool.length);
-      const order = pickOrder(aiStudentPool[student].p, random());
-      counts[order]++;
-      picked.push({ student, order });
-    } else {
-      const me = random();
-      students.push(me);
-      const ranking = [...candidateIds].sort((x, y) => Math.abs(spots[x] - me) - Math.abs(spots[y] - me));
-      counts[orders.findIndex(order => order.join() === ranking.join())]++;
-    }
-  }
-  const groups = orders.map((ranking, i) => ({ count: counts[i], ranking })).filter(group => group.count > 0);
-  return model === "spectrum" ? { groups, spots, students } : model === "ai" ? { groups, voters: picked } : { groups };
-}
-
-export function randomClass(random: () => number, voters: number, model: VoterModel): BallotGroup[] {
-  return generateClass(random, voters, model).groups;
-}
+// `order` indexes `orders`; `reason` is why the student put their first choice first.
+export type AiStudent = { name: string; profile: string; order: number; reason: string };
+export const aiStudentPool: AiStudent[] = aiStudents.students;
 
 export function judge(groups: BallotGroup[]): SimulatedElection {
   const winners = { plurality: plurality(groups).winners, runoff: runoff(groups).winners, borda: positional(groups).winners };
@@ -81,8 +44,9 @@ export function judge(groups: BallotGroup[]): SimulatedElection {
   return { groups, outcome, winners, tie, sameWinner: !tie && picks.size === 1, headToHead: head.length === 1 ? head[0] : null };
 }
 
-export function simulate(random: () => number, elections: number, voters: number, model: VoterModel): SimulatedElection[] {
-  return Array.from({ length: elections }, () => judge(randomClass(random, voters, model)));
+// Schools seed, seed + 1, ... counted one after another, as the 1,000-school view does.
+export function simulate(seed: number, elections: number, voters: number, model: VoterModel): SimulatedElection[] {
+  return Array.from({ length: elections }, (_, i) => judge(makeSchool(seed + i, voters, model).groups));
 }
 
 // Keep the visible working tied to the same counters that decide the winners.
@@ -101,7 +65,9 @@ export function explainElection(groups: BallotGroup[]) {
 // One school for the playground. The same seed always gives the same students, and a smaller
 // school is the first part of a bigger one, so dragging the size slider only adds or removes students.
 // `spots` overrides where the candidates stand on the line.
-export type SchoolStudent = { order: number; position?: number };
+// AI profiles are sampled independently from the pool. Sampling with replacement keeps
+// schools varied even when their size approaches or exceeds the number of profiles.
+export type SchoolStudent = { order: number; position?: number; student?: number };
 export type School = { groups: BallotGroup[]; students: SchoolStudent[]; spots?: Record<CandidateId, number> };
 
 export function rankFrom(spots: Record<CandidateId, number>, position: number) {
@@ -109,7 +75,9 @@ export function rankFrom(spots: Record<CandidateId, number>, position: number) {
   return orders.findIndex(order => order.join() === ranking.join());
 }
 
-export function makeSchool(seed: number, voters: number, model: "random" | "spectrum", spots?: Record<CandidateId, number>): School {
+export function makeSchool(seed: number, voters: number, model: VoterModel, spots?: Record<CandidateId, number>): School {
+  if (!Number.isSafeInteger(voters) || voters < 1) throw new Error("A school needs at least one voter.");
+  if (model === "ai" && !aiStudentPool.length) throw new Error("No AI students yet. Run npm run students.");
   const random = seededRandom(seed);
   // Keep candidates apart so their names stay readable on the line.
   const drawn = { A: .08 + random() * .84, B: .08 + random() * .84, C: .08 + random() * .84 };
@@ -117,7 +85,10 @@ export function makeSchool(seed: number, voters: number, model: "random" | "spec
   const students: SchoolStudent[] = [];
   for (let i = 0; i < voters; i++) {
     if (model === "random") students.push({ order: Math.floor(random() * orders.length) });
-    else { const position = random(); students.push({ order: rankFrom(stand, position), position }); }
+    else if (model === "ai") {
+      const student = Math.floor(random() * aiStudentPool.length);
+      students.push({ order: aiStudentPool[student].order, student });
+    } else { const position = random(); students.push({ order: rankFrom(stand, position), position }); }
   }
   const counts = orders.map(() => 0);
   for (const student of students) counts[student.order]++;
