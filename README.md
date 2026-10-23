@@ -22,15 +22,13 @@ Fonts and illustrations are local. Once installed and built, the experience runs
 
 ## Experience
 
-Visitors choose a fictional prefect with two simple commitments: fair participation, student representation, or helping younger students. The first-choice count elects Aarav; removing Kabir then elects Meera without changing the prepared preferences. Visitors who chose Kabir explicitly name a backup before their vote transfers. The first lesson records no invented preferences and preserves all 101 votes.
+Visitors choose a School Prefect from three fictional Grade 12 candidates, each with a role, slogan, strength, weakness and three promises. 487 students from across the school have already voted, and every possible ranking has some voters. On first choices Aarav wins with only 38%. When Kabir drops out, a split bar shows where his votes go: most go to Meera, some to Aarav, and Meera wins. Visitors who chose Kabir name their own backup first.
 
-After discovering the spoiler effect, visitors choose a first preference and a backup, preview their complete ballot, and count it using instant runoff. Borda then shows another way to use the same ranking. The initial vote is kept as a snapshot so later ranking edits do not rewrite the first lesson.
+Visitors then rank their top two and count the same ballots with points (Borda). The simulation asks one question: does the way we count change who wins? It makes up a school of 487 students (random, or standing on a line from sports to studies), counts it three ways, then repeats this 1,000 times and reports how often the winner changed. Visitors finish by choosing how their school should count. The playground remains optional.
 
-The guided flow continues through all five Arrow conditions, each with a small example and an optional question to discuss. The instant-runoff rounds are shown alongside the rule written as an algorithm, with the lines each round runs highlighted. A simulation chapter then runs 1,000 random elections of 101 students with a seeded Monte Carlo generator, under two voter models (uniformly random orders, or students and candidates on a one-dimensional spectrum). Visitors first generate and inspect a single pretend class step by step (including a picture of the spectrum model), then watch the computer repeat those steps. It counts how often there is no head-to-head winner and how often plurality, instant runoff and Borda disagree, and lets visitors inspect any single election. Score and approval voting live in the playground. Visitors finish by choosing what their voting rule should protect. The playground remains optional.
+Arrow's impossibility theorem is covered on the exhibition board, not in the app.
 
-Each screen is a short title and a visual, with almost no text, because presenters explain it out loud. Each candidate card shows a portrait, the candidate’s name, one quality and three short policies. It contains no presenter script, visit timings, or decorative status badges.
-
-The playground supports custom positional points, editable voter-group counts, explicit ratings, approval ballots, and a five-student example of strategic Borda reporting. The reset control starts a fresh session; refreshing also resets the experience. Playground edits are local previews and reset when leaving the playground.
+Each screen is a short title and a visual, with almost no text, because presenters explain it out loud.
 
 ## Verify
 
@@ -41,12 +39,13 @@ npm run lint
 npm run build
 ```
 
-The 28 tests cover verified election fixtures, conservation of transferred ballots, all six possible visitor rankings, ties, strategic reporting, score and approval totals, invalid inputs, the guided majority-cycle, independence, and rating-gap examples, and the simulation: a repeatable seeded generator, the known ~9% cycle rate for random voters, and no cycles on a spectrum. Browser verification is recorded in `docs/verification.md`.
+The tests cover verified election fixtures, conservation of transferred ballots, all six possible visitor rankings, ties, strategic reporting, score and approval totals, invalid inputs, a three-student majority cycle, and the simulation: a repeatable seeded generator, the known ~9% cycle rate for random voters, no cycles on a spectrum, and ties kept apart from changed winners. Browser verification is recorded in `docs/verification.md`.
 
 ## Structure
 
 - `src/lib/elections.ts`: validated, deterministic voting engine and prepared data.
-- `src/lib/voting-lessons.ts`: small, explicit profiles for the guided fairness and rating examples.
+- `src/lib/voting-lessons.ts`: a three-student majority cycle used by the tests.
+- `src/lib/simulation.ts` and `src/components/simulation-lab.tsx`: the 1,000-election simulation.
 - `src/components/election-experience.tsx`: guided visitor experience.
 - `src/components/playground.tsx`: editable experiments.
 - `src/components/election-visuals.tsx`: counts, ballots, and campaign details.
@@ -58,4 +57,4 @@ The majority cycle illustrates an aggregation problem; it is not presented as a 
 
 ## School context
 
-The school setting references NPS Koramangala’s [Student Council and School Prefect](https://npskrm.com/investiture-2026-2027.html), checked on 2026-10-10. Khoj refers to this exhibition project. The three candidates, their proposed campaigns, and every ballot profile are invented for teaching; they do not represent actual students, school policy, polling, or election results. Numerical profiles are intentionally preserved to demonstrate the different voting outcomes.
+The school setting references NPS Koramangala’s [Student Council and School Prefect](https://npskrm.com/investiture-2026-2027.html), checked on 2026-10-10. Khoj refers to this exhibition project. The three candidates, their campaigns, and every ballot profile are invented for teaching; they do not represent actual students, school policy, polling, or election results. Numerical profiles are intentionally preserved to demonstrate the different voting outcomes.

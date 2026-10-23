@@ -1,17 +1,23 @@
 import { candidateIds, condorcet, plurality, positional, runoff, type BallotGroup, type CandidateId } from "./elections";
+import aiStudents from "./ai-students.json";
 
 // "random": every student picks one of the six orders at random.
 // "spectrum": students and candidates sit on a line; students prefer whoever is closest.
-export type VoterModel = "random" | "spectrum";
+// "ai": students come from a pool where Clef read each made-up profile and the candidate cards
+// and gave a probability for each of the six orders (see scripts/generate-students.ts).
+export type VoterModel = "random" | "spectrum" | "ai";
 export type Outcome = "agree" | "disagree" | "circle";
 export type SimulatedElection = {
   groups: BallotGroup[];
   outcome: Outcome;
   winners: { plurality: CandidateId[]; runoff: CandidateId[]; borda: CandidateId[] };
+  // tie: some method ends in a tie. sameWinner: all three pick the same single winner.
+  tie: boolean;
+  sameWinner: boolean;
   headToHead: CandidateId | null;
 };
 
-const orders: CandidateId[][] = [["A", "B", "C"], ["A", "C", "B"], ["B", "A", "C"], ["B", "C", "A"], ["C", "A", "B"], ["C", "B", "A"]];
+export const orders: CandidateId[][] = [["A", "B", "C"], ["A", "C", "B"], ["B", "A", "C"], ["B", "C", "A"], ["C", "A", "B"], ["C", "B", "A"]];
 
 // Mulberry32: a tiny seeded generator, so the same seed always replays the same run.
 export function seededRandom(seed: number) {
@@ -25,17 +31,33 @@ export function seededRandom(seed: number) {
   };
 }
 
-// Positions (0 to 1) are only filled in for the spectrum model.
-export type ClassDetail = { groups: BallotGroup[]; spots?: Record<CandidateId, number>; students?: number[] };
+export const aiStudentPool: { profile: string; p: number[] }[] = aiStudents.students;
+
+// Positions (0 to 1) are only filled in for the spectrum model; voters only for the ai model.
+export type AiVoter = { student: number; order: number };
+export type ClassDetail = { groups: BallotGroup[]; spots?: Record<CandidateId, number>; students?: number[]; voters?: AiVoter[] };
+
+function pickOrder(p: number[], roll: number) {
+  let sum = 0;
+  for (let i = 0; i < p.length; i++) if (roll < (sum += p[i])) return i;
+  return p.length - 1;
+}
 
 export function generateClass(random: () => number, voters: number, model: VoterModel): ClassDetail {
   if (!Number.isSafeInteger(voters) || voters < 1) throw new Error("A class needs at least one voter.");
+  if (model === "ai" && !aiStudentPool.length) throw new Error("No AI students yet. Run npm run students.");
   const counts = orders.map(() => 0);
   const spots = { A: random(), B: random(), C: random() };
   const students: number[] = [];
+  const picked: AiVoter[] = [];
   for (let i = 0; i < voters; i++) {
     if (model === "random") counts[Math.floor(random() * orders.length)]++;
-    else {
+    else if (model === "ai") {
+      const student = Math.floor(random() * aiStudentPool.length);
+      const order = pickOrder(aiStudentPool[student].p, random());
+      counts[order]++;
+      picked.push({ student, order });
+    } else {
       const me = random();
       students.push(me);
       const ranking = [...candidateIds].sort((x, y) => Math.abs(spots[x] - me) - Math.abs(spots[y] - me));
@@ -43,7 +65,7 @@ export function generateClass(random: () => number, voters: number, model: Voter
     }
   }
   const groups = orders.map((ranking, i) => ({ count: counts[i], ranking })).filter(group => group.count > 0);
-  return model === "spectrum" ? { groups, spots, students } : { groups };
+  return model === "spectrum" ? { groups, spots, students } : model === "ai" ? { groups, voters: picked } : { groups };
 }
 
 export function randomClass(random: () => number, voters: number, model: VoterModel): BallotGroup[] {
@@ -55,7 +77,8 @@ export function judge(groups: BallotGroup[]): SimulatedElection {
   const head = condorcet(groups);
   const picks = new Set(Object.values(winners).map(w => w.length === 1 ? w[0] : "tie"));
   const outcome: Outcome = head.length === 0 ? "circle" : picks.size > 1 ? "disagree" : "agree";
-  return { groups, outcome, winners, headToHead: head.length === 1 ? head[0] : null };
+  const tie = picks.has("tie");
+  return { groups, outcome, winners, tie, sameWinner: !tie && picks.size === 1, headToHead: head.length === 1 ? head[0] : null };
 }
 
 export function simulate(random: () => number, elections: number, voters: number, model: VoterModel): SimulatedElection[] {

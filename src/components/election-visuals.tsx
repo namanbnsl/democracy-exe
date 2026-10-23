@@ -37,6 +37,17 @@ export function CountChart({ result, unit = "votes", eligible = [...candidateIds
   </div>;
 }
 
+// Kabir's supporters, split by who they ranked next. Each segment is coloured by where those votes went.
+export function KabirSplit({ split }: { split: Counts }) {
+  const total = split.A + split.B;
+  const goes = (["B", "A"] as CandidateId[]).filter(id => split[id] > 0);
+  return <figure className="kabir-split" aria-label={`Kabir’s ${total} votes: ${split.B} went to Meera, ${split.A} went to Aarav`}>
+    <figcaption><CandidateName id="C" portrait /><span>Kabir’s {total} votes had to go somewhere</span></figcaption>
+    <div className="split-bar">{goes.map(id => <span key={id} data-candidate={id} style={{ width: `${split[id] / total * 100}%` }}>{Math.round(split[id] / total * 100)}%</span>)}</div>
+    <div className="split-legend">{goes.map(id => <p key={id} data-candidate={id}><span className="candidate-dot" data-candidate={id} /><strong>{split[id]}</strong> ranked {nameOf(id)} next</p>)}</div>
+  </figure>;
+}
+
 export function ResultCard({ result, method, description, unit = "votes", children }: { result: Result; method: string; description: string; unit?: string; children?: React.ReactNode }) {
   const outcome = result.winners.length === 1 ? `${nameOf(result.winners[0])} wins` : result.winners.length > 1 ? `${result.winners.map(nameOf).join(" & ")} tie` : "It’s a tie";
   return <Card><CardHeader><CardDescription>{method}</CardDescription><CardTitle>{outcome}</CardTitle></CardHeader><CardContent><CountChart result={result} unit={unit} compact /></CardContent><CardFooter><p className="fine-print">{description}</p>{children}</CardFooter></Card>;

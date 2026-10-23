@@ -1,0 +1,5505 @@
+{
+ "model": "clef",
+ "students": [
+  {
+   "profile": "Class 9 · new this year · draws and paints · wants to be listened to",
+   "p": [
+    0.0639,
+    0.0337,
+    0.2533,
+    0.3547,
+    0.1195,
+    0.1749
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · loves chess · wants to be listened to",
+   "p": [
+    0.0964,
+    0.0426,
+    0.5182,
+    0.2443,
+    0.0404,
+    0.0581
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · finds it hard to speak up",
+   "p": [
+    0.1043,
+    0.1071,
+    0.2176,
+    0.1807,
+    0.1953,
+    0.195
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays cricket · wants things to get done",
+   "p": [
+    0.2442,
+    0.2398,
+    0.083,
+    0.0587,
+    0.2294,
+    0.1449
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · loves chess · struggles with homework",
+   "p": [
+    0.06,
+    0.1275,
+    0.0416,
+    0.076,
+    0.3364,
+    0.3585
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays cricket · struggles with homework",
+   "p": [
+    0.1251,
+    0.2115,
+    0.0508,
+    0.05,
+    0.4126,
+    0.15
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · loves organising things",
+   "p": [
+    0.1959,
+    0.2181,
+    0.124,
+    0.0666,
+    0.2541,
+    0.1413
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · never makes the team",
+   "p": [
+    0.3715,
+    0.3119,
+    0.1147,
+    0.0462,
+    0.1113,
+    0.0444
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · draws and paints · has lots of friends",
+   "p": [
+    0.0641,
+    0.0653,
+    0.0481,
+    0.0511,
+    0.5476,
+    0.2238
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · never makes the team",
+   "p": [
+    0.0745,
+    0.2326,
+    0.0403,
+    0.0748,
+    0.3434,
+    0.2344
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays football · worries about making friends",
+   "p": [
+    0.0584,
+    0.0787,
+    0.0661,
+    0.0783,
+    0.4367,
+    0.2818
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays football · has lots of friends",
+   "p": [
+    0.1805,
+    0.2236,
+    0.0971,
+    0.0751,
+    0.2395,
+    0.1842
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · always reading · cares most about fairness",
+   "p": [
+    0.5102,
+    0.2442,
+    0.1291,
+    0.0452,
+    0.0431,
+    0.0282
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · never makes the team",
+   "p": [
+    0.1259,
+    0.3048,
+    0.0503,
+    0.0375,
+    0.3542,
+    0.1273
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · draws and paints · often left out of teams",
+   "p": [
+    0.2141,
+    0.3091,
+    0.0993,
+    0.0832,
+    0.1849,
+    0.1094
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · never makes the team",
+   "p": [
+    0.3191,
+    0.2919,
+    0.1192,
+    0.0481,
+    0.1546,
+    0.0671
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · cares most about fairness",
+   "p": [
+    0.4598,
+    0.3056,
+    0.1037,
+    0.0428,
+    0.057,
+    0.0311
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · finds it hard to speak up",
+   "p": [
+    0.1032,
+    0.0692,
+    0.3661,
+    0.2991,
+    0.0699,
+    0.0925
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · on the debate team · wants things to get done",
+   "p": [
+    0.1556,
+    0.0757,
+    0.2941,
+    0.1036,
+    0.1934,
+    0.1776
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays cricket · often left out of teams",
+   "p": [
+    0.4132,
+    0.3415,
+    0.077,
+    0.0388,
+    0.0835,
+    0.046
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · cares most about fairness",
+   "p": [
+    0.5747,
+    0.2265,
+    0.0853,
+    0.0334,
+    0.0496,
+    0.0305
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · struggles with homework",
+   "p": [
+    0.0391,
+    0.0367,
+    0.0498,
+    0.093,
+    0.3779,
+    0.4035
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · draws and paints · never makes the team",
+   "p": [
+    0.2852,
+    0.2397,
+    0.1595,
+    0.1048,
+    0.1091,
+    0.1017
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · always reading · finds it hard to speak up",
+   "p": [
+    0.0946,
+    0.0759,
+    0.136,
+    0.2205,
+    0.1469,
+    0.3261
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · on the debate team · wants to be listened to",
+   "p": [
+    0.0931,
+    0.1338,
+    0.1613,
+    0.1966,
+    0.1715,
+    0.2437
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · often left out of teams",
+   "p": [
+    0.2212,
+    0.2785,
+    0.1258,
+    0.0864,
+    0.1823,
+    0.1058
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · loves organising things",
+   "p": [
+    0.4583,
+    0.2344,
+    0.1435,
+    0.051,
+    0.0742,
+    0.0386
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · on the debate team · often left out of teams",
+   "p": [
+    0.3413,
+    0.2811,
+    0.1446,
+    0.0652,
+    0.1073,
+    0.0605
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays football · often left out of teams",
+   "p": [
+    0.361,
+    0.2827,
+    0.13,
+    0.0635,
+    0.0956,
+    0.0672
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · finds it hard to speak up",
+   "p": [
+    0.0569,
+    0.2114,
+    0.0471,
+    0.0666,
+    0.4191,
+    0.1989
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · struggles with homework",
+   "p": [
+    0.049,
+    0.0633,
+    0.0565,
+    0.141,
+    0.2681,
+    0.4221
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays cricket · cares most about fairness",
+   "p": [
+    0.4414,
+    0.3623,
+    0.0787,
+    0.0349,
+    0.0539,
+    0.0288
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · finds it hard to speak up",
+   "p": [
+    0.0743,
+    0.075,
+    0.1146,
+    0.0935,
+    0.3185,
+    0.3241
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · draws and paints · wants things to get done",
+   "p": [
+    0.1184,
+    0.1144,
+    0.1081,
+    0.1067,
+    0.2629,
+    0.2895
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · dances · finds it hard to speak up",
+   "p": [
+    0.1391,
+    0.1526,
+    0.1493,
+    0.1052,
+    0.2972,
+    0.1566
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · worries about making friends",
+   "p": [
+    0.0367,
+    0.0747,
+    0.0503,
+    0.1145,
+    0.4238,
+    0.3
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · dances · struggles with homework",
+   "p": [
+    0.0413,
+    0.1087,
+    0.031,
+    0.0561,
+    0.4696,
+    0.2933
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · loves chess · cares most about fairness",
+   "p": [
+    0.4289,
+    0.3188,
+    0.086,
+    0.0287,
+    0.0978,
+    0.0398
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · wants things to get done",
+   "p": [
+    0.1299,
+    0.0792,
+    0.2165,
+    0.1377,
+    0.2021,
+    0.2346
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · learning to code · loves organising things",
+   "p": [
+    0.4068,
+    0.141,
+    0.3087,
+    0.058,
+    0.0526,
+    0.0329
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · always reading · wants to be listened to",
+   "p": [
+    0.1008,
+    0.063,
+    0.4376,
+    0.2786,
+    0.0603,
+    0.0597
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays cricket · cares most about fairness",
+   "p": [
+    0.5637,
+    0.2221,
+    0.1096,
+    0.0329,
+    0.0465,
+    0.0252
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · draws and paints · worries about making friends",
+   "p": [
+    0.051,
+    0.0602,
+    0.0514,
+    0.1191,
+    0.2506,
+    0.4677
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · wants things to get done",
+   "p": [
+    0.1193,
+    0.0592,
+    0.1976,
+    0.1007,
+    0.3097,
+    0.2135
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays cricket · worries about making friends",
+   "p": [
+    0.0444,
+    0.2433,
+    0.0235,
+    0.0224,
+    0.5351,
+    0.1313
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · draws and paints · struggles with homework",
+   "p": [
+    0.0961,
+    0.0781,
+    0.1364,
+    0.194,
+    0.2352,
+    0.2602
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · on the debate team · often left out of teams",
+   "p": [
+    0.165,
+    0.2617,
+    0.112,
+    0.0872,
+    0.252,
+    0.1221
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · learning to code · finds it hard to speak up",
+   "p": [
+    0.1032,
+    0.0469,
+    0.3542,
+    0.2416,
+    0.0975,
+    0.1566
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · has lots of friends",
+   "p": [
+    0.1091,
+    0.1,
+    0.1048,
+    0.1135,
+    0.3564,
+    0.2162
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · struggles with homework",
+   "p": [
+    0.0915,
+    0.1292,
+    0.047,
+    0.0682,
+    0.4329,
+    0.2312
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · has lots of friends",
+   "p": [
+    0.0613,
+    0.1098,
+    0.0577,
+    0.0576,
+    0.4184,
+    0.2952
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · loves chess · cares most about fairness",
+   "p": [
+    0.3688,
+    0.372,
+    0.0618,
+    0.03,
+    0.1265,
+    0.0409
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · loves chess · struggles with homework",
+   "p": [
+    0.1139,
+    0.1458,
+    0.1129,
+    0.1317,
+    0.2432,
+    0.2525
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · often left out of teams",
+   "p": [
+    0.1195,
+    0.3446,
+    0.0422,
+    0.0306,
+    0.4039,
+    0.0592
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · worries about making friends",
+   "p": [
+    0.065,
+    0.0646,
+    0.0433,
+    0.0693,
+    0.4618,
+    0.296
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · has lots of friends",
+   "p": [
+    0.0602,
+    0.091,
+    0.0516,
+    0.0735,
+    0.4373,
+    0.2864
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · loves organising things",
+   "p": [
+    0.3091,
+    0.2557,
+    0.1945,
+    0.0647,
+    0.1157,
+    0.0603
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · finds it hard to speak up",
+   "p": [
+    0.0934,
+    0.052,
+    0.2892,
+    0.2679,
+    0.1211,
+    0.1764
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · never makes the team",
+   "p": [
+    0.1579,
+    0.2461,
+    0.0866,
+    0.0559,
+    0.3268,
+    0.1267
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays cricket · loves organising things",
+   "p": [
+    0.3964,
+    0.3832,
+    0.0861,
+    0.0371,
+    0.0622,
+    0.035
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · cares most about fairness",
+   "p": [
+    0.54,
+    0.2316,
+    0.1114,
+    0.0312,
+    0.0538,
+    0.032
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · struggles with homework",
+   "p": [
+    0.0971,
+    0.1305,
+    0.0552,
+    0.0664,
+    0.4381,
+    0.2127
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · sings in the choir · loves organising things",
+   "p": [
+    0.3082,
+    0.1036,
+    0.3936,
+    0.1032,
+    0.0588,
+    0.0326
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · always reading · loves organising things",
+   "p": [
+    0.4927,
+    0.2356,
+    0.1297,
+    0.0396,
+    0.0618,
+    0.0406
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · learning to code · often left out of teams",
+   "p": [
+    0.2967,
+    0.3352,
+    0.0659,
+    0.0362,
+    0.1859,
+    0.0801
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · wants things to get done",
+   "p": [
+    0.4152,
+    0.2149,
+    0.1889,
+    0.0707,
+    0.0635,
+    0.0468
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · sings in the choir · struggles with homework",
+   "p": [
+    0.0609,
+    0.0877,
+    0.0518,
+    0.0899,
+    0.4124,
+    0.2973
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · often left out of teams",
+   "p": [
+    0.3155,
+    0.2917,
+    0.1242,
+    0.0874,
+    0.1139,
+    0.0673
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · on the debate team · finds it hard to speak up",
+   "p": [
+    0.0668,
+    0.1244,
+    0.0682,
+    0.095,
+    0.4186,
+    0.227
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · never makes the team",
+   "p": [
+    0.2161,
+    0.3329,
+    0.0533,
+    0.0299,
+    0.2533,
+    0.1145
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · cares most about fairness",
+   "p": [
+    0.5576,
+    0.1908,
+    0.1453,
+    0.0321,
+    0.0482,
+    0.026
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · wants things to get done",
+   "p": [
+    0.3005,
+    0.1128,
+    0.393,
+    0.0712,
+    0.0812,
+    0.0413
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · always reading · cares most about fairness",
+   "p": [
+    0.545,
+    0.1721,
+    0.1509,
+    0.0389,
+    0.0587,
+    0.0344
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · on the debate team · worries about making friends",
+   "p": [
+    0.0296,
+    0.0735,
+    0.0289,
+    0.0701,
+    0.4134,
+    0.3845
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · loves chess · wants to be listened to",
+   "p": [
+    0.0765,
+    0.0782,
+    0.2105,
+    0.2344,
+    0.1753,
+    0.2251
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · struggles with homework",
+   "p": [
+    0.0617,
+    0.1721,
+    0.0387,
+    0.0516,
+    0.3902,
+    0.2857
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · wants to be listened to",
+   "p": [
+    0.1211,
+    0.0723,
+    0.3874,
+    0.2074,
+    0.0757,
+    0.1361
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · has lots of friends",
+   "p": [
+    0.1114,
+    0.1191,
+    0.1101,
+    0.1156,
+    0.2853,
+    0.2585
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays football · wants to be listened to",
+   "p": [
+    0.0941,
+    0.1106,
+    0.1671,
+    0.3535,
+    0.1176,
+    0.1571
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · never makes the team",
+   "p": [
+    0.1712,
+    0.2954,
+    0.0919,
+    0.0858,
+    0.2219,
+    0.1338
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · sings in the choir · often left out of teams",
+   "p": [
+    0.113,
+    0.2126,
+    0.0591,
+    0.0865,
+    0.3292,
+    0.1996
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · never makes the team",
+   "p": [
+    0.0932,
+    0.2786,
+    0.07,
+    0.0653,
+    0.3436,
+    0.1493
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · always reading · wants to be listened to",
+   "p": [
+    0.064,
+    0.0553,
+    0.1991,
+    0.2328,
+    0.1739,
+    0.2749
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · wants things to get done",
+   "p": [
+    0.3412,
+    0.1906,
+    0.2161,
+    0.0751,
+    0.0969,
+    0.0801
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.0975,
+    0.0559,
+    0.3031,
+    0.2193,
+    0.1512,
+    0.173
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · on the debate team · wants to be listened to",
+   "p": [
+    0.1056,
+    0.0363,
+    0.6007,
+    0.198,
+    0.0313,
+    0.0281
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · struggles with homework",
+   "p": [
+    0.1082,
+    0.2214,
+    0.0568,
+    0.0499,
+    0.3663,
+    0.1974
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · dances · wants to be listened to",
+   "p": [
+    0.0699,
+    0.0349,
+    0.3973,
+    0.3449,
+    0.0745,
+    0.0785
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · finds it hard to speak up",
+   "p": [
+    0.1237,
+    0.0456,
+    0.2993,
+    0.1969,
+    0.1571,
+    0.1774
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · loves organising things",
+   "p": [
+    0.2252,
+    0.2632,
+    0.0855,
+    0.0581,
+    0.254,
+    0.114
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · loves chess · never makes the team",
+   "p": [
+    0.3764,
+    0.2688,
+    0.1146,
+    0.0671,
+    0.1191,
+    0.054
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · dances · cares most about fairness",
+   "p": [
+    0.5486,
+    0.205,
+    0.1199,
+    0.0364,
+    0.0579,
+    0.0322
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · cares most about fairness",
+   "p": [
+    0.61,
+    0.1627,
+    0.1053,
+    0.038,
+    0.0466,
+    0.0374
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · sings in the choir · loves organising things",
+   "p": [
+    0.268,
+    0.0884,
+    0.3685,
+    0.1189,
+    0.1055,
+    0.0507
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays cricket · never makes the team",
+   "p": [
+    0.2793,
+    0.4279,
+    0.0554,
+    0.0393,
+    0.14,
+    0.0581
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · worries about making friends",
+   "p": [
+    0.0365,
+    0.1116,
+    0.0268,
+    0.0755,
+    0.4238,
+    0.3258
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · loves chess · never makes the team",
+   "p": [
+    0.1808,
+    0.2666,
+    0.094,
+    0.0709,
+    0.2522,
+    0.1355
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · wants to be listened to",
+   "p": [
+    0.0749,
+    0.0456,
+    0.3531,
+    0.3818,
+    0.0537,
+    0.0909
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · on the debate team · finds it hard to speak up",
+   "p": [
+    0.1078,
+    0.0606,
+    0.3551,
+    0.2006,
+    0.1095,
+    0.1664
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · in the science club · wants to be listened to",
+   "p": [
+    0.1045,
+    0.0487,
+    0.5437,
+    0.2214,
+    0.0349,
+    0.0468
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays football · has lots of friends",
+   "p": [
+    0.2834,
+    0.3985,
+    0.0746,
+    0.0325,
+    0.1575,
+    0.0535
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · draws and paints · struggles with homework",
+   "p": [
+    0.0677,
+    0.0707,
+    0.0633,
+    0.0837,
+    0.3887,
+    0.3259
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays cricket · cares most about fairness",
+   "p": [
+    0.5526,
+    0.2664,
+    0.0877,
+    0.0267,
+    0.0425,
+    0.0241
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · never makes the team",
+   "p": [
+    0.2118,
+    0.2455,
+    0.1449,
+    0.1062,
+    0.1641,
+    0.1275
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · cares most about fairness",
+   "p": [
+    0.3916,
+    0.4129,
+    0.0609,
+    0.0286,
+    0.0724,
+    0.0336
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays football · cares most about fairness",
+   "p": [
+    0.59,
+    0.2175,
+    0.0877,
+    0.0302,
+    0.0492,
+    0.0254
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · struggles with homework",
+   "p": [
+    0.0605,
+    0.0492,
+    0.0531,
+    0.1088,
+    0.3749,
+    0.3535
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · loves chess · struggles with homework",
+   "p": [
+    0.076,
+    0.1204,
+    0.0448,
+    0.0798,
+    0.3251,
+    0.3539
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · on the debate team · wants things to get done",
+   "p": [
+    0.2071,
+    0.0828,
+    0.2931,
+    0.0965,
+    0.1339,
+    0.1866
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · learning to code · wants to be listened to",
+   "p": [
+    0.1179,
+    0.0639,
+    0.4084,
+    0.2704,
+    0.0796,
+    0.0598
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · learning to code · wants things to get done",
+   "p": [
+    0.2423,
+    0.0883,
+    0.4023,
+    0.1121,
+    0.082,
+    0.073
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · always reading · has lots of friends",
+   "p": [
+    0.2488,
+    0.2173,
+    0.1786,
+    0.1044,
+    0.1416,
+    0.1093
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays football · cares most about fairness",
+   "p": [
+    0.401,
+    0.3408,
+    0.0531,
+    0.0303,
+    0.124,
+    0.0508
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · sings in the choir · loves organising things",
+   "p": [
+    0.126,
+    0.1245,
+    0.1463,
+    0.1057,
+    0.3048,
+    0.1927
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · often left out of teams",
+   "p": [
+    0.3039,
+    0.215,
+    0.1546,
+    0.0724,
+    0.1437,
+    0.1104
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · learning to code · often left out of teams",
+   "p": [
+    0.2526,
+    0.3436,
+    0.0712,
+    0.0453,
+    0.2077,
+    0.0796
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · wants to be listened to",
+   "p": [
+    0.056,
+    0.0242,
+    0.3701,
+    0.3391,
+    0.0596,
+    0.151
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · wants things to get done",
+   "p": [
+    0.1749,
+    0.1678,
+    0.1777,
+    0.0962,
+    0.1728,
+    0.2106
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · never makes the team",
+   "p": [
+    0.0965,
+    0.3258,
+    0.048,
+    0.0418,
+    0.3654,
+    0.1225
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · in the science club · wants to be listened to",
+   "p": [
+    0.0698,
+    0.0571,
+    0.2401,
+    0.3001,
+    0.1082,
+    0.2247
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · dances · cares most about fairness",
+   "p": [
+    0.5515,
+    0.2049,
+    0.1039,
+    0.0329,
+    0.07,
+    0.0368
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · loves organising things",
+   "p": [
+    0.192,
+    0.1604,
+    0.1839,
+    0.0905,
+    0.2336,
+    0.1396
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · wants to be listened to",
+   "p": [
+    0.0853,
+    0.0382,
+    0.5129,
+    0.2809,
+    0.0385,
+    0.0442
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · has lots of friends",
+   "p": [
+    0.0536,
+    0.0725,
+    0.0507,
+    0.0551,
+    0.4675,
+    0.3006
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · on the debate team · never makes the team",
+   "p": [
+    0.3049,
+    0.2177,
+    0.2135,
+    0.0912,
+    0.108,
+    0.0647
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · on the debate team · loves organising things",
+   "p": [
+    0.3513,
+    0.2842,
+    0.0871,
+    0.0433,
+    0.1625,
+    0.0716
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · often left out of teams",
+   "p": [
+    0.2096,
+    0.3289,
+    0.0681,
+    0.0395,
+    0.2573,
+    0.0966
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · sings in the choir · wants to be listened to",
+   "p": [
+    0.0853,
+    0.0412,
+    0.305,
+    0.4169,
+    0.0505,
+    0.1011
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · loves organising things",
+   "p": [
+    0.1808,
+    0.146,
+    0.1737,
+    0.0697,
+    0.2562,
+    0.1736
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · wants things to get done",
+   "p": [
+    0.1255,
+    0.0714,
+    0.27,
+    0.132,
+    0.2195,
+    0.1816
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · in the science club · loves organising things",
+   "p": [
+    0.2561,
+    0.359,
+    0.082,
+    0.0386,
+    0.1764,
+    0.0879
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · loves chess · loves organising things",
+   "p": [
+    0.4359,
+    0.2811,
+    0.0956,
+    0.0321,
+    0.1042,
+    0.0511
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · often left out of teams",
+   "p": [
+    0.2754,
+    0.3711,
+    0.0899,
+    0.046,
+    0.1568,
+    0.0608
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays football · wants things to get done",
+   "p": [
+    0.2218,
+    0.2064,
+    0.0984,
+    0.0736,
+    0.2276,
+    0.1722
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · never makes the team",
+   "p": [
+    0.462,
+    0.2831,
+    0.0877,
+    0.0489,
+    0.0655,
+    0.0528
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · in the science club · has lots of friends",
+   "p": [
+    0.1259,
+    0.1154,
+    0.1392,
+    0.091,
+    0.3072,
+    0.2213
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · dances · often left out of teams",
+   "p": [
+    0.0873,
+    0.3327,
+    0.0456,
+    0.0356,
+    0.3964,
+    0.1024
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · struggles with homework",
+   "p": [
+    0.1098,
+    0.0645,
+    0.1283,
+    0.128,
+    0.2538,
+    0.3156
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · struggles with homework",
+   "p": [
+    0.1277,
+    0.1639,
+    0.0621,
+    0.089,
+    0.3385,
+    0.2188
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · always reading · has lots of friends",
+   "p": [
+    0.07,
+    0.1264,
+    0.0651,
+    0.0703,
+    0.3754,
+    0.2928
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · struggles with homework",
+   "p": [
+    0.0582,
+    0.0605,
+    0.0551,
+    0.0921,
+    0.4115,
+    0.3226
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · cares most about fairness",
+   "p": [
+    0.3178,
+    0.3815,
+    0.0738,
+    0.0329,
+    0.1506,
+    0.0434
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · wants things to get done",
+   "p": [
+    0.2199,
+    0.1596,
+    0.1838,
+    0.0543,
+    0.2106,
+    0.1718
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · never makes the team",
+   "p": [
+    0.2589,
+    0.3799,
+    0.118,
+    0.0747,
+    0.0971,
+    0.0714
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · wants things to get done",
+   "p": [
+    0.1778,
+    0.1504,
+    0.2252,
+    0.096,
+    0.2066,
+    0.144
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · has lots of friends",
+   "p": [
+    0.0386,
+    0.0538,
+    0.0473,
+    0.0697,
+    0.5545,
+    0.2361
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · always reading · struggles with homework",
+   "p": [
+    0.0636,
+    0.0694,
+    0.0751,
+    0.1142,
+    0.3212,
+    0.3565
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · often left out of teams",
+   "p": [
+    0.3577,
+    0.2137,
+    0.1543,
+    0.0807,
+    0.1176,
+    0.076
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · has lots of friends",
+   "p": [
+    0.078,
+    0.1072,
+    0.0487,
+    0.0495,
+    0.508,
+    0.2086
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · has lots of friends",
+   "p": [
+    0.1603,
+    0.1371,
+    0.1423,
+    0.0924,
+    0.3066,
+    0.1613
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · learning to code · has lots of friends",
+   "p": [
+    0.1254,
+    0.0831,
+    0.1202,
+    0.0937,
+    0.3505,
+    0.2271
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · has lots of friends",
+   "p": [
+    0.0966,
+    0.1115,
+    0.1057,
+    0.125,
+    0.3419,
+    0.2193
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · loves organising things",
+   "p": [
+    0.4044,
+    0.1164,
+    0.3199,
+    0.0632,
+    0.0597,
+    0.0364
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · cares most about fairness",
+   "p": [
+    0.5038,
+    0.2701,
+    0.0674,
+    0.0285,
+    0.0876,
+    0.0426
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · has lots of friends",
+   "p": [
+    0.0818,
+    0.0891,
+    0.0618,
+    0.0529,
+    0.48,
+    0.2344
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · on the debate team · struggles with homework",
+   "p": [
+    0.1253,
+    0.0899,
+    0.1023,
+    0.0928,
+    0.3055,
+    0.2842
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays cricket · wants things to get done",
+   "p": [
+    0.3538,
+    0.1191,
+    0.3378,
+    0.0984,
+    0.0547,
+    0.0362
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · on the debate team · has lots of friends",
+   "p": [
+    0.0909,
+    0.1215,
+    0.061,
+    0.0713,
+    0.4096,
+    0.2457
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · loves chess · worries about making friends",
+   "p": [
+    0.0635,
+    0.1537,
+    0.0524,
+    0.071,
+    0.4376,
+    0.2218
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · worries about making friends",
+   "p": [
+    0.0639,
+    0.1163,
+    0.046,
+    0.0624,
+    0.4897,
+    0.2217
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · wants things to get done",
+   "p": [
+    0.2707,
+    0.3304,
+    0.0942,
+    0.0631,
+    0.1303,
+    0.1113
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · has lots of friends",
+   "p": [
+    0.1225,
+    0.0825,
+    0.1457,
+    0.1351,
+    0.2496,
+    0.2646
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · cares most about fairness",
+   "p": [
+    0.5506,
+    0.2217,
+    0.1151,
+    0.0314,
+    0.0542,
+    0.027
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · has lots of friends",
+   "p": [
+    0.1223,
+    0.1627,
+    0.083,
+    0.1034,
+    0.311,
+    0.2176
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · struggles with homework",
+   "p": [
+    0.1098,
+    0.0548,
+    0.137,
+    0.1718,
+    0.2293,
+    0.2973
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · finds it hard to speak up",
+   "p": [
+    0.0421,
+    0.0693,
+    0.0661,
+    0.0599,
+    0.4346,
+    0.328
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · on the debate team · never makes the team",
+   "p": [
+    0.0872,
+    0.2781,
+    0.052,
+    0.0397,
+    0.352,
+    0.191
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · wants to be listened to",
+   "p": [
+    0.103,
+    0.0605,
+    0.4221,
+    0.2806,
+    0.0668,
+    0.067
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · has lots of friends",
+   "p": [
+    0.0818,
+    0.0776,
+    0.0558,
+    0.0791,
+    0.4628,
+    0.2429
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · on the debate team · never makes the team",
+   "p": [
+    0.1217,
+    0.2278,
+    0.0697,
+    0.0848,
+    0.2903,
+    0.2057
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · sings in the choir · wants things to get done",
+   "p": [
+    0.1875,
+    0.0831,
+    0.4014,
+    0.1619,
+    0.0844,
+    0.0817
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays football · wants to be listened to",
+   "p": [
+    0.1012,
+    0.0519,
+    0.5606,
+    0.1936,
+    0.0472,
+    0.0455
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · often left out of teams",
+   "p": [
+    0.3174,
+    0.2864,
+    0.1349,
+    0.0809,
+    0.112,
+    0.0684
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · in the science club · cares most about fairness",
+   "p": [
+    0.6128,
+    0.1707,
+    0.1126,
+    0.0323,
+    0.0436,
+    0.028
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays football · wants things to get done",
+   "p": [
+    0.4595,
+    0.2372,
+    0.1454,
+    0.0547,
+    0.062,
+    0.0412
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays football · wants things to get done",
+   "p": [
+    0.2875,
+    0.0956,
+    0.4243,
+    0.1044,
+    0.0488,
+    0.0394
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · often left out of teams",
+   "p": [
+    0.3662,
+    0.3118,
+    0.1195,
+    0.0465,
+    0.1039,
+    0.0521
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · in the science club · finds it hard to speak up",
+   "p": [
+    0.0654,
+    0.0421,
+    0.1067,
+    0.146,
+    0.3008,
+    0.339
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · always reading · wants things to get done",
+   "p": [
+    0.2635,
+    0.112,
+    0.3351,
+    0.0728,
+    0.1138,
+    0.1028
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · sings in the choir · loves organising things",
+   "p": [
+    0.3745,
+    0.2861,
+    0.1143,
+    0.0391,
+    0.1286,
+    0.0574
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · often left out of teams",
+   "p": [
+    0.3508,
+    0.3177,
+    0.0832,
+    0.0345,
+    0.1448,
+    0.069
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · finds it hard to speak up",
+   "p": [
+    0.0756,
+    0.0715,
+    0.1,
+    0.1531,
+    0.3342,
+    0.2656
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · learning to code · wants to be listened to",
+   "p": [
+    0.0639,
+    0.0382,
+    0.2124,
+    0.3696,
+    0.1036,
+    0.2123
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · always reading · cares most about fairness",
+   "p": [
+    0.3856,
+    0.3153,
+    0.0995,
+    0.0339,
+    0.1148,
+    0.0509
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · has lots of friends",
+   "p": [
+    0.0792,
+    0.1382,
+    0.0661,
+    0.0912,
+    0.3214,
+    0.3039
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · loves organising things",
+   "p": [
+    0.2398,
+    0.0511,
+    0.493,
+    0.1257,
+    0.0509,
+    0.0395
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · on the debate team · wants things to get done",
+   "p": [
+    0.4527,
+    0.138,
+    0.2414,
+    0.0617,
+    0.0542,
+    0.052
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.0912,
+    0.0596,
+    0.1213,
+    0.1101,
+    0.3415,
+    0.2763
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · always reading · worries about making friends",
+   "p": [
+    0.0775,
+    0.1334,
+    0.0744,
+    0.1051,
+    0.3738,
+    0.2358
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · on the debate team · finds it hard to speak up",
+   "p": [
+    0.109,
+    0.0382,
+    0.3792,
+    0.2466,
+    0.0986,
+    0.1284
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.0801,
+    0.0556,
+    0.0924,
+    0.0908,
+    0.4045,
+    0.2766
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · worries about making friends",
+   "p": [
+    0.0681,
+    0.0636,
+    0.0695,
+    0.0775,
+    0.3747,
+    0.3466
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · loves chess · often left out of teams",
+   "p": [
+    0.2888,
+    0.3295,
+    0.1005,
+    0.0651,
+    0.133,
+    0.0831
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · loves chess · finds it hard to speak up",
+   "p": [
+    0.0887,
+    0.0951,
+    0.1162,
+    0.1127,
+    0.3208,
+    0.2665
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · learning to code · often left out of teams",
+   "p": [
+    0.3027,
+    0.2861,
+    0.1544,
+    0.0637,
+    0.1183,
+    0.0748
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · on the debate team · struggles with homework",
+   "p": [
+    0.0808,
+    0.0982,
+    0.0525,
+    0.0862,
+    0.3991,
+    0.2832
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · wants to be listened to",
+   "p": [
+    0.0645,
+    0.0313,
+    0.6181,
+    0.2167,
+    0.0344,
+    0.035
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · loves organising things",
+   "p": [
+    0.1362,
+    0.1296,
+    0.1949,
+    0.0902,
+    0.2878,
+    0.1613
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays football · finds it hard to speak up",
+   "p": [
+    0.0586,
+    0.1357,
+    0.0532,
+    0.0649,
+    0.4152,
+    0.2724
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · always reading · has lots of friends",
+   "p": [
+    0.1515,
+    0.1173,
+    0.1426,
+    0.1321,
+    0.2651,
+    0.1914
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · never makes the team",
+   "p": [
+    0.2084,
+    0.3322,
+    0.091,
+    0.0464,
+    0.2042,
+    0.1178
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · finds it hard to speak up",
+   "p": [
+    0.2338,
+    0.2093,
+    0.2087,
+    0.1301,
+    0.1297,
+    0.0884
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · never makes the team",
+   "p": [
+    0.2221,
+    0.2196,
+    0.0757,
+    0.0401,
+    0.2873,
+    0.1552
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · wants to be listened to",
+   "p": [
+    0.0971,
+    0.0465,
+    0.5514,
+    0.2185,
+    0.0409,
+    0.0456
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · loves chess · never makes the team",
+   "p": [
+    0.3281,
+    0.3175,
+    0.1322,
+    0.0515,
+    0.1038,
+    0.0669
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · loves chess · wants to be listened to",
+   "p": [
+    0.0738,
+    0.026,
+    0.4596,
+    0.3554,
+    0.0401,
+    0.0451
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · wants to be listened to",
+   "p": [
+    0.0617,
+    0.0332,
+    0.3304,
+    0.3706,
+    0.0823,
+    0.1218
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · has lots of friends",
+   "p": [
+    0.1597,
+    0.1716,
+    0.1781,
+    0.1191,
+    0.2192,
+    0.1523
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · cares most about fairness",
+   "p": [
+    0.3856,
+    0.3342,
+    0.0886,
+    0.0312,
+    0.104,
+    0.0564
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · loves organising things",
+   "p": [
+    0.1908,
+    0.2319,
+    0.1005,
+    0.0618,
+    0.3006,
+    0.1144
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · on the debate team · has lots of friends",
+   "p": [
+    0.1007,
+    0.1329,
+    0.103,
+    0.083,
+    0.3343,
+    0.2461
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · dances · wants things to get done",
+   "p": [
+    0.3829,
+    0.2251,
+    0.1763,
+    0.0769,
+    0.0863,
+    0.0525
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · struggles with homework",
+   "p": [
+    0.0444,
+    0.157,
+    0.0323,
+    0.0521,
+    0.4598,
+    0.2544
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · wants things to get done",
+   "p": [
+    0.2,
+    0.1668,
+    0.0943,
+    0.0728,
+    0.2693,
+    0.1968
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · learning to code · wants things to get done",
+   "p": [
+    0.4005,
+    0.1694,
+    0.2691,
+    0.0781,
+    0.046,
+    0.0369
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · has lots of friends",
+   "p": [
+    0.1047,
+    0.0891,
+    0.1118,
+    0.0942,
+    0.3212,
+    0.279
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · loves chess · struggles with homework",
+   "p": [
+    0.1066,
+    0.0864,
+    0.0938,
+    0.1079,
+    0.3342,
+    0.2711
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · learning to code · finds it hard to speak up",
+   "p": [
+    0.0812,
+    0.0575,
+    0.2643,
+    0.3231,
+    0.104,
+    0.1699
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · often left out of teams",
+   "p": [
+    0.0933,
+    0.2686,
+    0.0723,
+    0.049,
+    0.3456,
+    0.1712
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · on the debate team · wants to be listened to",
+   "p": [
+    0.0569,
+    0.0263,
+    0.3647,
+    0.3685,
+    0.0631,
+    0.1205
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · always reading · wants to be listened to",
+   "p": [
+    0.0832,
+    0.0694,
+    0.2148,
+    0.3188,
+    0.1136,
+    0.2002
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · often left out of teams",
+   "p": [
+    0.2904,
+    0.3445,
+    0.0921,
+    0.0611,
+    0.135,
+    0.0769
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · loves organising things",
+   "p": [
+    0.2782,
+    0.2742,
+    0.1273,
+    0.0634,
+    0.1787,
+    0.0782
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · loves chess · never makes the team",
+   "p": [
+    0.4467,
+    0.3137,
+    0.0836,
+    0.0407,
+    0.0799,
+    0.0354
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · always reading · finds it hard to speak up",
+   "p": [
+    0.1288,
+    0.0489,
+    0.4147,
+    0.1969,
+    0.086,
+    0.1247
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · loves chess · has lots of friends",
+   "p": [
+    0.0824,
+    0.1655,
+    0.0491,
+    0.0698,
+    0.4433,
+    0.1899
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · wants things to get done",
+   "p": [
+    0.1925,
+    0.1409,
+    0.1547,
+    0.0968,
+    0.2169,
+    0.1982
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · loves chess · cares most about fairness",
+   "p": [
+    0.5883,
+    0.1794,
+    0.1195,
+    0.0353,
+    0.0467,
+    0.0308
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays football · wants things to get done",
+   "p": [
+    0.2379,
+    0.25,
+    0.1504,
+    0.0976,
+    0.1708,
+    0.0933
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · often left out of teams",
+   "p": [
+    0.3291,
+    0.3417,
+    0.0732,
+    0.0405,
+    0.1511,
+    0.0644
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · always reading · worries about making friends",
+   "p": [
+    0.0516,
+    0.0465,
+    0.0545,
+    0.0743,
+    0.5104,
+    0.2627
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · dances · often left out of teams",
+   "p": [
+    0.2961,
+    0.3895,
+    0.0689,
+    0.0404,
+    0.1376,
+    0.0675
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · never makes the team",
+   "p": [
+    0.1806,
+    0.2296,
+    0.0802,
+    0.0527,
+    0.2757,
+    0.1812
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays cricket · often left out of teams",
+   "p": [
+    0.3508,
+    0.3991,
+    0.073,
+    0.0393,
+    0.0905,
+    0.0473
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · dances · cares most about fairness",
+   "p": [
+    0.4723,
+    0.3052,
+    0.0996,
+    0.0347,
+    0.0577,
+    0.0305
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · struggles with homework",
+   "p": [
+    0.0646,
+    0.1198,
+    0.0549,
+    0.079,
+    0.425,
+    0.2567
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · finds it hard to speak up",
+   "p": [
+    0.0944,
+    0.2451,
+    0.0534,
+    0.0758,
+    0.3503,
+    0.181
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · learning to code · has lots of friends",
+   "p": [
+    0.1142,
+    0.1115,
+    0.1515,
+    0.1326,
+    0.3114,
+    0.1788
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · on the debate team · worries about making friends",
+   "p": [
+    0.0487,
+    0.0469,
+    0.0556,
+    0.0988,
+    0.4455,
+    0.3045
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · draws and paints · struggles with homework",
+   "p": [
+    0.0749,
+    0.0648,
+    0.1031,
+    0.1566,
+    0.2695,
+    0.3311
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · finds it hard to speak up",
+   "p": [
+    0.1877,
+    0.0851,
+    0.3333,
+    0.1831,
+    0.1231,
+    0.0877
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · always reading · has lots of friends",
+   "p": [
+    0.0602,
+    0.101,
+    0.0629,
+    0.0629,
+    0.4631,
+    0.2499
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · worries about making friends",
+   "p": [
+    0.0377,
+    0.0813,
+    0.0272,
+    0.0569,
+    0.4456,
+    0.3513
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · wants to be listened to",
+   "p": [
+    0.0613,
+    0.0433,
+    0.3233,
+    0.4094,
+    0.0507,
+    0.112
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · wants things to get done",
+   "p": [
+    0.2276,
+    0.147,
+    0.2005,
+    0.0655,
+    0.2111,
+    0.1483
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays football · often left out of teams",
+   "p": [
+    0.4075,
+    0.2931,
+    0.1011,
+    0.0486,
+    0.0927,
+    0.057
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · worries about making friends",
+   "p": [
+    0.0615,
+    0.1433,
+    0.0398,
+    0.054,
+    0.4417,
+    0.2597
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · wants to be listened to",
+   "p": [
+    0.0804,
+    0.0362,
+    0.5465,
+    0.2477,
+    0.0497,
+    0.0395
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · struggles with homework",
+   "p": [
+    0.0833,
+    0.0815,
+    0.0601,
+    0.1131,
+    0.3114,
+    0.3506
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · finds it hard to speak up",
+   "p": [
+    0.264,
+    0.2596,
+    0.1637,
+    0.09,
+    0.142,
+    0.0807
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · struggles with homework",
+   "p": [
+    0.0758,
+    0.1093,
+    0.0508,
+    0.1148,
+    0.3605,
+    0.2888
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · on the debate team · wants to be listened to",
+   "p": [
+    0.0631,
+    0.0214,
+    0.3986,
+    0.359,
+    0.0424,
+    0.1155
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · finds it hard to speak up",
+   "p": [
+    0.1115,
+    0.0816,
+    0.3553,
+    0.2045,
+    0.1258,
+    0.1213
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · cares most about fairness",
+   "p": [
+    0.3742,
+    0.362,
+    0.0635,
+    0.032,
+    0.1099,
+    0.0584
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · has lots of friends",
+   "p": [
+    0.2293,
+    0.2291,
+    0.1159,
+    0.0863,
+    0.2136,
+    0.1258
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · cares most about fairness",
+   "p": [
+    0.346,
+    0.4215,
+    0.0757,
+    0.036,
+    0.0864,
+    0.0344
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · learning to code · often left out of teams",
+   "p": [
+    0.2003,
+    0.281,
+    0.1126,
+    0.1007,
+    0.2009,
+    0.1045
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · draws and paints · wants to be listened to",
+   "p": [
+    0.0687,
+    0.0774,
+    0.124,
+    0.2311,
+    0.1537,
+    0.3451
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · loves chess · finds it hard to speak up",
+   "p": [
+    0.1437,
+    0.0703,
+    0.3395,
+    0.2332,
+    0.1092,
+    0.1041
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · has lots of friends",
+   "p": [
+    0.1746,
+    0.1598,
+    0.1699,
+    0.1241,
+    0.1884,
+    0.1832
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · draws and paints · wants to be listened to",
+   "p": [
+    0.0601,
+    0.0293,
+    0.4531,
+    0.3442,
+    0.0491,
+    0.0642
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · loves organising things",
+   "p": [
+    0.2551,
+    0.3369,
+    0.0713,
+    0.0554,
+    0.1891,
+    0.0922
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · wants things to get done",
+   "p": [
+    0.1814,
+    0.0605,
+    0.4467,
+    0.171,
+    0.0775,
+    0.0629
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · always reading · loves organising things",
+   "p": [
+    0.1447,
+    0.1214,
+    0.1528,
+    0.1069,
+    0.288,
+    0.1862
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays football · wants things to get done",
+   "p": [
+    0.4458,
+    0.2408,
+    0.1574,
+    0.0664,
+    0.0514,
+    0.0382
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · always reading · wants things to get done",
+   "p": [
+    0.1653,
+    0.1465,
+    0.0928,
+    0.0898,
+    0.3016,
+    0.204
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · often left out of teams",
+   "p": [
+    0.3906,
+    0.3505,
+    0.0957,
+    0.0455,
+    0.0743,
+    0.0434
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · loves chess · has lots of friends",
+   "p": [
+    0.149,
+    0.1755,
+    0.1093,
+    0.088,
+    0.3101,
+    0.1681
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · often left out of teams",
+   "p": [
+    0.3315,
+    0.3024,
+    0.0816,
+    0.055,
+    0.1575,
+    0.072
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays cricket · worries about making friends",
+   "p": [
+    0.0724,
+    0.2417,
+    0.0422,
+    0.0467,
+    0.45,
+    0.147
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · never makes the team",
+   "p": [
+    0.31,
+    0.2896,
+    0.1629,
+    0.0655,
+    0.1032,
+    0.0688
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · wants things to get done",
+   "p": [
+    0.1932,
+    0.0785,
+    0.42,
+    0.1368,
+    0.0804,
+    0.0911
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · loves organising things",
+   "p": [
+    0.2082,
+    0.3127,
+    0.0863,
+    0.0358,
+    0.2597,
+    0.0973
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · learning to code · loves organising things",
+   "p": [
+    0.4286,
+    0.2301,
+    0.1278,
+    0.0434,
+    0.112,
+    0.0581
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · sings in the choir · often left out of teams",
+   "p": [
+    0.1577,
+    0.2549,
+    0.1035,
+    0.0566,
+    0.3102,
+    0.1171
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · loves chess · has lots of friends",
+   "p": [
+    0.0794,
+    0.1586,
+    0.0737,
+    0.0815,
+    0.3074,
+    0.2994
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · sings in the choir · cares most about fairness",
+   "p": [
+    0.5175,
+    0.2189,
+    0.1437,
+    0.0329,
+    0.0602,
+    0.0268
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · cares most about fairness",
+   "p": [
+    0.3399,
+    0.3454,
+    0.0893,
+    0.0305,
+    0.137,
+    0.0579
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · has lots of friends",
+   "p": [
+    0.123,
+    0.0748,
+    0.1451,
+    0.1015,
+    0.3134,
+    0.2422
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · in the science club · finds it hard to speak up",
+   "p": [
+    0.0527,
+    0.0869,
+    0.0649,
+    0.132,
+    0.2887,
+    0.3748
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays cricket · loves organising things",
+   "p": [
+    0.3433,
+    0.3375,
+    0.1048,
+    0.0469,
+    0.1179,
+    0.0496
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · never makes the team",
+   "p": [
+    0.0813,
+    0.2144,
+    0.0548,
+    0.1098,
+    0.288,
+    0.2517
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · often left out of teams",
+   "p": [
+    0.1924,
+    0.2737,
+    0.105,
+    0.0846,
+    0.2506,
+    0.0937
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · dances · loves organising things",
+   "p": [
+    0.3622,
+    0.2831,
+    0.13,
+    0.0404,
+    0.1349,
+    0.0494
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · wants to be listened to",
+   "p": [
+    0.0629,
+    0.032,
+    0.2865,
+    0.353,
+    0.0824,
+    0.1832
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays football · never makes the team",
+   "p": [
+    0.3459,
+    0.3568,
+    0.103,
+    0.0602,
+    0.079,
+    0.0551
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · on the debate team · loves organising things",
+   "p": [
+    0.2913,
+    0.0698,
+    0.4395,
+    0.0941,
+    0.059,
+    0.0463
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · wants things to get done",
+   "p": [
+    0.1298,
+    0.0966,
+    0.1395,
+    0.0851,
+    0.3271,
+    0.2219
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · draws and paints · often left out of teams",
+   "p": [
+    0.1803,
+    0.2716,
+    0.0994,
+    0.0607,
+    0.2453,
+    0.1427
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays football · has lots of friends",
+   "p": [
+    0.0715,
+    0.1113,
+    0.0454,
+    0.0382,
+    0.5169,
+    0.2167
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays cricket · cares most about fairness",
+   "p": [
+    0.3811,
+    0.3601,
+    0.0887,
+    0.0371,
+    0.0938,
+    0.0392
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · sings in the choir · worries about making friends",
+   "p": [
+    0.0307,
+    0.0395,
+    0.0288,
+    0.0526,
+    0.4635,
+    0.3849
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · struggles with homework",
+   "p": [
+    0.0473,
+    0.0517,
+    0.0557,
+    0.1051,
+    0.4198,
+    0.3204
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · always reading · struggles with homework",
+   "p": [
+    0.0626,
+    0.1811,
+    0.0443,
+    0.0716,
+    0.3733,
+    0.2671
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · finds it hard to speak up",
+   "p": [
+    0.1199,
+    0.0652,
+    0.2496,
+    0.2002,
+    0.1485,
+    0.2166
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays cricket · finds it hard to speak up",
+   "p": [
+    0.2374,
+    0.1569,
+    0.2535,
+    0.1336,
+    0.1202,
+    0.0984
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · loves organising things",
+   "p": [
+    0.2109,
+    0.3038,
+    0.0704,
+    0.0357,
+    0.2639,
+    0.1153
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · struggles with homework",
+   "p": [
+    0.0457,
+    0.1173,
+    0.0284,
+    0.0635,
+    0.3939,
+    0.3512
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · sings in the choir · cares most about fairness",
+   "p": [
+    0.3914,
+    0.359,
+    0.0971,
+    0.0301,
+    0.0877,
+    0.0347
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays football · often left out of teams",
+   "p": [
+    0.177,
+    0.3766,
+    0.0642,
+    0.0769,
+    0.2121,
+    0.0932
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · learning to code · never makes the team",
+   "p": [
+    0.2875,
+    0.377,
+    0.0839,
+    0.0556,
+    0.1427,
+    0.0533
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · wants to be listened to",
+   "p": [
+    0.072,
+    0.064,
+    0.217,
+    0.2342,
+    0.1708,
+    0.242
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · draws and paints · worries about making friends",
+   "p": [
+    0.0716,
+    0.0742,
+    0.0592,
+    0.0859,
+    0.4975,
+    0.2116
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · in the science club · wants things to get done",
+   "p": [
+    0.4575,
+    0.178,
+    0.197,
+    0.0612,
+    0.0573,
+    0.049
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · on the debate team · often left out of teams",
+   "p": [
+    0.1882,
+    0.2801,
+    0.0962,
+    0.0535,
+    0.2517,
+    0.1303
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · struggles with homework",
+   "p": [
+    0.063,
+    0.1009,
+    0.0638,
+    0.0965,
+    0.4058,
+    0.27
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · always reading · wants to be listened to",
+   "p": [
+    0.0646,
+    0.1031,
+    0.1417,
+    0.2597,
+    0.1839,
+    0.247
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · learning to code · loves organising things",
+   "p": [
+    0.4218,
+    0.2883,
+    0.1309,
+    0.0465,
+    0.0729,
+    0.0396
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · wants to be listened to",
+   "p": [
+    0.0577,
+    0.031,
+    0.3576,
+    0.4129,
+    0.0452,
+    0.0956
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · in the science club · often left out of teams",
+   "p": [
+    0.2026,
+    0.3141,
+    0.0794,
+    0.0432,
+    0.2405,
+    0.1202
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · loves chess · struggles with homework",
+   "p": [
+    0.0775,
+    0.1304,
+    0.0602,
+    0.0809,
+    0.3769,
+    0.2741
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays cricket · cares most about fairness",
+   "p": [
+    0.3708,
+    0.3984,
+    0.0733,
+    0.0356,
+    0.0926,
+    0.0293
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · sings in the choir · never makes the team",
+   "p": [
+    0.3358,
+    0.3021,
+    0.0949,
+    0.0568,
+    0.1446,
+    0.0658
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · never makes the team",
+   "p": [
+    0.1367,
+    0.1891,
+    0.0644,
+    0.0577,
+    0.3253,
+    0.2268
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · loves organising things",
+   "p": [
+    0.2399,
+    0.2814,
+    0.0921,
+    0.0419,
+    0.238,
+    0.1067
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · never makes the team",
+   "p": [
+    0.2655,
+    0.2895,
+    0.1544,
+    0.0681,
+    0.1249,
+    0.0976
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays football · struggles with homework",
+   "p": [
+    0.0442,
+    0.1751,
+    0.0323,
+    0.0473,
+    0.4631,
+    0.238
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · learning to code · often left out of teams",
+   "p": [
+    0.1026,
+    0.3071,
+    0.0458,
+    0.0373,
+    0.3794,
+    0.1278
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · cares most about fairness",
+   "p": [
+    0.3982,
+    0.2933,
+    0.0841,
+    0.0293,
+    0.1454,
+    0.0497
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · in the science club · wants things to get done",
+   "p": [
+    0.1822,
+    0.0825,
+    0.2739,
+    0.0846,
+    0.1867,
+    0.1901
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · often left out of teams",
+   "p": [
+    0.1966,
+    0.2576,
+    0.103,
+    0.0869,
+    0.2554,
+    0.1005
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · worries about making friends",
+   "p": [
+    0.0337,
+    0.1231,
+    0.0236,
+    0.0293,
+    0.5722,
+    0.2181
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · dances · finds it hard to speak up",
+   "p": [
+    0.103,
+    0.0565,
+    0.3207,
+    0.2371,
+    0.1183,
+    0.1644
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · always reading · loves organising things",
+   "p": [
+    0.2278,
+    0.2021,
+    0.1184,
+    0.0466,
+    0.2696,
+    0.1355
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · never makes the team",
+   "p": [
+    0.2398,
+    0.3673,
+    0.0522,
+    0.0301,
+    0.2353,
+    0.0753
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · on the debate team · wants things to get done",
+   "p": [
+    0.2607,
+    0.0874,
+    0.439,
+    0.0742,
+    0.0715,
+    0.0672
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · finds it hard to speak up",
+   "p": [
+    0.0935,
+    0.0631,
+    0.3558,
+    0.3109,
+    0.0709,
+    0.1058
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · learning to code · wants to be listened to",
+   "p": [
+    0.0636,
+    0.0237,
+    0.5245,
+    0.295,
+    0.0418,
+    0.0514
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · wants to be listened to",
+   "p": [
+    0.0859,
+    0.078,
+    0.2439,
+    0.2136,
+    0.1613,
+    0.2173
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays football · wants to be listened to",
+   "p": [
+    0.0749,
+    0.0507,
+    0.2334,
+    0.3201,
+    0.0989,
+    0.222
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · dances · has lots of friends",
+   "p": [
+    0.1232,
+    0.1415,
+    0.1136,
+    0.0912,
+    0.3068,
+    0.2237
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · always reading · finds it hard to speak up",
+   "p": [
+    0.0803,
+    0.0435,
+    0.1196,
+    0.1197,
+    0.3037,
+    0.3332
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · learning to code · finds it hard to speak up",
+   "p": [
+    0.0634,
+    0.0938,
+    0.0587,
+    0.1764,
+    0.2576,
+    0.3501
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · sings in the choir · has lots of friends",
+   "p": [
+    0.214,
+    0.2003,
+    0.1494,
+    0.122,
+    0.1832,
+    0.1311
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · finds it hard to speak up",
+   "p": [
+    0.1206,
+    0.0587,
+    0.3791,
+    0.2185,
+    0.0989,
+    0.1242
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · struggles with homework",
+   "p": [
+    0.0491,
+    0.0902,
+    0.0337,
+    0.0746,
+    0.4495,
+    0.3029
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · cares most about fairness",
+   "p": [
+    0.545,
+    0.1962,
+    0.1282,
+    0.0434,
+    0.0523,
+    0.0349
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · in the science club · has lots of friends",
+   "p": [
+    0.0567,
+    0.1287,
+    0.0402,
+    0.0429,
+    0.494,
+    0.2375
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · wants to be listened to",
+   "p": [
+    0.0704,
+    0.0337,
+    0.2936,
+    0.3647,
+    0.0992,
+    0.1384
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · learning to code · cares most about fairness",
+   "p": [
+    0.3408,
+    0.3514,
+    0.0914,
+    0.0329,
+    0.1291,
+    0.0544
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · always reading · wants things to get done",
+   "p": [
+    0.2198,
+    0.108,
+    0.1718,
+    0.0737,
+    0.2525,
+    0.1742
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · wants to be listened to",
+   "p": [
+    0.0771,
+    0.067,
+    0.2077,
+    0.3002,
+    0.1106,
+    0.2374
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · often left out of teams",
+   "p": [
+    0.1972,
+    0.2366,
+    0.1103,
+    0.0764,
+    0.249,
+    0.1305
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays football · often left out of teams",
+   "p": [
+    0.3861,
+    0.3334,
+    0.0957,
+    0.0453,
+    0.0914,
+    0.0481
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · finds it hard to speak up",
+   "p": [
+    0.0814,
+    0.1055,
+    0.1207,
+    0.1341,
+    0.2473,
+    0.311
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · sings in the choir · wants things to get done",
+   "p": [
+    0.1563,
+    0.0536,
+    0.5444,
+    0.152,
+    0.0545,
+    0.0392
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays football · has lots of friends",
+   "p": [
+    0.1069,
+    0.2116,
+    0.0455,
+    0.0547,
+    0.4034,
+    0.1779
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · cares most about fairness",
+   "p": [
+    0.516,
+    0.262,
+    0.1043,
+    0.0331,
+    0.0536,
+    0.031
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays cricket · finds it hard to speak up",
+   "p": [
+    0.0483,
+    0.1892,
+    0.0438,
+    0.0612,
+    0.4179,
+    0.2396
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · in the science club · cares most about fairness",
+   "p": [
+    0.5095,
+    0.2533,
+    0.1176,
+    0.0416,
+    0.047,
+    0.031
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays cricket · never makes the team",
+   "p": [
+    0.3691,
+    0.3907,
+    0.0764,
+    0.0463,
+    0.0776,
+    0.0399
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · learning to code · often left out of teams",
+   "p": [
+    0.0859,
+    0.2475,
+    0.0725,
+    0.0577,
+    0.3852,
+    0.1512
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · wants to be listened to",
+   "p": [
+    0.0573,
+    0.0272,
+    0.4681,
+    0.3333,
+    0.0501,
+    0.064
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · never makes the team",
+   "p": [
+    0.3368,
+    0.2423,
+    0.1646,
+    0.0723,
+    0.1143,
+    0.0697
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · loves chess · wants to be listened to",
+   "p": [
+    0.1336,
+    0.053,
+    0.5172,
+    0.1916,
+    0.0586,
+    0.046
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · worries about making friends",
+   "p": [
+    0.065,
+    0.0561,
+    0.074,
+    0.1204,
+    0.3944,
+    0.2901
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays cricket · loves organising things",
+   "p": [
+    0.2044,
+    0.2833,
+    0.122,
+    0.0606,
+    0.2415,
+    0.0882
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · loves chess · has lots of friends",
+   "p": [
+    0.1358,
+    0.2037,
+    0.0933,
+    0.0683,
+    0.3275,
+    0.1714
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · loves chess · worries about making friends",
+   "p": [
+    0.0553,
+    0.1643,
+    0.0345,
+    0.0653,
+    0.365,
+    0.3156
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · always reading · never makes the team",
+   "p": [
+    0.1098,
+    0.2483,
+    0.0832,
+    0.0563,
+    0.2989,
+    0.2035
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · draws and paints · struggles with homework",
+   "p": [
+    0.0411,
+    0.0893,
+    0.0314,
+    0.077,
+    0.4187,
+    0.3425
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · sings in the choir · never makes the team",
+   "p": [
+    0.1618,
+    0.2444,
+    0.0648,
+    0.0985,
+    0.2455,
+    0.185
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · on the debate team · worries about making friends",
+   "p": [
+    0.0409,
+    0.0683,
+    0.0552,
+    0.106,
+    0.3895,
+    0.3401
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · always reading · wants to be listened to",
+   "p": [
+    0.064,
+    0.0465,
+    0.2545,
+    0.4884,
+    0.0508,
+    0.0958
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · loves organising things",
+   "p": [
+    0.1791,
+    0.2817,
+    0.0763,
+    0.0365,
+    0.3112,
+    0.1152
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · wants to be listened to",
+   "p": [
+    0.0729,
+    0.028,
+    0.5716,
+    0.2245,
+    0.0486,
+    0.0544
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays football · has lots of friends",
+   "p": [
+    0.0832,
+    0.1573,
+    0.0461,
+    0.0519,
+    0.3868,
+    0.2747
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · sings in the choir · loves organising things",
+   "p": [
+    0.1854,
+    0.247,
+    0.1108,
+    0.0403,
+    0.2775,
+    0.139
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · on the debate team · often left out of teams",
+   "p": [
+    0.3305,
+    0.2816,
+    0.1131,
+    0.0686,
+    0.1126,
+    0.0936
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays cricket · struggles with homework",
+   "p": [
+    0.1348,
+    0.1525,
+    0.1282,
+    0.1215,
+    0.2702,
+    0.1928
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · on the debate team · never makes the team",
+   "p": [
+    0.2734,
+    0.1561,
+    0.1942,
+    0.1075,
+    0.1358,
+    0.133
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · loves organising things",
+   "p": [
+    0.1572,
+    0.2421,
+    0.0804,
+    0.0473,
+    0.3423,
+    0.1307
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · always reading · has lots of friends",
+   "p": [
+    0.137,
+    0.0827,
+    0.1404,
+    0.1132,
+    0.3015,
+    0.2252
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · wants to be listened to",
+   "p": [
+    0.0736,
+    0.0819,
+    0.192,
+    0.3711,
+    0.0949,
+    0.1865
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · worries about making friends",
+   "p": [
+    0.0853,
+    0.1262,
+    0.0834,
+    0.115,
+    0.3288,
+    0.2613
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · on the debate team · wants to be listened to",
+   "p": [
+    0.0714,
+    0.0402,
+    0.3718,
+    0.3652,
+    0.054,
+    0.0974
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · loves chess · has lots of friends",
+   "p": [
+    0.0966,
+    0.1291,
+    0.051,
+    0.0617,
+    0.409,
+    0.2526
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · dances · struggles with homework",
+   "p": [
+    0.1262,
+    0.0818,
+    0.1665,
+    0.1474,
+    0.2352,
+    0.2429
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · wants to be listened to",
+   "p": [
+    0.049,
+    0.021,
+    0.4825,
+    0.3391,
+    0.0515,
+    0.0569
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · draws and paints · wants to be listened to",
+   "p": [
+    0.0802,
+    0.0349,
+    0.4295,
+    0.327,
+    0.0577,
+    0.0707
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · learning to code · wants things to get done",
+   "p": [
+    0.1775,
+    0.0541,
+    0.4891,
+    0.1631,
+    0.058,
+    0.0582
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · sings in the choir · often left out of teams",
+   "p": [
+    0.3233,
+    0.2515,
+    0.1507,
+    0.0759,
+    0.1187,
+    0.0799
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · on the debate team · cares most about fairness",
+   "p": [
+    0.395,
+    0.3802,
+    0.0818,
+    0.0283,
+    0.0771,
+    0.0376
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · cares most about fairness",
+   "p": [
+    0.2992,
+    0.3679,
+    0.0887,
+    0.0379,
+    0.1583,
+    0.048
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays football · worries about making friends",
+   "p": [
+    0.1113,
+    0.161,
+    0.0847,
+    0.0671,
+    0.3836,
+    0.1923
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · has lots of friends",
+   "p": [
+    0.0416,
+    0.0748,
+    0.0469,
+    0.0536,
+    0.6121,
+    0.171
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · finds it hard to speak up",
+   "p": [
+    0.1218,
+    0.1704,
+    0.0811,
+    0.0575,
+    0.4013,
+    0.1679
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · finds it hard to speak up",
+   "p": [
+    0.0544,
+    0.0915,
+    0.1294,
+    0.1718,
+    0.2464,
+    0.3065
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · draws and paints · loves organising things",
+   "p": [
+    0.4323,
+    0.2518,
+    0.1368,
+    0.0528,
+    0.0805,
+    0.0458
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · on the debate team · cares most about fairness",
+   "p": [
+    0.5263,
+    0.2309,
+    0.136,
+    0.037,
+    0.0438,
+    0.026
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · sings in the choir · wants to be listened to",
+   "p": [
+    0.0537,
+    0.0257,
+    0.3148,
+    0.3887,
+    0.0767,
+    0.1404
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.0669,
+    0.0966,
+    0.1297,
+    0.2589,
+    0.2024,
+    0.2455
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays cricket · struggles with homework",
+   "p": [
+    0.1145,
+    0.1225,
+    0.0797,
+    0.115,
+    0.2774,
+    0.2909
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · dances · cares most about fairness",
+   "p": [
+    0.4253,
+    0.315,
+    0.0696,
+    0.0281,
+    0.1163,
+    0.0457
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · draws and paints · loves organising things",
+   "p": [
+    0.2976,
+    0.2957,
+    0.0867,
+    0.043,
+    0.1998,
+    0.0772
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays cricket · has lots of friends",
+   "p": [
+    0.3011,
+    0.3229,
+    0.081,
+    0.0624,
+    0.1524,
+    0.0802
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · sings in the choir · worries about making friends",
+   "p": [
+    0.0385,
+    0.06,
+    0.0457,
+    0.0681,
+    0.4448,
+    0.3429
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · sings in the choir · never makes the team",
+   "p": [
+    0.3119,
+    0.337,
+    0.1046,
+    0.0552,
+    0.1259,
+    0.0654
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · draws and paints · often left out of teams",
+   "p": [
+    0.299,
+    0.3189,
+    0.1254,
+    0.0899,
+    0.1042,
+    0.0626
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · on the debate team · worries about making friends",
+   "p": [
+    0.0689,
+    0.1604,
+    0.0683,
+    0.1397,
+    0.335,
+    0.2277
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · draws and paints · often left out of teams",
+   "p": [
+    0.1593,
+    0.2388,
+    0.0783,
+    0.0699,
+    0.3044,
+    0.1493
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · has lots of friends",
+   "p": [
+    0.0995,
+    0.1353,
+    0.0684,
+    0.0795,
+    0.4038,
+    0.2135
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · dances · finds it hard to speak up",
+   "p": [
+    0.0578,
+    0.0689,
+    0.0638,
+    0.1724,
+    0.2069,
+    0.4302
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · in the science club · cares most about fairness",
+   "p": [
+    0.4053,
+    0.3337,
+    0.0862,
+    0.0354,
+    0.0912,
+    0.0482
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · wants things to get done",
+   "p": [
+    0.3554,
+    0.2256,
+    0.1885,
+    0.0816,
+    0.0804,
+    0.0685
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · in the science club · struggles with homework",
+   "p": [
+    0.037,
+    0.0619,
+    0.038,
+    0.068,
+    0.4317,
+    0.3634
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · loves organising things",
+   "p": [
+    0.3965,
+    0.3364,
+    0.0863,
+    0.0489,
+    0.0905,
+    0.0414
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · always reading · cares most about fairness",
+   "p": [
+    0.3676,
+    0.3668,
+    0.0721,
+    0.0303,
+    0.123,
+    0.0402
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · finds it hard to speak up",
+   "p": [
+    0.1184,
+    0.0455,
+    0.3547,
+    0.1921,
+    0.123,
+    0.1663
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · has lots of friends",
+   "p": [
+    0.1276,
+    0.0744,
+    0.1084,
+    0.1229,
+    0.3076,
+    0.2591
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays football · wants things to get done",
+   "p": [
+    0.3919,
+    0.2288,
+    0.1931,
+    0.0764,
+    0.0715,
+    0.0383
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · dances · wants to be listened to",
+   "p": [
+    0.0991,
+    0.0723,
+    0.3855,
+    0.2612,
+    0.0995,
+    0.0824
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · plays cricket · has lots of friends",
+   "p": [
+    0.2798,
+    0.3825,
+    0.0761,
+    0.046,
+    0.1563,
+    0.0593
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · loves chess · struggles with homework",
+   "p": [
+    0.0741,
+    0.1064,
+    0.0595,
+    0.0681,
+    0.4727,
+    0.2192
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · on the debate team · struggles with homework",
+   "p": [
+    0.0924,
+    0.1269,
+    0.0681,
+    0.066,
+    0.4514,
+    0.1952
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · has lots of friends",
+   "p": [
+    0.0818,
+    0.1614,
+    0.0397,
+    0.0359,
+    0.4472,
+    0.234
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · worries about making friends",
+   "p": [
+    0.0422,
+    0.0897,
+    0.0312,
+    0.0382,
+    0.5903,
+    0.2084
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · always reading · often left out of teams",
+   "p": [
+    0.2642,
+    0.3039,
+    0.0839,
+    0.0467,
+    0.2195,
+    0.0818
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays cricket · worries about making friends",
+   "p": [
+    0.0605,
+    0.0885,
+    0.046,
+    0.0614,
+    0.5157,
+    0.2279
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.0795,
+    0.0675,
+    0.113,
+    0.1113,
+    0.3551,
+    0.2736
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · dances · wants to be listened to",
+   "p": [
+    0.0585,
+    0.0243,
+    0.4418,
+    0.3559,
+    0.0428,
+    0.0767
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · often left out of teams",
+   "p": [
+    0.307,
+    0.2536,
+    0.1435,
+    0.0825,
+    0.1451,
+    0.0683
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · finds it hard to speak up",
+   "p": [
+    0.0896,
+    0.0543,
+    0.3715,
+    0.2985,
+    0.0812,
+    0.1049
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · worries about making friends",
+   "p": [
+    0.0424,
+    0.0913,
+    0.0337,
+    0.0785,
+    0.4268,
+    0.3273
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · loves organising things",
+   "p": [
+    0.2419,
+    0.2696,
+    0.0795,
+    0.0413,
+    0.2638,
+    0.1039
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays cricket · loves organising things",
+   "p": [
+    0.2174,
+    0.3317,
+    0.0773,
+    0.0466,
+    0.2493,
+    0.0777
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · loves organising things",
+   "p": [
+    0.4727,
+    0.2574,
+    0.0944,
+    0.0468,
+    0.0837,
+    0.045
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays football · worries about making friends",
+   "p": [
+    0.0542,
+    0.1322,
+    0.0314,
+    0.0686,
+    0.4375,
+    0.2761
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · in the science club · worries about making friends",
+   "p": [
+    0.0334,
+    0.0528,
+    0.0512,
+    0.1248,
+    0.2953,
+    0.4425
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · always reading · never makes the team",
+   "p": [
+    0.2429,
+    0.2108,
+    0.2117,
+    0.0947,
+    0.1292,
+    0.1107
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · plays cricket · finds it hard to speak up",
+   "p": [
+    0.0851,
+    0.2669,
+    0.0544,
+    0.0612,
+    0.3801,
+    0.1523
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · draws and paints · has lots of friends",
+   "p": [
+    0.0446,
+    0.1121,
+    0.0463,
+    0.0603,
+    0.4437,
+    0.293
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · in the science club · struggles with homework",
+   "p": [
+    0.1214,
+    0.0713,
+    0.1508,
+    0.1678,
+    0.2304,
+    0.2583
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · draws and paints · worries about making friends",
+   "p": [
+    0.072,
+    0.0695,
+    0.0888,
+    0.0915,
+    0.3708,
+    0.3074
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · dances · wants things to get done",
+   "p": [
+    0.1291,
+    0.1319,
+    0.126,
+    0.0872,
+    0.2679,
+    0.2579
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · plays football · cares most about fairness",
+   "p": [
+    0.4078,
+    0.3818,
+    0.0515,
+    0.0255,
+    0.1002,
+    0.0332
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · wants to be listened to",
+   "p": [
+    0.0782,
+    0.0361,
+    0.5776,
+    0.2458,
+    0.0312,
+    0.0311
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · loves organising things",
+   "p": [
+    0.2168,
+    0.2915,
+    0.1396,
+    0.0731,
+    0.204,
+    0.075
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · loves chess · often left out of teams",
+   "p": [
+    0.322,
+    0.3263,
+    0.1009,
+    0.0579,
+    0.1266,
+    0.0663
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · draws and paints · never makes the team",
+   "p": [
+    0.2507,
+    0.2813,
+    0.1235,
+    0.098,
+    0.1498,
+    0.0967
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · in the science club · struggles with homework",
+   "p": [
+    0.0654,
+    0.0819,
+    0.0509,
+    0.081,
+    0.4641,
+    0.2567
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays football · never makes the team",
+   "p": [
+    0.1825,
+    0.3657,
+    0.0572,
+    0.0636,
+    0.2065,
+    0.1245
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays football · often left out of teams",
+   "p": [
+    0.1489,
+    0.3497,
+    0.067,
+    0.0917,
+    0.223,
+    0.1197
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · dances · wants things to get done",
+   "p": [
+    0.1763,
+    0.0617,
+    0.4758,
+    0.146,
+    0.0737,
+    0.0665
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · on the debate team · cares most about fairness",
+   "p": [
+    0.4639,
+    0.2707,
+    0.1069,
+    0.028,
+    0.0782,
+    0.0523
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · dances · never makes the team",
+   "p": [
+    0.2588,
+    0.2775,
+    0.1664,
+    0.0724,
+    0.1334,
+    0.0915
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · loves organising things",
+   "p": [
+    0.3928,
+    0.0896,
+    0.3294,
+    0.0951,
+    0.051,
+    0.0421
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays football · struggles with homework",
+   "p": [
+    0.1476,
+    0.1282,
+    0.1196,
+    0.1022,
+    0.207,
+    0.2954
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · struggles with homework",
+   "p": [
+    0.069,
+    0.0695,
+    0.0742,
+    0.1073,
+    0.3663,
+    0.3137
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · sings in the choir · cares most about fairness",
+   "p": [
+    0.4301,
+    0.3194,
+    0.0889,
+    0.0318,
+    0.0861,
+    0.0437
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · loves chess · struggles with homework",
+   "p": [
+    0.064,
+    0.1011,
+    0.0516,
+    0.0552,
+    0.4726,
+    0.2555
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays football · loves organising things",
+   "p": [
+    0.4534,
+    0.1875,
+    0.1851,
+    0.0543,
+    0.0813,
+    0.0384
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays football · cares most about fairness",
+   "p": [
+    0.5743,
+    0.2098,
+    0.1,
+    0.0333,
+    0.0561,
+    0.0265
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · dances · often left out of teams",
+   "p": [
+    0.3304,
+    0.358,
+    0.0703,
+    0.0334,
+    0.156,
+    0.0519
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · cares most about fairness",
+   "p": [
+    0.5452,
+    0.2184,
+    0.1194,
+    0.0353,
+    0.0555,
+    0.0262
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · has lots of friends",
+   "p": [
+    0.047,
+    0.1786,
+    0.0362,
+    0.0402,
+    0.4219,
+    0.2761
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · draws and paints · never makes the team",
+   "p": [
+    0.3083,
+    0.265,
+    0.1564,
+    0.073,
+    0.1159,
+    0.0814
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · on the debate team · has lots of friends",
+   "p": [
+    0.2809,
+    0.2214,
+    0.1925,
+    0.0871,
+    0.1339,
+    0.0842
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · on the debate team · struggles with homework",
+   "p": [
+    0.0683,
+    0.0704,
+    0.0628,
+    0.0922,
+    0.4005,
+    0.3058
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · struggles with homework",
+   "p": [
+    0.0408,
+    0.0863,
+    0.0487,
+    0.0881,
+    0.4603,
+    0.2758
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · in the science club · struggles with homework",
+   "p": [
+    0.0587,
+    0.0883,
+    0.0585,
+    0.0813,
+    0.4191,
+    0.2941
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · dances · loves organising things",
+   "p": [
+    0.2652,
+    0.3067,
+    0.0865,
+    0.0568,
+    0.1865,
+    0.0983
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · always reading · cares most about fairness",
+   "p": [
+    0.3553,
+    0.3212,
+    0.0976,
+    0.033,
+    0.135,
+    0.0579
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · draws and paints · never makes the team",
+   "p": [
+    0.1043,
+    0.2474,
+    0.0599,
+    0.0865,
+    0.2975,
+    0.2044
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · always reading · never makes the team",
+   "p": [
+    0.121,
+    0.2057,
+    0.0964,
+    0.0875,
+    0.2309,
+    0.2585
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · loves chess · never makes the team",
+   "p": [
+    0.3653,
+    0.2563,
+    0.1114,
+    0.0689,
+    0.1145,
+    0.0836
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · always reading · wants things to get done",
+   "p": [
+    0.1201,
+    0.1155,
+    0.1612,
+    0.1448,
+    0.2366,
+    0.2218
+   ]
+  },
+  {
+   "profile": "Class 6 · here since nursery · sings in the choir · worries about making friends",
+   "p": [
+    0.0653,
+    0.0532,
+    0.0823,
+    0.0714,
+    0.4281,
+    0.2997
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · plays cricket · worries about making friends",
+   "p": [
+    0.0582,
+    0.1311,
+    0.037,
+    0.0836,
+    0.3692,
+    0.3209
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · draws and paints · loves organising things",
+   "p": [
+    0.1903,
+    0.2434,
+    0.0833,
+    0.0634,
+    0.3082,
+    0.1114
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · loves chess · wants things to get done",
+   "p": [
+    0.2095,
+    0.0561,
+    0.5529,
+    0.1021,
+    0.0463,
+    0.0331
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · sings in the choir · wants to be listened to",
+   "p": [
+    0.0658,
+    0.0317,
+    0.4977,
+    0.3348,
+    0.0321,
+    0.0379
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · loves chess · never makes the team",
+   "p": [
+    0.1525,
+    0.2767,
+    0.0493,
+    0.0379,
+    0.3631,
+    0.1205
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays football · wants to be listened to",
+   "p": [
+    0.1978,
+    0.0841,
+    0.4593,
+    0.1586,
+    0.0627,
+    0.0375
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · in the science club · has lots of friends",
+   "p": [
+    0.046,
+    0.1051,
+    0.0414,
+    0.0487,
+    0.5435,
+    0.2153
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · sings in the choir · wants things to get done",
+   "p": [
+    0.1104,
+    0.0717,
+    0.2618,
+    0.1492,
+    0.2074,
+    0.1995
+   ]
+  },
+  {
+   "profile": "Class 6 · new this year · plays football · wants things to get done",
+   "p": [
+    0.1683,
+    0.1613,
+    0.1847,
+    0.0795,
+    0.2371,
+    0.1691
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · loves organising things",
+   "p": [
+    0.4586,
+    0.2712,
+    0.0989,
+    0.0456,
+    0.0832,
+    0.0425
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · sings in the choir · finds it hard to speak up",
+   "p": [
+    0.1104,
+    0.0715,
+    0.2419,
+    0.3066,
+    0.1073,
+    0.1623
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · worries about making friends",
+   "p": [
+    0.0343,
+    0.0582,
+    0.0258,
+    0.0743,
+    0.4036,
+    0.4038
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · in the science club · wants things to get done",
+   "p": [
+    0.2228,
+    0.0942,
+    0.4039,
+    0.1459,
+    0.0653,
+    0.0679
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · on the debate team · cares most about fairness",
+   "p": [
+    0.3849,
+    0.3129,
+    0.1017,
+    0.0348,
+    0.1191,
+    0.0466
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · loves chess · wants things to get done",
+   "p": [
+    0.3612,
+    0.1169,
+    0.3342,
+    0.0873,
+    0.0506,
+    0.0498
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · learning to code · finds it hard to speak up",
+   "p": [
+    0.1142,
+    0.0467,
+    0.3135,
+    0.2952,
+    0.1049,
+    0.1255
+   ]
+  },
+  {
+   "profile": "Class 9 · new this year · in the science club · often left out of teams",
+   "p": [
+    0.1243,
+    0.2626,
+    0.089,
+    0.1019,
+    0.2901,
+    0.1321
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · plays cricket · finds it hard to speak up",
+   "p": [
+    0.2005,
+    0.1988,
+    0.1913,
+    0.1239,
+    0.1611,
+    0.1244
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays cricket · has lots of friends",
+   "p": [
+    0.0682,
+    0.2902,
+    0.0308,
+    0.0263,
+    0.4459,
+    0.1386
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · draws and paints · never makes the team",
+   "p": [
+    0.2452,
+    0.3509,
+    0.1254,
+    0.0664,
+    0.1483,
+    0.0638
+   ]
+  },
+  {
+   "profile": "Class 8 · here since nursery · loves chess · wants things to get done",
+   "p": [
+    0.2438,
+    0.0532,
+    0.5348,
+    0.0972,
+    0.0372,
+    0.0338
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · always reading · worries about making friends",
+   "p": [
+    0.0848,
+    0.068,
+    0.1157,
+    0.1738,
+    0.2417,
+    0.316
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays cricket · struggles with homework",
+   "p": [
+    0.0464,
+    0.1019,
+    0.0459,
+    0.0834,
+    0.418,
+    0.3044
+   ]
+  },
+  {
+   "profile": "Class 9 · here since nursery · plays cricket · worries about making friends",
+   "p": [
+    0.063,
+    0.0695,
+    0.0718,
+    0.093,
+    0.4367,
+    0.266
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · always reading · finds it hard to speak up",
+   "p": [
+    0.1131,
+    0.0576,
+    0.317,
+    0.2767,
+    0.1164,
+    0.1192
+   ]
+  },
+  {
+   "profile": "Class 10 · new this year · plays cricket · has lots of friends",
+   "p": [
+    0.0781,
+    0.1503,
+    0.0457,
+    0.0409,
+    0.5091,
+    0.1759
+   ]
+  },
+  {
+   "profile": "Class 7 · here since nursery · loves chess · finds it hard to speak up",
+   "p": [
+    0.1439,
+    0.1026,
+    0.3002,
+    0.2034,
+    0.1263,
+    0.1236
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · plays cricket · has lots of friends",
+   "p": [
+    0.2416,
+    0.3014,
+    0.0705,
+    0.052,
+    0.2094,
+    0.1251
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · draws and paints · worries about making friends",
+   "p": [
+    0.0731,
+    0.0516,
+    0.1037,
+    0.113,
+    0.3247,
+    0.3339
+   ]
+  },
+  {
+   "profile": "Class 7 · new this year · plays football · wants to be listened to",
+   "p": [
+    0.0741,
+    0.0893,
+    0.1591,
+    0.3091,
+    0.112,
+    0.2564
+   ]
+  },
+  {
+   "profile": "Class 10 · here since nursery · sings in the choir · struggles with homework",
+   "p": [
+    0.0592,
+    0.0634,
+    0.092,
+    0.1681,
+    0.2798,
+    0.3375
+   ]
+  },
+  {
+   "profile": "Class 8 · new this year · sings in the choir · cares most about fairness",
+   "p": [
+    0.4212,
+    0.301,
+    0.1199,
+    0.0406,
+    0.0812,
+    0.0361
+   ]
+  }
+ ]
+}

@@ -7,28 +7,29 @@ export type Result = { counts: Counts; winners: CandidateId[]; total: number };
 export type RunoffRound = Result & { active: CandidateId[]; eliminated?: CandidateId; transfers?: Counts };
 export type RunoffResult = Result & { rounds: RunoffRound[]; eliminationTie: CandidateId[] };
 
-// School context comes from npskrm.com; these campaigns and ballots are invented.
+// School context comes from npskrm.com; these candidates, campaigns and ballots are invented.
 export const candidates = [
-  { id: "A" as const, name: "Aarav", surname: "Shah", quality: "Fair-minded organiser", policies: ["Open trials for house teams", "A fair-turns rota", "Spots for first-timers"] },
-  { id: "B" as const, name: "Meera", surname: "Rao", quality: "Listens and follows through", policies: ["Suggestion box in every class", "Monthly updates", "Weekly open hour"] },
-  { id: "C" as const, name: "Kabir", surname: "Sen", quality: "Makes everyone feel welcome", policies: ["Buddies for new students", "A friendly bench", "Homework club"] },
+  { id: "A" as const, name: "Aarav", surname: "Shah", grade: "12 B", quality: "Football captain", slogan: "Let’s make school fun again", policies: ["A sports league between classes every term", "A school fest run by students", "A better canteen menu"], strength: "Popular in every grade", weakness: "Never been on the student council" },
+  { id: "B" as const, name: "Meera", surname: "Rao", grade: "12 A", quality: "Class representative since Grade 9", slogan: "Less talk, more done", policies: ["Library open through lunch", "Water coolers on every floor", "A monthly meeting with the principal"], strength: "The most experienced", weakness: "Seen as a bit too serious" },
+  { id: "C" as const, name: "Kabir", surname: "Sen", grade: "12 C", quality: "Runs the peer tutoring club", slogan: "Nobody gets left behind", policies: ["Free tutoring before exams", "A buddy for every new student", "A quiet room for studying"], strength: "Loved by younger students", weakness: "Only joined the school last year" },
 ];
 
+// A whole-school vote: 487 students from Grades 6 to 12. Every possible ranking has some voters.
 export const scenarios: Record<string, { name: string; description: string; groups: BallotGroup[] }> = {
-  original: { name: "This election", description: "Aarav leads on first choices. Most students still prefer Meera to Aarav.", groups: [{ count: 40, ranking: ["A", "B", "C"] }, { count: 35, ranking: ["B", "C", "A"] }, { count: 25, ranking: ["C", "B", "A"] }] },
-  disagreement: { name: "Another cohort", description: "The same 100 students elect three different prefects under three counting rules.", groups: [{ count: 40, ranking: ["A", "C", "B"] }, { count: 33, ranking: ["B", "C", "A"] }, { count: 27, ranking: ["C", "B", "A"] }] },
-  cycle: { name: "A divided cohort", description: "Every candidate wins one head-to-head contest and loses another.", groups: [{ count: 35, ranking: ["A", "B", "C"] }, { count: 33, ranking: ["B", "C", "A"] }, { count: 32, ranking: ["C", "A", "B"] }] },
+  original: { name: "This election", description: "Aarav leads on first choices. Most students still prefer Meera to Aarav.", groups: [{ count: 112, ranking: ["A", "B", "C"] }, { count: 72, ranking: ["A", "C", "B"] }, { count: 98, ranking: ["B", "A", "C"] }, { count: 69, ranking: ["B", "C", "A"] }, { count: 89, ranking: ["C", "B", "A"] }, { count: 47, ranking: ["C", "A", "B"] }] },
+  disagreement: { name: "Another year", description: "The same 487 students elect three different prefects under three counting rules.", groups: [{ count: 196, ranking: ["A", "C", "B"] }, { count: 161, ranking: ["B", "C", "A"] }, { count: 130, ranking: ["C", "B", "A"] }] },
+  cycle: { name: "A divided school", description: "Every candidate wins one head-to-head contest and loses another.", groups: [{ count: 171, ranking: ["A", "B", "C"] }, { count: 161, ranking: ["B", "C", "A"] }, { count: 155, ranking: ["C", "A", "B"] }] },
 };
 
 export const ratingGroups: RatingGroup[] = [
-  { count: 40, scores: { A: 10, B: 8, C: 0 } },
-  { count: 35, scores: { A: 0, B: 10, C: 8 } },
-  { count: 25, scores: { A: 0, B: 8, C: 10 } },
+  { count: 184, scores: { A: 10, B: 8, C: 0 } },
+  { count: 167, scores: { A: 0, B: 10, C: 8 } },
+  { count: 136, scores: { A: 0, B: 8, C: 10 } },
 ];
 export const approvalGroups: RatingGroup[] = [
-  { count: 40, scores: { A: 1, B: 1, C: 0 } },
-  { count: 35, scores: { A: 0, B: 1, C: 1 } },
-  { count: 25, scores: { A: 0, B: 1, C: 1 } },
+  { count: 184, scores: { A: 1, B: 1, C: 0 } },
+  { count: 167, scores: { A: 0, B: 1, C: 1 } },
+  { count: 136, scores: { A: 0, B: 1, C: 1 } },
 ];
 export const strategyGroups = (strategic: boolean): BallotGroup[] => [
   { count: 2, ranking: ["B", "A", "C"] },
