@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { ArrowRight, Check, ChevronDown, Dices, Play, RotateCcw } from "lucide-react";
+import { ArrowRight, ChevronDown, Dices, Play, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { AnimatedNumber, CandidateName } from "@/components/election-visuals";
@@ -26,25 +26,7 @@ const single = (winners: CandidateId[]) => winners.length === 1 ? winners[0] : n
 // Tiny hash so each student keeps the same height on the line.
 const jitter = (i: number) => ((i * 2654435761) >>> 0) / 4294967296;
 
-const W = 420, H = 300;
-
-// Small goals that send you back to the controls. Each one checks the school on screen.
-const challenges: { id: string; text: string; met: (election: SimulatedElection) => boolean }[] = [
-  { id: "agree", text: "Make all three methods agree", met: e => e.sameWinner },
-  { id: "split", text: "Make the methods disagree", met: e => changedWinner(e) },
-  { id: "kabir", text: "Make Kabir win on points only", met: e => single(e.winners.borda) === "C" && [e.winners.plurality, e.winners.runoff].every(w => single(w) !== null && single(w) !== "C") },
-  { id: "three", text: "Make each method pick someone different", met: e => !e.tie && new Set([e.winners.plurality[0], e.winners.runoff[0], e.winners.borda[0]]).size === 3 },
-];
-
-// One challenge at a time. A finished one stays ticked for a moment before the next appears.
-function Challenge({ done, justDone }: { done: Set<string>; justDone: string | null }) {
-  const shown = challenges.find(c => c.id === justDone) ?? challenges.find(c => !done.has(c.id));
-  return <section className="pg-challenge" aria-live="polite" data-done={!shown || shown.id === justDone}>
-    <span className="pg-check" aria-hidden="true">{(!shown || shown.id === justDone) && <Check />}</span>
-    <p key={shown?.id ?? "all"}>{shown ? shown.text : "You finished every challenge."}</p>
-    <span className="pg-challenge-count">{done.size} of {challenges.length} done</span>
-  </section>;
-}
+const W = 560, H = 290;
 
 function SchoolPicture({ school, model, hovered, onMove }: { school: School; model: SchoolModel; hovered: number | null; onMove: (spots: Record<CandidateId, number>) => void }) {
   const svg = useRef<SVGSVGElement>(null);
@@ -204,28 +186,12 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const [runSeed, setRunSeed] = useState(0);
   const [loaded, setLoaded] = useState<number | null>(null);
   const frame = useRef<number | null>(null);
-  const top = useRef<HTMLDivElement>(null);
   useEffect(() => () => { if (frame.current !== null) cancelAnimationFrame(frame.current); }, []);
 
   const school = useMemo(() => makeSchool(seed, size, kind, spots ?? undefined), [seed, size, kind, spots]);
   const election = useMemo(() => judge(school.groups), [school]);
-  const [done, setDone] = useState<Set<string>>(() => new Set());
-  const [justDone, setJustDone] = useState<string | null>(null);
   const [showBallots, setShowBallots] = useState(false);
-  // Only schools the visitor makes count, not the one shown on arrival.
-  const opening = useRef(election);
-  useEffect(() => {
-    if (election === opening.current) return;
-    const met = challenges.filter(c => c.met(election) && !done.has(c.id));
-    // Marks a challenge as done the moment the school on screen meets it.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (met.length) { setDone(old => new Set([...old, ...met.map(c => c.id)])); setJustDone(met[0].id); }
-  }, [election, done]);
-  useEffect(() => {
-    if (!justDone) return;
-    const timer = setTimeout(() => setJustDone(null), 1800);
-    return () => clearTimeout(timer);
-  }, [justDone]);
+  const [view, setView] = useState<"one" | "many">("one");
 
   function stop() { if (frame.current !== null) cancelAnimationFrame(frame.current); frame.current = null; }
   function clearRuns() { stop(); setRuns([]); setPhase("ready"); setLoaded(null); }
@@ -253,15 +219,18 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
     frame.current = requestAnimationFrame(tick);
   }
   function open(index: number) {
-    setSeed((runSeed + index) >>> 0); setSpots(null); setLoaded(index);
-    top.current?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    setSeed((runSeed + index) >>> 0); setSpots(null); setLoaded(index); setView("one");
   }
 
   const changed = runs.filter(changedWinner).length;
   const ties = runs.filter(run => run.tie).length;
 
   return <div className="playground">
-    <div className="pg-controls" ref={top}>
+    <div className="pg-controls">
+      <ToggleGroup type="single" variant="outline" spacing={0} value={view} onValueChange={value => value && setView(value as "one" | "many")} className="pg-view" aria-label="View">
+        <ToggleGroupItem value="one">One school</ToggleGroupItem>
+        <ToggleGroupItem value="many">1,000 schools</ToggleGroupItem>
+      </ToggleGroup>
       <label className="pg-size"><span>Students</span>
         <input type="range" min={MIN_STUDENTS} max={MAX_STUDENTS} value={size} disabled={phase === "running"} onChange={event => changeSize(Number(event.target.value))} aria-valuetext={`${size} students`} style={{ "--fill": `${(size - MIN_STUDENTS) / (MAX_STUDENTS - MIN_STUDENTS) * 100}%` } as React.CSSProperties} />
         <output>{size.toLocaleString()}</output>
@@ -270,41 +239,38 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
         <ToggleGroupItem value="random">Random</ToggleGroupItem>
         <ToggleGroupItem value="spectrum">On a line</ToggleGroupItem>
       </ToggleGroup>
-      <Button variant="outline" disabled={phase === "running"} onClick={shuffle}><Dices data-icon="inline-start" />New students</Button>
     </div>
 
-    <div className="pg-board">
+    {view === "one" ? <div className="pg-board" key="one">
       <section className="pg-school" aria-label="The school">
-        <div className="pg-school-head"><h3>{loaded !== null ? `School ${loaded + 1}` : "Your school"}</h3>
-          <button type="button" className="pg-link" aria-pressed={showBallots} onClick={() => setShowBallots(!showBallots)}>{showBallots ? "See students" : "See ballots"}</button></div>
+        <div className="pg-head"><h3>{loaded !== null ? `School ${loaded + 1} of 1,000` : "Your school"}</h3>
+          <div className="pg-head-actions">
+            <button type="button" className="pg-link" aria-pressed={showBallots} onClick={() => setShowBallots(!showBallots)}>{showBallots ? "See students" : "See ballots"}</button>
+            <Button variant="outline" size="sm" onClick={shuffle}><Dices data-icon="inline-start" />New students</Button>
+          </div>
+        </div>
         {showBallots ? <OrderList school={school} hovered={hovered} onHover={setHovered} /> : <>
           <SchoolPicture school={school} model={kind} hovered={hovered} onMove={next => { setSpots(next); setLoaded(null); }} />
           {kind === "spectrum" && <div className="pg-axis"><span>Sports &amp; fun</span><span className="pg-hint">Drag the candidates</span><span>Studies &amp; exams</span></div>}
         </>}
       </section>
       <section className="pg-count" aria-label="Three ways to count">
-        <div className="pg-school-head"><h3>Who wins?</h3></div>
+        <div className="pg-head"><h3>Who wins?</h3></div>
         <Methods school={school} election={election} />
-        <Challenge done={done} justDone={justDone} />
       </section>
-      <section className="pg-thousand" aria-label="1,000 schools">
-        <div className="pg-thousand-head">
-          <div>
-            <h3>{phase === "done" ? <><AnimatedNumber value={changed} duration={700} /> of 1,000 schools</> : phase === "running" ? <>Counting school <AnimatedNumber value={runs.length} duration={120} /> of 1,000</> : "Now try 1,000 schools"}</h3>
-            <p aria-live="polite">{phase === "done" ? "picked different winners. Tap one." : `Each with ${size.toLocaleString()} ${kind === "random" ? "random students" : "students on a line"}.`}</p>
-          </div>
-          <Button onClick={start} disabled={phase === "running"}>{phase === "done" ? <><RotateCcw data-icon="inline-start" />Run again</> : <><Play data-icon="inline-start" />Run 1,000 schools</>}</Button>
-        </div>
-        <div className="pg-thousand-body">
-          <ResultsGrid runs={runs} loaded={loaded} disabled={phase !== "done"} onSelect={open} />
-          <ul className="pg-legend">
-            <li><span data-same="false" />Different winners</li>
-            <li><span data-same="true" />Same winner</li>
-            {ties > 0 && <li><span data-same="tie" />Tie</li>}
-          </ul>
-        </div>
-      </section>
-    </div>
-
+    </div> : <section className="pg-thousand" key="many" aria-label="1,000 schools">
+      <ResultsGrid runs={runs} loaded={loaded} disabled={phase !== "done"} onSelect={open} />
+      <div className="pg-thousand-side">
+        <p className="pg-big" aria-live="polite">{phase === "ready" ? <span className="pg-big-hint">Make 1,000 schools like yours and count each one three ways.</span>
+          : <><strong><AnimatedNumber value={changed} duration={phase === "done" ? 700 : 120} /></strong><span>of {phase === "done" ? "1,000" : runs.length.toLocaleString()} schools picked different winners</span></>}</p>
+        <ul className="pg-legend">
+          <li><span data-same="false" />Different winners</li>
+          <li><span data-same="true" />Same winner</li>
+          {ties > 0 && <li><span data-same="tie" />Tie</li>}
+        </ul>
+        <Button size="lg" onClick={start} disabled={phase === "running"}>{phase === "done" ? <><RotateCcw data-icon="inline-start" />Run again</> : <><Play data-icon="inline-start" />Run 1,000 schools</>}</Button>
+        {phase === "done" && <p className="pg-hint">Click a square to open that school.</p>}
+      </div>
+    </section>}
   </div>;
 }

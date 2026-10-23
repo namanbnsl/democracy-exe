@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -100,7 +100,6 @@ export function ElectionExperience() {
       <span className="wordmark"><svg className="brand-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 4 39h13L30 16Z" fill="var(--candidate-a)" /><path d="m24 4 20 35H31L18 16Z" fill="var(--candidate-b)" /><path d="M4 39h40l-7-12H11Z" fill="var(--candidate-c)" /><path d="m24 4 20 35H4Z" fill="none" stroke="currentColor" strokeWidth="2" /></svg>democracy<span className="wordmark-extension">.exe</span></span>
       <nav className="chapter-progress" aria-label="Chapters"><ol>{chapters.map((c, i) => <li key={c.short}><button type="button" aria-current={i === step ? "step" : undefined} data-done={i < step} disabled={i > reached || i === step} onClick={() => go(i)}><span className="chapter-number">{i < step ? <Check aria-hidden="true" /> : i + 1}</span><span className="chapter-short">{c.short}</span></button></li>)}</ol></nav>
       <div className="header-actions">
-        <Dialog><DialogTrigger asChild><Button variant="ghost" size="sm">About</Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>About democracy.exe</DialogTitle><DialogDescription>Vote for a school prefect and try different ways to count the same ballots.</DialogDescription></DialogHeader><p className="fine-print">This election is set at NPS Koramangala. The candidates, promises and ballots are made up. Your vote joins 487 pretend students. Later examples use separate groups.</p><p className="fine-print">Refreshing the page clears your choices.</p><p className="fine-print">Arrow’s theorem explains limits of voting rules that use rankings. It does not cover rules that use scores.</p><a className="source-link" href="https://plato.stanford.edu/entries/arrows-theorem/" target="_blank" rel="noreferrer">Read about Arrow’s theorem <ArrowUpRight data-icon="inline-end" /></a><a className="source-link" href="https://npskrm.com/investiture-2026-2027.html" target="_blank" rel="noreferrer">NPS Koramangala’s Student Council <ArrowUpRight data-icon="inline-end" /></a></DialogContent></Dialog>
         <Dialog open={resetOpen} onOpenChange={setResetOpen}><DialogTrigger asChild><Button variant="ghost" size="icon" aria-label="Start again" disabled={step === 0 && !favourite}><RotateCcw /></Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>Start a new election?</DialogTitle><DialogDescription>This clears your choices so the next visitor can start fresh.</DialogDescription></DialogHeader><DialogFooter><DialogClose asChild><Button variant="outline">Keep going</Button></DialogClose><Button onClick={reset}>Start again</Button></DialogFooter></DialogContent></Dialog>
       </div>
     </header>
