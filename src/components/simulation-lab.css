@@ -129,3 +129,42 @@ li[data-done="true"] .pg-check { background: var(--signal-good); border-color: v
   .pg-school, .pg-count, .pg-thousand { padding: 14px; }
   .pg-thousand-head { flex-direction: column; align-items: stretch; }
 }
+
+/* Wide screens: school, count and the 1,000 schools sit side by side so nothing needs scrolling. */
+@media (min-width: 861px) {
+  .pg-board { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pg-thousand { grid-column: 1 / -1; }
+}
+@media (min-width: 1100px) {
+  .playground { gap: 12px; }
+  .pg-board { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr) minmax(0, .92fr); gap: 12px; }
+  .pg-thousand { grid-column: auto; display: flex; flex-direction: column; }
+  .pg-school, .pg-count, .pg-thousand { padding: 14px 16px; }
+  .pg-school-head { margin-bottom: 4px; }
+  .pg-school-head h3, .pg-thousand-head h3 { font-size: 15px; }
+  .pg-orders { grid-template-columns: 1fr; gap: 1px; margin-top: 8px; padding-top: 8px; }
+  .pg-orders li { padding: 3px 6px; }
+  .pg-verdict { padding: 8px 10px; font-size: 13px; }
+  .pg-results { gap: 4px; }
+  .pg-method-head { padding: 8px 4px; gap: 3px 10px; }
+  .pg-method-name { font-size: 13px; }
+  .pg-winner { font-size: 13px; }
+  .pg-winner .mini-portrait { width: 26px; height: 26px; }
+  .pg-numbers, .pg-note { font-size: 12px; gap: 3px 10px; }
+  .pg-challenges { padding-top: 10px; }
+  .pg-challenges h3 { font-size: 13px; margin-bottom: 6px; }
+  .pg-challenges ul { gap: 5px; }
+  .pg-challenges li { font-size: 12px; gap: 8px; }
+  .pg-check { width: 17px; height: 17px; }
+  .pg-thousand-head { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 10px; }
+  .pg-thousand-head h3 { line-height: 1.35; }
+  .pg-thousand-head p { font-size: 12px; }
+  .pg-thousand-body { grid-template-columns: 1fr; gap: 12px; }
+  .pg-grid { --pg-columns: 50; gap: 1.5px; }
+  .pg-side { gap: 10px; }
+  .pg-legend { gap: 4px; }
+  .pg-legend li, .pg-history li { font-size: 12px; }
+  .pg-history { padding-top: 8px; }
+  .pg-history ol { gap: 3px; }
+  .pg-history h4 { margin-bottom: 4px; }
+}

@@ -31,9 +31,9 @@ const W = 560, H = 230;
 
 // Small goals that send you back to the controls. Each one checks the school on screen.
 const challenges: { id: string; text: string; met: (election: SimulatedElection) => boolean }[] = [
-  { id: "agree", text: "Make all three methods pick the same winner", met: e => e.sameWinner },
+  { id: "agree", text: "Make all three methods agree", met: e => e.sameWinner },
   { id: "split", text: "Make the methods disagree", met: e => changedWinner(e) },
-  { id: "kabir", text: "Make Kabir win on points but lose with one name each", met: e => single(e.winners.borda) === "C" && single(e.winners.plurality) !== null && single(e.winners.plurality) !== "C" },
+  { id: "kabir", text: "Make Kabir win on points only", met: e => single(e.winners.borda) === "C" && [e.winners.plurality, e.winners.runoff].every(w => single(w) !== null && single(w) !== "C") },
   { id: "three", text: "Make each method pick someone different", met: e => !e.tie && new Set([e.winners.plurality[0], e.winners.runoff[0], e.winners.borda[0]]).size === 3 },
 ];
 
@@ -243,7 +243,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
       if (all.length < SIMULATED_ELECTIONS) frame.current = requestAnimationFrame(tick);
       else {
         frame.current = null; setPhase("done");
-        setHistory(old => [{ model: kind, size, changed: all.filter(changedWinner).length, ties: all.filter(run => run.tie).length }, ...old].slice(0, 4));
+        setHistory(old => [{ model: kind, size, changed: all.filter(changedWinner).length, ties: all.filter(run => run.tie).length }, ...old].slice(0, 3));
       }
     };
     frame.current = requestAnimationFrame(tick);
@@ -281,27 +281,27 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
         <Methods school={school} election={election} />
         <Challenges done={done} />
       </section>
+      <section className="pg-thousand" aria-label="1,000 schools">
+        <div className="pg-thousand-head">
+          <div>
+            <h3>{phase === "done" ? <><AnimatedNumber value={changed} duration={700} /> of 1,000 schools</> : phase === "running" ? <>Counting school <AnimatedNumber value={runs.length} duration={120} /> of 1,000</> : "Now try 1,000 schools"}</h3>
+            <p aria-live="polite">{phase === "done" ? "picked different winners. Tap one." : `Each with ${size.toLocaleString()} ${kind === "random" ? "random students" : "students on a line"}.`}</p>
+          </div>
+          <Button onClick={start} disabled={phase === "running"}>{phase === "done" ? <><RotateCcw data-icon="inline-start" />Run again</> : <><Play data-icon="inline-start" />Run 1,000 schools</>}</Button>
+        </div>
+        <div className="pg-thousand-body">
+          <ResultsGrid runs={runs} loaded={loaded} disabled={phase !== "done"} onSelect={open} />
+          <div className="pg-side">
+            <ul className="pg-legend">
+              <li><span data-same="false" />Different winners<b><AnimatedNumber value={changed} duration={120} /></b></li>
+              <li><span data-same="true" />Same winner<b><AnimatedNumber value={runs.length - changed - ties} duration={120} /></b></li>
+              <li><span data-same="tie" />A tie<b><AnimatedNumber value={ties} duration={120} /></b></li>
+            </ul>
+            {history.length > 0 && <div className="pg-history"><h4>Your runs</h4><ol>{history.map((run, i) => <li key={history.length - i}><span>{run.size.toLocaleString()} {run.model === "random" ? "random" : "on a line"}</span><b>{(run.changed / 10).toFixed(1)}%</b></li>)}</ol></div>}
+          </div>
+        </div>
+      </section>
     </div>
 
-    <section className="pg-thousand" aria-label="1,000 schools">
-      <div className="pg-thousand-head">
-        <div>
-          <h3>{phase === "done" ? <><AnimatedNumber value={changed} duration={700} /> of 1,000 schools picked different winners</> : phase === "running" ? <>Counting school <AnimatedNumber value={runs.length} duration={120} /> of 1,000</> : "Now try 1,000 schools"}</h3>
-          <p aria-live="polite">{phase === "done" ? `${ties ? `${ties} had a tie. ` : ""}Pick a square to open that school.` : `Each with ${size.toLocaleString()} ${kind === "random" ? "random students" : "students on a line"}.`}</p>
-        </div>
-        <Button onClick={start} disabled={phase === "running"}>{phase === "done" ? <><RotateCcw data-icon="inline-start" />Run again</> : <><Play data-icon="inline-start" />Run 1,000 schools</>}</Button>
-      </div>
-      <div className="pg-thousand-body">
-        <ResultsGrid runs={runs} loaded={loaded} disabled={phase !== "done"} onSelect={open} />
-        <div className="pg-side">
-          <ul className="pg-legend">
-            <li><span data-same="false" />Different winners<b><AnimatedNumber value={changed} duration={120} /></b></li>
-            <li><span data-same="true" />Same winner<b><AnimatedNumber value={runs.length - changed - ties} duration={120} /></b></li>
-            <li><span data-same="tie" />A tie<b><AnimatedNumber value={ties} duration={120} /></b></li>
-          </ul>
-          {history.length > 0 && <div className="pg-history"><h4>Your runs</h4><ol>{history.map((run, i) => <li key={history.length - i}><span>{run.size.toLocaleString()} {run.model === "random" ? "random" : "on a line"}</span><b>{(run.changed / 10).toFixed(1)}%</b></li>)}</ol></div>}
-        </div>
-      </div>
-    </section>
   </div>;
 }
