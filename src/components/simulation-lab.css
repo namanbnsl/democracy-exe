@@ -106,9 +106,10 @@
 .pg-big strong { font-size: 56px; font-weight: 600; line-height: 1; letter-spacing: -2px; font-variant-numeric: tabular-nums; }
 .pg-big span { font-size: 16px; line-height: 1.4; }
 .pg-big .pg-big-hint { font-size: 17px; font-weight: 500; line-height: 1.45; }
-.pg-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; }
+.pg-legend { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .pg-legend li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted-foreground); }
 .pg-legend li > span { width: 12px; height: 12px; border-radius: 3px; }
+.pg-legend b { margin-left: auto; color: var(--foreground); font-weight: 600; font-variant-numeric: tabular-nums; }
 .pg-legend [data-same="true"] { background: var(--signal-good); }
 .pg-legend [data-same="false"] { background: var(--signal-bad); }
 .pg-legend [data-same="tie"] { background: var(--muted-foreground); }

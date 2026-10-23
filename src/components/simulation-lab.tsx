@@ -224,6 +224,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
 
   const changed = runs.filter(changedWinner).length;
   const ties = runs.filter(run => run.tie).length;
+  const percent = (count: number) => `${(100 * count / Math.max(1, runs.length)).toFixed(1)}%`;
 
   return <div className="playground">
     <div className="pg-controls">
@@ -264,9 +265,9 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
         <p className="pg-big" aria-live="polite">{phase === "ready" ? <span className="pg-big-hint">Make 1,000 schools like yours and count each one three ways.</span>
           : <><strong><AnimatedNumber value={changed} duration={phase === "done" ? 700 : 120} /></strong><span>of {phase === "done" ? "1,000" : runs.length.toLocaleString()} schools picked different winners</span></>}</p>
         <ul className="pg-legend">
-          <li><span data-same="false" />Different winners</li>
-          <li><span data-same="true" />Same winner</li>
-          {ties > 0 && <li><span data-same="tie" />Tie</li>}
+          <li><span data-same="false" />Different winners{runs.length > 0 && <b>{percent(changed)}</b>}</li>
+          <li><span data-same="true" />Same winner{runs.length > 0 && <b>{percent(runs.length - changed - ties)}</b>}</li>
+          {ties > 0 && <li><span data-same="tie" />Tie<b>{percent(ties)}</b></li>}
         </ul>
         <Button size="lg" onClick={start} disabled={phase === "running"}>{phase === "done" ? <><RotateCcw data-icon="inline-start" />Run again</> : <><Play data-icon="inline-start" />Run 1,000 schools</>}</Button>
         {phase === "done" && <p className="pg-hint">Click a square to open that school.</p>}
