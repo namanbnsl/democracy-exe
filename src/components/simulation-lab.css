@@ -63,7 +63,6 @@
 .pg-winner .mini-portrait { width: 30px; height: 30px; }
 .pg-tie { padding: 3px 10px; border-radius: 99px; background: var(--muted); color: var(--muted-foreground); font-size: 13px; }
 @keyframes pg-pop { from { opacity: 0; transform: scale(.7); } }
-.pg-method-summary { grid-area: summary; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
 .pg-numbers { display: inline-flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted-foreground); }
 .pg-numbers > span { display: inline-flex; align-items: center; gap: 5px; }
 .pg-numbers b { color: var(--foreground); font-weight: 500; font-variant-numeric: tabular-nums; }
@@ -92,30 +91,17 @@
 .pg-grid button:not(:disabled):hover { transform: scale(1.8); position: relative; z-index: 1; }
 .pg-grid button[data-loaded="true"] { outline: 2px solid var(--foreground); outline-offset: 1px; position: relative; z-index: 1; }
 @keyframes pg-square { from { transform: scale(0); } }
-.pg-side { display: flex; flex-direction: column; gap: 18px; }
-.pg-legend, .pg-history ol { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .pg-legend li { display: flex; align-items: center; gap: 9px; font-size: 13px; }
 .pg-legend li > span { width: 12px; height: 12px; border-radius: 3px; }
 .pg-legend [data-same="true"] { background: var(--signal-good); }
 .pg-legend [data-same="false"] { background: var(--signal-bad); }
 .pg-legend [data-same="tie"] { background: var(--muted-foreground); }
-.pg-legend b, .pg-history b { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
-.pg-history { padding-top: 14px; border-top: 1px solid var(--border); }
-.pg-history h4 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
-.pg-history li { display: flex; gap: 12px; font-size: 13px; animation: pg-open 260ms ease-out both; }
 
 .pg-handle-hit { fill: transparent; }
 
 .pg-count { display: flex; flex-direction: column; }
-.pg-challenges { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
-.pg-challenges h3 { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 8px; font-size: 14px; font-weight: 600; }
-.pg-challenges h3 span { font-size: 13px; font-weight: 500; color: var(--muted-foreground); font-variant-numeric: tabular-nums; }
-.pg-challenges ul { display: grid; grid-template-columns: 1fr; gap: 7px; margin: 0; padding: 0; list-style: none; }
-.pg-challenges li { display: flex; align-items: center; gap: 10px; font-size: 13px; transition: color 200ms; }
-.pg-challenges li[data-done="true"] { color: var(--muted-foreground); }
 .pg-check { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; border: 1.5px solid var(--input); border-radius: 50%; transition: background 200ms, border-color 200ms; }
 .pg-check svg { width: 12px; height: 12px; color: white; animation: pg-pop 420ms cubic-bezier(.3,1.6,.5,1) both; }
-li[data-done="true"] .pg-check { background: var(--signal-good); border-color: var(--signal-good); animation: pg-ring 600ms ease-out; }
 @keyframes pg-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal-good) 50%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
 
 @media (max-width: 860px) {
@@ -151,20 +137,41 @@ li[data-done="true"] .pg-check { background: var(--signal-good); border-color: v
   .pg-winner { font-size: 13px; }
   .pg-winner .mini-portrait { width: 26px; height: 26px; }
   .pg-numbers, .pg-note { font-size: 12px; gap: 3px 10px; }
-  .pg-challenges { padding-top: 10px; }
-  .pg-challenges h3 { font-size: 13px; margin-bottom: 6px; }
-  .pg-challenges ul { gap: 5px; }
-  .pg-challenges li { font-size: 12px; gap: 8px; }
   .pg-check { width: 17px; height: 17px; }
   .pg-thousand-head { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 10px; }
   .pg-thousand-head h3 { line-height: 1.35; }
   .pg-thousand-head p { font-size: 12px; }
   .pg-thousand-body { grid-template-columns: 1fr; gap: 12px; }
   .pg-grid { --pg-columns: 50; gap: 1.5px; }
-  .pg-side { gap: 10px; }
-  .pg-legend { gap: 4px; }
-  .pg-legend li, .pg-history li { font-size: 12px; }
-  .pg-history { padding-top: 8px; }
-  .pg-history ol { gap: 3px; }
-  .pg-history h4 { margin-bottom: 4px; }
 }
+
+/* Calmer version: one challenge, collapsed method numbers, inline legend. */
+.pg-link { padding: 2px 6px; border: 0; border-radius: 6px; background: none; color: var(--primary); font: inherit; font-size: 12.5px; font-weight: 500; }
+.pg-link:hover { background: var(--accent); }
+.pg-school-head { align-items: center; }
+.pg-axis { align-items: baseline; }
+.pg-axis .pg-hint { font-size: 11.5px; }
+.pg-school .pg-orders { margin-top: 4px; padding-top: 0; border-top: 0; grid-template-columns: 1fr; gap: 2px; animation: pg-open 220ms ease-out both; }
+.pg-school .pg-orders li { padding: 6px 8px; font-size: 13px; }
+.pg-school .pg-picture { animation: pg-open 220ms ease-out both; }
+.pg-method-head { grid-template-areas: "name winner"; padding: 12px 4px; }
+.pg-working .pg-method-summary { margin-bottom: 8px; }
+.pg-working .pg-method-summary:empty { display: none; }
+.pg-challenge { display: flex; align-items: center; gap: 10px; margin-top: auto; padding: 12px 12px; border-radius: 10px; background: var(--background); font-size: 13px; transition: background 250ms; }
+.pg-challenge p { flex: 1; margin: 0; animation: pg-open 260ms ease-out both; }
+.pg-challenge[data-done="true"] { background: color-mix(in oklab, var(--signal-good) 10%, var(--background)); }
+.pg-challenge[data-done="true"] .pg-check { background: var(--signal-good); border-color: var(--signal-good); animation: pg-ring 600ms ease-out; }
+.pg-challenge-count { color: var(--muted-foreground); font-size: 12px; font-variant-numeric: tabular-nums; }
+.pg-legend { flex-direction: row; flex-wrap: wrap; gap: 6px 16px; }
+.pg-legend li { font-size: 12px; color: var(--muted-foreground); }
+.pg-thousand-body { grid-template-columns: 1fr !important; gap: 12px; }
+@media (min-width: 1100px) {
+  .pg-method-head { padding: 12px 4px; }
+  .pg-method-name, .pg-winner { font-size: 14px; }
+  .pg-winner .mini-portrait { width: 30px; height: 30px; }
+  .pg-verdict { padding: 10px 12px; font-size: 14px; }
+  .pg-results { gap: 8px; }
+}
+
+.pg-legend { display: flex; margin: 0; padding: 0; list-style: none; }
+.pg-legend li { display: flex; align-items: center; gap: 7px; }

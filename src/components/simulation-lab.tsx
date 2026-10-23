@@ -17,7 +17,6 @@ const MIN_STUDENTS = 3;
 const MAX_STUDENTS = 1000;
 export type SchoolModel = Exclude<VoterModel, "ai">;
 type Phase = "ready" | "running" | "done";
-type Run = { model: SchoolModel; size: number; changed: number; ties: number };
 
 const shade = (election: SimulatedElection) => election.tie ? "tie" : String(election.sameWinner);
 const changedWinner = (election: SimulatedElection) => !election.tie && !election.sameWinner;
@@ -27,7 +26,7 @@ const single = (winners: CandidateId[]) => winners.length === 1 ? winners[0] : n
 // Tiny hash so each student keeps the same height on the line.
 const jitter = (i: number) => ((i * 2654435761) >>> 0) / 4294967296;
 
-const W = 560, H = 230;
+const W = 420, H = 300;
 
 // Small goals that send you back to the controls. Each one checks the school on screen.
 const challenges: { id: string; text: string; met: (election: SimulatedElection) => boolean }[] = [
@@ -37,10 +36,13 @@ const challenges: { id: string; text: string; met: (election: SimulatedElection)
   { id: "three", text: "Make each method pick someone different", met: e => !e.tie && new Set([e.winners.plurality[0], e.winners.runoff[0], e.winners.borda[0]]).size === 3 },
 ];
 
-function Challenges({ done }: { done: Set<string> }) {
-  return <section className="pg-challenges" aria-label="Challenges">
-    <h3>Challenges <span>{done.size} of {challenges.length}</span></h3>
-    <ul>{challenges.map(c => <li key={c.id} data-done={done.has(c.id)}><span className="pg-check" aria-hidden="true">{done.has(c.id) && <Check />}</span>{c.text}<span className="sr-only">{done.has(c.id) ? " (done)" : ""}</span></li>)}</ul>
+// One challenge at a time. A finished one stays ticked for a moment before the next appears.
+function Challenge({ done, justDone }: { done: Set<string>; justDone: string | null }) {
+  const shown = challenges.find(c => c.id === justDone) ?? challenges.find(c => !done.has(c.id));
+  return <section className="pg-challenge" aria-live="polite" data-done={!shown || shown.id === justDone}>
+    <span className="pg-check" aria-hidden="true">{(!shown || shown.id === justDone) && <Check />}</span>
+    <p key={shown?.id ?? "all"}>{shown ? shown.text : "You finished every challenge."}</p>
+    <span className="pg-challenge-count">{done.size} of {challenges.length} done</span>
   </section>;
 }
 
@@ -68,7 +70,7 @@ function SchoolPicture({ school, model, hovered, onMove }: { school: School; mod
   }
 
   const spots = school.spots!;
-  const pad = 26, line = 168;
+  const pad = 22, line = 236;
   const x = (position: number) => pad + position * (W - 2 * pad);
   // Stack names in rows when candidates stand close together.
   const rows: Partial<Record<CandidateId, number>> = {};
@@ -131,23 +133,21 @@ function Winner({ winners }: { winners: CandidateId[] }) {
   return <span className="pg-winner" key={winners.join()}>{id ? <><span className="mini-portrait"><Portrait id={id} small /></span>{nameOf(id)}</> : <span className="pg-tie">Tie</span>}</span>;
 }
 
+// Shows only the winner until opened; the numbers and working sit underneath.
 function Method({ name, rule, winners, summary, working }: { name: string; rule: string; winners: CandidateId[]; summary: React.ReactNode; working: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return <li className="pg-method" data-open={open}>
     <button type="button" className="pg-method-head" aria-expanded={open} onClick={() => setOpen(!open)}>
       <span className="pg-method-name">{name}<ChevronDown aria-hidden="true" /></span>
       <Winner winners={winners} />
-      <span className="pg-method-summary">{summary}</span>
     </button>
-    <div className="pg-working" hidden={!open}><p className="pg-rule">{rule}</p>{working}</div>
+    <div className="pg-working" hidden={!open}><p className="pg-rule">{rule}</p><div className="pg-method-summary">{summary}</div>{working}</div>
   </li>;
 }
 
 function Methods({ school, election }: { school: School; election: SimulatedElection }) {
   const working = explainElection(school.groups);
   const rounds = working.runoff.rounds;
-  const finalRound = rounds.at(-1)!;
-  const out = rounds.find(round => round.eliminated);
   const total = working.firstChoices.total;
   const verdict = election.tie ? "One of the methods ends in a tie." : election.sameWinner ? `All three pick ${nameOf(election.winners.plurality[0])}.` : "Same ballots, different winners.";
   return <div className="pg-results">
@@ -157,8 +157,7 @@ function Methods({ school, election }: { school: School; election: SimulatedElec
         summary={<Numbers counts={working.firstChoices.counts} ids={[...candidateIds]} winner={single(working.firstChoices.winners)} />}
         working={null} />
       <Method name="Instant runoff" rule="Knock out whoever is last and move their votes to each ballot’s next choice, until someone has more than half." winners={working.runoff.winners}
-        summary={working.runoff.eliminationTie.length ? <span className="pg-note">{working.runoff.eliminationTie.map(nameOf).join(" and ")} tie for last</span>
-          : <>{out && <span className="pg-note">{nameOf(out.eliminated!)} out, then</span>}<Numbers counts={finalRound.counts} ids={finalRound.active} winner={single(working.runoff.winners)} /></>}
+        summary={working.runoff.eliminationTie.length ? <span className="pg-note">{working.runoff.eliminationTie.map(nameOf).join(" and ")} tie for last</span> : null}
         working={<ol className="pg-rounds">{rounds.map((round, i) => <li key={i}>
           <span className="pg-round-label">{i === 0 ? "First choices" : "After moving votes"}</span>
           <Numbers counts={round.counts} ids={round.active} winner={!round.eliminated ? single(round.winners) : null} />
@@ -166,7 +165,7 @@ function Methods({ school, election }: { school: School; election: SimulatedElec
           {!round.eliminated && single(round.winners) && <span className="pg-note">{nameOf(single(round.winners)!)} has more than half of {total}.</span>}
         </li>)}</ol>} />
       <Method name="Points" rule="1st choice gets 2 points, 2nd choice gets 1." winners={working.points.winners}
-        summary={<Numbers counts={working.points.counts} ids={[...candidateIds]} winner={single(working.points.winners)} />}
+        summary={null}
         working={<ul className="pg-sums">{[...candidateIds].sort((a, b) => working.points.counts[b] - working.points.counts[a]).map(id => <li key={id}><CandidateName id={id} /><span>{(working.points.counts[id] - working.secondChoices[id]) / 2} × 2 + {working.secondChoices[id]} × 1 = <b>{working.points.counts[id]}</b></span></li>)}</ul>} />
     </ul>
   </div>;
@@ -204,7 +203,6 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const [runs, setRuns] = useState<SimulatedElection[]>([]);
   const [runSeed, setRunSeed] = useState(0);
   const [loaded, setLoaded] = useState<number | null>(null);
-  const [history, setHistory] = useState<Run[]>([]);
   const frame = useRef<number | null>(null);
   const top = useRef<HTMLDivElement>(null);
   useEffect(() => () => { if (frame.current !== null) cancelAnimationFrame(frame.current); }, []);
@@ -212,6 +210,8 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const school = useMemo(() => makeSchool(seed, size, kind, spots ?? undefined), [seed, size, kind, spots]);
   const election = useMemo(() => judge(school.groups), [school]);
   const [done, setDone] = useState<Set<string>>(() => new Set());
+  const [justDone, setJustDone] = useState<string | null>(null);
+  const [showBallots, setShowBallots] = useState(false);
   // Only schools the visitor makes count, not the one shown on arrival.
   const opening = useRef(election);
   useEffect(() => {
@@ -219,8 +219,13 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
     const met = challenges.filter(c => c.met(election) && !done.has(c.id));
     // Marks a challenge as done the moment the school on screen meets it.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (met.length) setDone(old => new Set([...old, ...met.map(c => c.id)]));
+    if (met.length) { setDone(old => new Set([...old, ...met.map(c => c.id)])); setJustDone(met[0].id); }
   }, [election, done]);
+  useEffect(() => {
+    if (!justDone) return;
+    const timer = setTimeout(() => setJustDone(null), 1800);
+    return () => clearTimeout(timer);
+  }, [justDone]);
 
   function stop() { if (frame.current !== null) cancelAnimationFrame(frame.current); frame.current = null; }
   function clearRuns() { stop(); setRuns([]); setPhase("ready"); setLoaded(null); }
@@ -243,7 +248,6 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
       if (all.length < SIMULATED_ELECTIONS) frame.current = requestAnimationFrame(tick);
       else {
         frame.current = null; setPhase("done");
-        setHistory(old => [{ model: kind, size, changed: all.filter(changedWinner).length, ties: all.filter(run => run.tie).length }, ...old].slice(0, 3));
       }
     };
     frame.current = requestAnimationFrame(tick);
@@ -271,15 +275,17 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
 
     <div className="pg-board">
       <section className="pg-school" aria-label="The school">
-        <div className="pg-school-head"><h3>{loaded !== null ? `School ${loaded + 1}` : "Your school"}</h3>{kind === "spectrum" && <span className="pg-hint">Drag the candidates</span>}</div>
-        <SchoolPicture school={school} model={kind} hovered={hovered} onMove={next => { setSpots(next); setLoaded(null); }} />
-        {kind === "spectrum" && <div className="pg-axis"><span>Sports &amp; fun</span><span>Studies &amp; exams</span></div>}
-        <OrderList school={school} hovered={hovered} onHover={setHovered} />
+        <div className="pg-school-head"><h3>{loaded !== null ? `School ${loaded + 1}` : "Your school"}</h3>
+          <button type="button" className="pg-link" aria-pressed={showBallots} onClick={() => setShowBallots(!showBallots)}>{showBallots ? "See students" : "See ballots"}</button></div>
+        {showBallots ? <OrderList school={school} hovered={hovered} onHover={setHovered} /> : <>
+          <SchoolPicture school={school} model={kind} hovered={hovered} onMove={next => { setSpots(next); setLoaded(null); }} />
+          {kind === "spectrum" && <div className="pg-axis"><span>Sports &amp; fun</span><span className="pg-hint">Drag the candidates</span><span>Studies &amp; exams</span></div>}
+        </>}
       </section>
       <section className="pg-count" aria-label="Three ways to count">
         <div className="pg-school-head"><h3>Who wins?</h3></div>
         <Methods school={school} election={election} />
-        <Challenges done={done} />
+        <Challenge done={done} justDone={justDone} />
       </section>
       <section className="pg-thousand" aria-label="1,000 schools">
         <div className="pg-thousand-head">
@@ -291,14 +297,11 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
         </div>
         <div className="pg-thousand-body">
           <ResultsGrid runs={runs} loaded={loaded} disabled={phase !== "done"} onSelect={open} />
-          <div className="pg-side">
-            <ul className="pg-legend">
-              <li><span data-same="false" />Different winners<b><AnimatedNumber value={changed} duration={120} /></b></li>
-              <li><span data-same="true" />Same winner<b><AnimatedNumber value={runs.length - changed - ties} duration={120} /></b></li>
-              <li><span data-same="tie" />A tie<b><AnimatedNumber value={ties} duration={120} /></b></li>
-            </ul>
-            {history.length > 0 && <div className="pg-history"><h4>Your runs</h4><ol>{history.map((run, i) => <li key={history.length - i}><span>{run.size.toLocaleString()} {run.model === "random" ? "random" : "on a line"}</span><b>{(run.changed / 10).toFixed(1)}%</b></li>)}</ol></div>}
-          </div>
+          <ul className="pg-legend">
+            <li><span data-same="false" />Different winners</li>
+            <li><span data-same="true" />Same winner</li>
+            {ties > 0 && <li><span data-same="tie" />Tie</li>}
+          </ul>
         </div>
       </section>
     </div>
