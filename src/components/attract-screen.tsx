@@ -17,7 +17,7 @@ function Ballot({ className }: { className?: string }) {
 }
 
 // Digital rain on paper. The giant wordmark is built on a fine grid of solid ink cells with a hard shadow in a
-// candidate colour. Every few seconds a colour wave sweeps the rain and recolours the shadow.
+// candidate colour. Every second or two a colour wave sweeps the rain and recolours the shadow.
 const rainChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+=<>*#%@$&".split("");
 // A big arrow pointer that wanders the screen on its own, like a demo running itself.
 function GhostCursor({ ref }: { ref: React.Ref<SVGSVGElement> }) {
@@ -45,18 +45,23 @@ function MatrixField({ wordRef, cursorRef }: { wordRef: React.RefObject<HTMLHead
     let word = new Uint8Array(0);
     let mask = new Uint8Array(0), glyphs = new Uint8Array(0), hue = new Uint8Array(0);
     let drops: { col: number; head: number; speed: number; len: number }[] = [];
-    let wave = { x: 0, y: 0, born: -1e5, tint: palette[0] }, shadow = palette[0], nextWave = 2600;
+    let wave = { x: 0, y: 0, born: -1e5, tint: palette[0] }, shadow = palette[0], nextWave = 1200;
     const born = performance.now();
     const pointer = { x: -1e4, y: -1e4 };
     // The ghost glides along a gentle curve to a random spot, rests a moment, then picks another.
     const ghost = { x: -1e4, y: -1e4, from: [0, 0], via: [0, 0], to: [0, 0], start: 0, dur: 0, rest: 0 };
     const ghostLeg = (now: number) => {
       const [x, y] = ghost.to;
-      const to = [w * (.08 + Math.random() * .84), h * (.1 + Math.random() * .8)];
+      // Long sweeps: the farthest of a few random spots, so each leg crosses a good part of the screen.
+      let to = [x, y];
+      for (let i = 0; i < 6; i++) {
+        const p = [w * (.08 + Math.random() * .84), h * (.1 + Math.random() * .8)];
+        if (Math.hypot(p[0] - x, p[1] - y) > Math.hypot(to[0] - x, to[1] - y)) to = p;
+      }
       const dist = Math.hypot(to[0] - x, to[1] - y);
       const bend = (Math.random() - .5) * dist * .6;
       const mx = (x + to[0]) / 2, my = (y + to[1]) / 2;
-      Object.assign(ghost, { from: [x, y], to, via: [mx - (to[1] - y) / (dist || 1) * bend, my + (to[0] - x) / (dist || 1) * bend], start: now, dur: 700 + dist * 1.6, rest: 250 + Math.random() * 1400 });
+      Object.assign(ghost, { from: [x, y], to, via: [mx - (to[1] - y) / (dist || 1) * bend, my + (to[0] - x) / (dist || 1) * bend], start: now, dur: 600 + dist * 1.3, rest: 250 + Math.random() * 1400 });
     };
     const moveGhost = (now: number) => {
       if (!ghost.dur) { ghost.to = [w * .7, h * .75]; ghostLeg(now); }
@@ -122,8 +127,8 @@ function MatrixField({ wordRef, cursorRef }: { wordRef: React.RefObject<HTMLHead
     const move = (e: PointerEvent) => { pointer.x = e.clientX; pointer.y = e.clientY; };
     const leave = () => { pointer.x = pointer.y = -1e4; };
     const waveAt = (x: number, y: number, now: number) => {
-      const t = now - wave.born - Math.hypot(x - wave.x, y - wave.y) / 1.1;
-      return t > 0 && t < 2400 ? 1 - t / 2400 : 0;
+      const t = now - wave.born - Math.hypot(x - wave.x, y - wave.y) / 2;
+      return t > 0 && t < 1500 ? 1 - t / 1500 : 0;
     };
     const mix = (a: number[], b: number[], g: number) => a.map((v, i) => Math.round(v + (b[i] - v) * g));
     const fill = (c: number[], a: number) => { ctx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a})`; };
@@ -134,7 +139,7 @@ function MatrixField({ wordRef, cursorRef }: { wordRef: React.RefObject<HTMLHead
         const tint = palette[(palette.indexOf(shadow) + 1) % 3];
         wave = { x: Math.random() * w, y: Math.random() * h, born: now, tint };
         shadow = tint;
-        nextWave = age + 3500 + Math.random() * 2500;
+        nextWave = age + 1400 + Math.random() * 1000;
       }
       moveGhost(now);
       ctx.clearRect(0, 0, w, h);
