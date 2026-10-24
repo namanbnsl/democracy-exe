@@ -43,18 +43,28 @@ export function BallotTable({ groups, visitor }: { groups: BallotGroup[]; visito
   </Accordion>;
 }
 
-// With `majority`, bars show each share of all ballots and mark the halfway line.
+// With `majority`, bars show each share of all ballots.
 // `moved` splits each bar into the candidate's own votes and votes that arrived from `movedFrom`.
-export function CountChart({ result, unit = "votes", eligible = [...candidateIds], compact = false, majority = false, moved, movedFrom }: { result: Result; unit?: string; eligible?: CandidateId[]; compact?: boolean; majority?: boolean; moved?: Counts; movedFrom?: CandidateId }) {
+// `taken` shows a new candidate pulling votes away: the others keep an empty outline of what they lost,
+// and the newcomer's bar is built from the colours of the candidates it took them from.
+export function CountChart({ result, unit = "votes", eligible = [...candidateIds], compact = false, majority = false, moved, movedFrom, taken }: { result: Result; unit?: string; eligible?: CandidateId[]; compact?: boolean; majority?: boolean; moved?: Counts; movedFrom?: CandidateId; taken?: { by: CandidateId; from: Counts } }) {
   const max = majority ? Math.max(1, result.total) : Math.max(1, ...eligible.map(id => result.counts[id]));
   const leaders = result.winners.length === 1 ? result.winners : [];
-  return <div className="count-chart" data-compact={compact} data-majority={majority} aria-label={`Election result in ${unit}`}>
+  const sources = taken ? eligible.filter(id => id !== taken.by && taken.from[id] > 0) : [];
+  return <div className="count-chart" data-compact={compact} aria-label={`Election result in ${unit}`}>
     {eligible.map(id => <div className="count-row" key={id} data-candidate={id} data-leading={leaders.includes(id)}>
       <div className="count-label"><CandidateName id={id} portrait={!compact} /><span className="count-number"><AnimatedNumber value={result.counts[id]} duration={600} /> <span>{majority ? `${unit} (${Math.round(result.counts[id] / result.total * 100)}%)` : unit}</span></span></div>
-      <div className="count-track"><div className="count-fill" data-candidate={id} style={{ width: `${result.counts[id] / max * 100}%` }}>{moved && movedFrom && moved[id] > 0 && <span className="count-moved" data-candidate={movedFrom} style={{ width: `${moved[id] / result.counts[id] * 100}%` }} />}</div>{majority && <span className="majority-line" aria-hidden="true" />}</div>
+      <div className="count-track">
+        <div className="count-fill" data-candidate={id} data-taken={taken?.by === id || undefined} style={{ width: `${result.counts[id] / max * 100}%` }}>
+          {moved && movedFrom && moved[id] > 0 && <span className="count-moved" data-candidate={movedFrom} style={{ width: `${moved[id] / result.counts[id] * 100}%` }} />}
+          {taken?.by === id && sources.map(from => <span key={from} className="count-source" data-candidate={from} style={{ width: `${taken.from[from] / result.counts[id] * 100}%` }} />)}
+        </div>
+        {taken && taken.by !== id && taken.from[id] > 0 && <span className="count-taken" data-candidate={id} style={{ left: `${result.counts[id] / max * 100}%`, width: `${taken.from[id] / max * 100}%` }} />}
+      </div>
       {moved && movedFrom && moved[id] > 0 && <p className="count-moved-note"><span className="count-moved-key" data-candidate={movedFrom} aria-hidden="true" />{moved[id]} of these came from {nameOf(movedFrom)}</p>}
+      {taken && taken.by !== id && taken.from[id] > 0 && <p className="count-moved-note count-taken-note"><span className="count-taken-key" data-candidate={id} aria-hidden="true" />{taken.from[id]} taken by {nameOf(taken.by)}</p>}
+      {taken?.by === id && <p className="count-moved-note">{sources.map(from => <span key={from} className="count-source-note"><span className="candidate-dot" data-candidate={from} aria-hidden="true" />{taken.from[from]} from {nameOf(from)}</span>)}</p>}
     </div>)}
-    {majority && <p className="majority-legend"><span aria-hidden="true" />Over this line is more than half the votes</p>}
   </div>;
 }
 

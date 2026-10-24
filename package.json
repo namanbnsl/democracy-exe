@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "node --import tsx --test --test-isolation=none src/lib/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "students": "node --import tsx scripts/generate-students.ts"
+    "students": "node --import tsx scripts/generate-students.ts",
+    "portraits": "node --import tsx scripts/generate-portraits.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -31,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "shadcn": "^4.21.4",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"

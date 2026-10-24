@@ -1,5 +1,5 @@
-import { ElectionExperience } from "@/components/election-experience";
+import { Kiosk } from "@/components/kiosk";
 
 export default function Home() {
-  return <ElectionExperience />;
+  return <Kiosk />;
 }

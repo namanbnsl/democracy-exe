@@ -42,6 +42,8 @@ This replaces `src/lib/ai-students.json`. To try a smaller sample in a separate 
 npm run students -- 30 /tmp/students-trial.json
 ```
 
+`npm run portraits` draws the candidate and student portraits into `public/portraits/` the same way. It only draws missing ones; name students to redraw them (`npm run portraits -- Riya Kabir`).
+
 ## Checks
 
 ```sh

@@ -83,6 +83,8 @@ export function ElectionExperience() {
 
   const initialCount = firstChoiceWithVisitor(scenarios.original.groups, firstVote)!;
   const twoCandidateCount = firstChoiceWithVisitor(scenarios.original.groups, firstVote, ["A", "B"])!;
+  // The votes each side loses when Kabir joins are exactly the ones he picks up.
+  const kabirTook = { A: twoCandidateCount.counts.A - initialCount.counts.A, B: twoCandidateCount.counts.B - initialCount.counts.B, C: 0 };
   const rankGroups = withVisitor(scenarios.original.groups, ballot);
   const ranked = runoff(rankGroups);
   const canContinue = step === 0 ? !!favourite : step === 2 ? rankStage > 0 || (!!rankFirst && !!rankBackup) : true;
@@ -108,7 +110,7 @@ export function ElectionExperience() {
         <div className="tour-stage" ref={stageRef} data-step={step}><div className="stage-enter" key={`${step}-${rankStage}`}>
           {step === 0 && <ToggleGroup type="single" variant="campaign" size="campaign" value={favourite ?? ""} onValueChange={v => setFavourite((v || null) as CandidateId | null)} className="candidate-options" aria-label="Choose your prefect">
             {candidates.filter(c => c.id !== "C").map(c => <ToggleGroupItem key={c.id} value={c.id} aria-label={`Choose ${c.name}`} aria-describedby={`campaign-${c.id}`}>
-              <span className="campaign-portrait"><Portrait id={c.id} /></span>
+              <span className="campaign-portrait"><Portrait id={c.id} /><span className="campaign-slogan">“{c.slogan}”</span></span>
               <span className="campaign-heading"><span className="campaign-name">{c.name} {c.surname}</span><span className="choice-circle">{favourite === c.id && <Check aria-hidden="true" />}</span></span>
               <span className="campaign-body" id={`campaign-${c.id}`}>
                 <span className="campaign-grade">Grade {c.grade}</span>
@@ -124,7 +126,7 @@ export function ElectionExperience() {
             <div className="story-grid">
               <section className="story-results" aria-label={kabirEntered ? "After Kabir joins" : "Before Kabir joins"}>
                 <p className="result-signal" key={String(kabirEntered)} data-signal={kabirEntered ? "bad" : "good"}>{kabirEntered ? "Winner changed: Aarav wins" : "Meera wins"}</p>
-                <CountChart majority result={kabirEntered ? initialCount : twoCandidateCount} eligible={kabirEntered ? [...candidateIds] : ["A", "B"]} />
+                <CountChart majority result={kabirEntered ? initialCount : twoCandidateCount} eligible={kabirEntered ? [...candidateIds] : ["A", "B"]} taken={kabirEntered ? { by: "C", from: kabirTook } : undefined} />
               </section>
               <aside className="story-explainer" key={String(kabirEntered)}>
                 {kabirEntered ? <><h2 className="story-candidate"><span className="mini-portrait"><Portrait id="C" small /></span>Kabir Sen</h2><p>Runs the peer tutoring club.</p><p>136 students now choose Kabir.</p><div className="entry-flows"><p><strong>89</strong><span>from Meera’s side</span><ArrowRight aria-hidden="true" /><CandidateName id="C" /></p><p><strong>47</strong><span>from Aarav’s side</span><ArrowRight aria-hidden="true" /><CandidateName id="C" /></p></div><p className="fine-print">Kabir doesn’t win. But Meera loses enough votes for Aarav to take the lead. That’s the <strong>spoiler effect</strong>.</p></>
