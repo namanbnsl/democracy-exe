@@ -19,7 +19,16 @@ function Ballot({ className }: { className?: string }) {
 // Digital rain on paper. The giant wordmark is built on a fine grid of solid ink cells with a hard shadow in a
 // candidate colour. Every few seconds a colour wave sweeps the rain and recolours the shadow.
 const rainChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+=<>*#%@$&".split("");
-function MatrixField({ wordRef }: { wordRef: React.RefObject<HTMLHeadingElement | null> }) {
+// A big arrow pointer that wanders the screen on its own, like a demo running itself.
+function GhostCursor({ ref }: { ref: React.Ref<SVGSVGElement> }) {
+  const arrow = "M1 1v16l4-4 3 6 3-1-3-6h5z";
+  return <svg ref={ref} className="ghost-cursor" viewBox="0 0 16 22" shapeRendering="crispEdges" aria-hidden="true">
+    <path d={arrow} transform="translate(2 2)" fill="var(--title)" />
+    <path d={arrow} fill="#fffdf6" stroke="#1d2a4d" strokeWidth="1.5" strokeLinejoin="miter" />
+  </svg>;
+}
+
+function MatrixField({ wordRef, cursorRef }: { wordRef: React.RefObject<HTMLHeadingElement | null>; cursorRef: React.RefObject<SVGSVGElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -39,6 +48,25 @@ function MatrixField({ wordRef }: { wordRef: React.RefObject<HTMLHeadingElement 
     let wave = { x: 0, y: 0, born: -1e5, tint: palette[0] }, shadow = palette[0], nextWave = 2600;
     const born = performance.now();
     const pointer = { x: -1e4, y: -1e4 };
+    // The ghost glides along a gentle curve to a random spot, rests a moment, then picks another.
+    const ghost = { x: -1e4, y: -1e4, from: [0, 0], via: [0, 0], to: [0, 0], start: 0, dur: 0, rest: 0 };
+    const ghostLeg = (now: number) => {
+      const [x, y] = ghost.to;
+      const to = [w * (.08 + Math.random() * .84), h * (.1 + Math.random() * .8)];
+      const dist = Math.hypot(to[0] - x, to[1] - y);
+      const bend = (Math.random() - .5) * dist * .6;
+      const mx = (x + to[0]) / 2, my = (y + to[1]) / 2;
+      Object.assign(ghost, { from: [x, y], to, via: [mx - (to[1] - y) / (dist || 1) * bend, my + (to[0] - x) / (dist || 1) * bend], start: now, dur: 700 + dist * 1.6, rest: 250 + Math.random() * 1400 });
+    };
+    const moveGhost = (now: number) => {
+      if (!ghost.dur) { ghost.to = [w * .7, h * .75]; ghostLeg(now); }
+      const t = Math.min(1, (now - ghost.start) / ghost.dur);
+      const e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const q = (i: number) => (1 - e) * (1 - e) * ghost.from[i] + 2 * (1 - e) * e * ghost.via[i] + e * e * ghost.to[i];
+      ghost.x = q(0); ghost.y = q(1);
+      if (cursorRef.current) cursorRef.current.style.transform = `translate(${ghost.x}px, ${ghost.y}px)`;
+      if (now - ghost.start > ghost.dur + ghost.rest) ghostLeg(now);
+    };
     const newDrop = (col: number, first = false) => ({ col, head: first ? Math.random() * rows : -Math.random() * rows * .5, speed: 9 + Math.random() * 34, len: 6 + Math.floor(Math.random() * 30) });
 
     const buildMask = () => {
@@ -108,6 +136,7 @@ function MatrixField({ wordRef }: { wordRef: React.RefObject<HTMLHeadingElement 
         shadow = tint;
         nextWave = age + 3500 + Math.random() * 2500;
       }
+      moveGhost(now);
       ctx.clearRect(0, 0, w, h);
       ctx.font = font.replace("700 ", `700 ${C - 1}px `);
       ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -131,7 +160,7 @@ function MatrixField({ wordRef }: { wordRef: React.RefObject<HTMLHeadingElement 
           const a = k === 0 ? 1 : Math.pow(1 - k / d.len, .9);
           if (mask[i]) continue;
           const x = d.col * C + C / 2, y = r * C + C / 2;
-          const near = Math.hypot(x - pointer.x, y - pointer.y);
+          const near = Math.min(Math.hypot(x - pointer.x, y - pointer.y), Math.hypot(x - ghost.x, y - ghost.y));
           fill(k === 0 ? ink : mix(base, wave.tint, waveAt(x, y, now)), near < 180 ? Math.min(1, a * 2) : a);
           ctx.fillText(rainChars[glyphs[i]], x, y);
         }
@@ -167,7 +196,7 @@ function MatrixField({ wordRef }: { wordRef: React.RefObject<HTMLHeadingElement 
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerleave", leave);
     };
-  }, [wordRef]);
+  }, [wordRef, cursorRef]);
   return <canvas ref={canvasRef} className="voter-field" aria-hidden="true" />;
 }
 
@@ -175,6 +204,7 @@ export function AttractScreen({ onStart }: { onStart: () => void }) {
   const [leaving, setLeaving] = useState(false);
   const zoomRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLHeadingElement>(null);
+  const cursorRef = useRef<SVGSVGElement>(null);
 
   // Windows-style "maximise": an outline grows from the button to fill the screen.
   function start(box: DOMRect) {
@@ -187,7 +217,7 @@ export function AttractScreen({ onStart }: { onStart: () => void }) {
   }
 
   return <div className={`attract ${GeistPixelSquare.variable}`} data-leaving={leaving} role="dialog" aria-modal="true" aria-label="democracy.exe">
-    <MatrixField wordRef={wordRef} />
+    <MatrixField wordRef={wordRef} cursorRef={cursorRef} />
     <main className="attract-main">
       <h1 ref={wordRef} className="attract-word">democracy.exe</h1>
       <button type="button" className="attract-run" onClick={e => start(e.currentTarget.getBoundingClientRect())}>
@@ -196,6 +226,7 @@ export function AttractScreen({ onStart }: { onStart: () => void }) {
         <span className="run-arrow" aria-hidden="true">→</span>
       </button>
     </main>
+    <GhostCursor ref={cursorRef} />
     <div ref={zoomRef} className="attract-zoom" aria-hidden="true" />
   </div>;
 }
