@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { FieldLegend, FieldSet } from "@/components/ui/field";
-import { Portrait } from "@/components/portrait";
+import { Portrait, portraitBackdrop } from "@/components/portrait";
 import { CandidateName, CountChart, PointsExplainer, Ranking, RunoffWalkthrough } from "@/components/election-visuals";
 import { SimulationLab } from "@/components/simulation-lab";
 import { candidateIds, candidates, firstChoiceWithVisitor, nameOf, runoff, scenarios, withVisitor, type CandidateId } from "@/lib/elections";
@@ -40,6 +40,7 @@ export function ElectionExperience() {
   const [ballot, setBallot] = useState<CandidateId[] | null>(null);
   // Rank a ballot, follow instant runoff, then count the same ballot with points.
   const [rankStage, setRankStage] = useState(0);
+  const [runoffRound, setRunoffRound] = useState(0);
   const [simModel, setSimModel] = useState<VoterModel>("random");
   const [resetOpen, setResetOpen] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
@@ -53,7 +54,7 @@ export function ElectionExperience() {
   function go(next: number) { setStep(next); setReached(r => Math.max(r, next)); }
   function reset() {
     setStep(0); setReached(0); setFavourite(null); setFirstVote(null); setKabirEntered(false);
-    setRankFirst(null); setRankBackup(null); setBallot(null); setRankStage(0);
+    setRankFirst(null); setRankBackup(null); setBallot(null); setRankStage(0); setRunoffRound(0);
     setSimModel("random"); setResetOpen(false);
   }
   function cast() {
@@ -65,18 +66,21 @@ export function ElectionExperience() {
   function countRanking() {
     if (!rankFirst || !rankBackup) return;
     setBallot([rankFirst, rankBackup, candidateIds.find(id => id !== rankFirst && id !== rankBackup)!]);
-    setRankStage(1);
+    setRankStage(1); setRunoffRound(0);
   }
   function next() {
     if (step === 0) cast();
     else if (step === 1 && !kabirEntered) setKabirEntered(true);
     else if (step === 2 && rankStage === 0) countRanking();
+    // Show the runoff's final count before moving on, so nobody skips past who actually wins.
+    else if (step === 2 && rankStage === 1 && runoffRound < lastRound) setRunoffRound(lastRound);
     else if (step === 2 && rankStage === 1) setRankStage(2);
     else if (step === chapters.length - 1) setResetOpen(true);
     else go(step + 1);
   }
   function back() {
-    if (step === 2 && rankStage > 0) setRankStage(rankStage - 1);
+    if (step === 2 && rankStage === 1 && runoffRound > 0) setRunoffRound(0);
+    else if (step === 2 && rankStage > 0) setRankStage(rankStage - 1);
     else if (step === 1 && kabirEntered) setKabirEntered(false);
     else go(step - 1);
   }
@@ -87,10 +91,11 @@ export function ElectionExperience() {
   const kabirTook = { A: twoCandidateCount.counts.A - initialCount.counts.A, B: twoCandidateCount.counts.B - initialCount.counts.B, C: 0 };
   const rankGroups = withVisitor(scenarios.original.groups, ballot);
   const ranked = runoff(rankGroups);
+  const lastRound = ranked.rounds.length - 1;
   const canContinue = step === 0 ? !!favourite : step === 2 ? rankStage > 0 || (!!rankFirst && !!rankBackup) : true;
   const nextLabel = step === 0 ? favourite ? `Vote for ${nameOf(favourite)}` : "Pick a candidate"
     : step === 1 ? kabirEntered ? "Try ranking" : "Kabir joins the race"
-    : step === 2 ? ["Count my ranking", "Count with points", "Try more elections"][rankStage]
+    : step === 2 ? rankStage === 1 && runoffRound < lastRound ? "See the final count" : ["Count my ranking", "Count with points", "Try more elections"][rankStage]
     : "Start again";
   const title = step === 1 ? "Can a new candidate change the winner?"
     : step === 2 ? ["Now rank your top two", "Instant runoff", "Points (Borda)"][rankStage]
@@ -110,7 +115,7 @@ export function ElectionExperience() {
         <div className="tour-stage" ref={stageRef} data-step={step}><div className="stage-enter" key={`${step}-${rankStage}`}>
           {step === 0 && <ToggleGroup type="single" variant="campaign" size="campaign" value={favourite ?? ""} onValueChange={v => setFavourite((v || null) as CandidateId | null)} className="candidate-options" aria-label="Choose your prefect">
             {candidates.filter(c => c.id !== "C").map(c => <ToggleGroupItem key={c.id} value={c.id} aria-label={`Choose ${c.name}`} aria-describedby={`campaign-${c.id}`}>
-              <span className="campaign-portrait"><Portrait id={c.id} /><span className="campaign-slogan">“{c.slogan}”</span></span>
+              <span className="campaign-portrait" style={{ background: portraitBackdrop(c.id) }}><Portrait id={c.id} /><span className="campaign-slogan">“{c.slogan}”</span></span>
               <span className="campaign-heading"><span className="campaign-name">{c.name} {c.surname}</span><span className="choice-circle">{favourite === c.id && <Check aria-hidden="true" />}</span></span>
               <span className="campaign-body" id={`campaign-${c.id}`}>
                 <span className="campaign-grade">Grade {c.grade}</span>
@@ -139,7 +144,7 @@ export function ElectionExperience() {
             <div className="rank-card"><FieldSet><FieldLegend>First choice</FieldLegend><CandidateChoices value={rankFirst} label="My favourite" onChange={id => { setRankFirst(id); setRankBackup(null); }} /></FieldSet></div>
             <div className="rank-card"><FieldSet><FieldLegend>Second choice</FieldLegend>{rankFirst ? <CandidateChoices value={rankBackup} exclude={rankFirst} label="My backup" onChange={setRankBackup} /> : <p className="note">Pick your first choice first.</p>}</FieldSet></div>
             <p className="ranking-preview">Your ballot: {rankFirst ? <Ranking ranking={rankBackup ? [rankFirst, rankBackup, candidateIds.find(id => id !== rankFirst && id !== rankBackup)!] : [rankFirst]} /> : "Waiting for your first choice"}</p>
-          </div> : rankStage === 1 ? <RunoffWalkthrough result={ranked} /> : <div className="stage points-stage" aria-live="polite"><PointsExplainer groups={rankGroups} ballot={ballot} /></div>)}
+          </div> : rankStage === 1 ? <RunoffWalkthrough result={ranked} round={runoffRound} onRound={setRunoffRound} /> : <div className="stage points-stage" aria-live="polite"><PointsExplainer groups={rankGroups} ballot={ballot} /></div>)}
 
           {step === 3 && <div className="stage"><SimulationLab model={simModel} onModelChange={setSimModel} /></div>}
 

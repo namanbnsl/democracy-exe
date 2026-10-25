@@ -6,7 +6,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Portrait } from "@/components/portrait";
-import { candidateIds, nameOf, positional, type BallotGroup, type CandidateId, type Counts, type Result, type RunoffResult } from "@/lib/elections";
+import { candidateIds, nameOf, positional, runoff, type BallotGroup, type CandidateId, type Counts, type Result, type RunoffResult } from "@/lib/elections";
 
 // Counts up (or down) to `value` so changes are easy to follow. Jumps straight there with reduced motion.
 export function AnimatedNumber({ value, duration = 450 }: { value: number; duration?: number }) {
@@ -17,7 +17,8 @@ export function AnimatedNumber({ value, duration = 450 }: { value: number; durat
     if (start === value || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { from.current = value; setShown(value); return; }
     const began = performance.now();
     let frame = requestAnimationFrame(function tick(now) {
-      const t = Math.min(1, (now - began) / duration);
+      // rAF can pass a timestamp from before `began`, which would overshoot below the start.
+      const t = Math.min(1, Math.max(0, (now - began) / duration));
       const next = Math.round(start + (value - start) * (1 - (1 - t) ** 3));
       from.current = next; setShown(next);
       if (t < 1) frame = requestAnimationFrame(tick);
@@ -123,6 +124,7 @@ export function PointsExplainer({ groups, ballot, weights = [2, 1, 0] }: { group
   const winner = result.winners.length === 1 ? result.winners[0] : null;
   const order = [...candidateIds].sort((a, b) => result.counts[b] - result.counts[a]);
   const firstLeader = [...candidateIds].sort((a, b) => tally(b, 0) - tally(a, 0))[0];
+  const runoffWinner = runoff(groups).winners;
   const places = ["1st", "2nd", "3rd"];
   return <div className="points-explainer">
     {ballot && <section className="points-rule" aria-label="How your ballot gives out points">
@@ -145,18 +147,19 @@ export function PointsExplainer({ groups, ballot, weights = [2, 1, 0] }: { group
       ? `${nameOf(winner)} has the most first choices and the most points.`
       : tally(winner, 1) > tally(firstLeader, 1)
         ? `${nameOf(firstLeader)} has the most first choices, but more students put ${nameOf(winner)} second. That’s enough to win on points.`
-        : `${nameOf(winner)} wins on points.`}</p>}
+        : `${nameOf(winner)} wins on points.`}
+      {runoffWinner.length === 1 && runoffWinner[0] !== winner && <> <strong>Same ballots, but instant runoff picked {nameOf(runoffWinner[0])}.</strong></>}</p>}
   </div>;
 }
 
-export function RunoffWalkthrough({ result }: { result: RunoffResult }) {
-  const [roundIndex, setRoundIndex] = useState(0);
+// `round` is controlled, so the footer's main button can step through the rounds too.
+export function RunoffWalkthrough({ result, round: roundIndex, onRound }: { result: RunoffResult; round: number; onRound: (round: number) => void }) {
   const index = Math.min(roundIndex, result.rounds.length - 1);
   const round = result.rounds[index];
   const previous = result.rounds[index - 1];
   const winner = !round.eliminated && result.winners.length === 1 ? result.winners[0] : null;
   return <div className="runoff-walkthrough">
-    <ToggleGroup type="single" variant="outline" size="lg" spacing={0} value={String(index)} onValueChange={value => value && setRoundIndex(Number(value))} aria-label="Instant runoff round" className="round-selector">
+    <ToggleGroup type="single" variant="outline" size="lg" spacing={0} value={String(index)} onValueChange={value => value && onRound(Number(value))} aria-label="Instant runoff round" className="round-selector">
       {result.rounds.map((_, i) => <ToggleGroupItem key={i} value={String(i)}>{i === result.rounds.length - 1 ? "Final count" : "First count"}</ToggleGroupItem>)}
     </ToggleGroup>
     <div className="runoff-grid" aria-live="polite">

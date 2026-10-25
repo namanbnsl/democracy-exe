@@ -104,8 +104,9 @@
 .candidate-options[data-slot="toggle-group"] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: 22px; align-items: stretch; }
 .candidate-options [data-slot="toggle-group-item"] { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; }
 .campaign-portrait { position: relative; display: block; height: 168px; overflow: hidden; margin: 9px 9px 0; border-radius: 8px; }
-/* Campaign posters: the whole portrait on its own colour, with the slogan beside it (or above it on tall screens). */
-.campaign-portrait .portrait-img { object-fit: contain; object-position: 88% 100%; transform: scale(1.45); transform-origin: 88% 100%; }
+/* Campaign posters: head and shoulders on the right, on the portrait's own colour, with the slogan beside it
+   (or above the whole figure on tall screens). */
+.campaign-portrait .portrait-img { position: absolute; inset: 0 0 0 auto; width: 44%; object-position: 50% 26%; }
 .campaign-slogan { position: absolute; inset: 0 auto 0 0; z-index: 1; display: flex; align-items: center; width: 58%; padding: 0 22px; font-size: 22px; font-weight: 650; line-height: 1.15; letter-spacing: -.4px; text-wrap: balance; color: #1d2433; }
 .portrait-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
 .portrait-initial { display: grid; place-items: center; width: 100%; height: 100%; background: #f3ead8; color: var(--muted-foreground); font-size: 2em; font-weight: 600; }
@@ -373,7 +374,7 @@
 .story-pair { display: flex; align-items: center; gap: 18px; }
 .story-pair > span:nth-child(2) { color: var(--muted-foreground); font-size: 14px; }
 .entry-flows { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
-.entry-flows > p { display: grid; grid-template-columns: 26px 1fr 14px auto; gap: 8px; align-items: center; margin: 0; font-size: 14px; }
+.entry-flows > p { display: grid; grid-template-columns: 26px auto 14px auto; justify-content: start; gap: 8px; align-items: center; margin: 0; font-size: 14px; }
 .entry-flows svg, .transfer-summary svg { width: 14px; height: 14px; }
 .entry-flows .candidate-name { font-size: 14px; gap: 5px; }
 .round-selector[data-slot="toggle-group"] { width: fit-content; margin-bottom: 16px; }
@@ -486,7 +487,7 @@
   .guided-app .candidate-options[data-slot="toggle-group"] { gap: 24px; }
   .guided-app .campaign-portrait { height: auto; aspect-ratio: 2 / 3; }
   .guided-app .campaign-slogan { display: block; inset: 0 0 auto; width: auto; padding: 26px 26px; font-size: 28px; letter-spacing: -.6px; }
-  .guided-app .campaign-portrait .portrait-img { object-fit: cover; object-position: 50% 100%; transform: none; }
+  .guided-app .campaign-portrait .portrait-img { inset: 6% 0 auto; width: 100%; height: 100%; object-position: 50% 0; }
   .guided-app .campaign-body { flex: none; gap: 14px; padding: 14px 24px 26px; }
   .guided-app .campaign-heading { padding: 20px 24px 0; }
   .guided-app .campaign-name { font-size: 30px; }
@@ -565,5 +566,11 @@
 /* Phones: the portrait is a small square beside the card text, so it has no room for a slogan. */
 @media (max-width: 700px) {
   .campaign-slogan { display: none; }
-  .campaign-portrait .portrait-img { object-fit: cover; object-position: 50% 75%; transform: none; }
+  .campaign-portrait .portrait-img { width: 100%; object-position: 50% 30%; }
 }
+
+/* Kiosk: a gentle warning before an idle session starts over. */
+.idle-warning { position: fixed; left: 50%; bottom: 28px; z-index: 50; display: flex; align-items: center; gap: 20px; width: max-content; max-width: calc(100% - 32px); padding: 16px 16px 16px 22px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); box-shadow: 0 12px 40px #252b3833; transform: translateX(-50%); animation: idle-in 220ms ease-out both; }
+.idle-warning p { margin: 0; font-size: 17px; font-variant-numeric: tabular-nums; }
+@keyframes idle-in { from { opacity: 0; transform: translate(-50%, 12px); } }
+@media (max-width: 560px) { .idle-warning { flex-direction: column; align-items: stretch; gap: 12px; } }

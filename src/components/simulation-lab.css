@@ -45,7 +45,7 @@
 .pg-handle-name { fill: var(--foreground); font-size: 15px; font-weight: 600; pointer-events: none; }
 .pg-dot[data-picked="true"] { stroke: var(--foreground); stroke-width: 2.5; }
 .pg-picture .pg-dot { cursor: default; }
-.pg-student { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 14px; row-gap: 3px; align-items: start; margin: 10px 0 6px; padding: 12px 16px 12px 12px; border-radius: 12px; background: var(--muted); animation: pg-open 220ms ease-out both; }
+.pg-student { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 14px; row-gap: 3px; align-items: start; margin: 8px 0 4px; padding: 12px 16px 12px 12px; border-radius: 12px; background: var(--muted); animation: pg-open 220ms ease-out both; }
 .pg-student > :not(.pg-student-face) { grid-column: 2; }
 .pg-student-face { grid-row: 1 / span 3; width: 76px; height: 76px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 3px var(--card); }
 .pg-student figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }

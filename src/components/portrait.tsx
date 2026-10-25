@@ -8,15 +8,18 @@ import type { CandidateId } from "@/lib/elections";
 // above the head for the slogan; `face` is where the head is (as percentages of the image) so round avatars
 // can crop in on it.
 const candidates: Record<CandidateId, { file: string; backdrop: string; face: [number, number] }> = {
-  A: { file: "aarav", backdrop: "#abd3fd", face: [52, 43] },
-  B: { file: "meera", backdrop: "#f8bdd0", face: [50, 47] },
-  C: { file: "kabir", backdrop: "#d4c8fc", face: [54, 50] },
+  A: { file: "aarav", backdrop: "#a9d4fc", face: [52, 38] },
+  B: { file: "meera", backdrop: "#f4c1d5", face: [47, 40] },
+  C: { file: "kabir", backdrop: "#d7cbfa", face: [50, 41] },
 };
 
 function frame(face: [number, number], zoom: number) {
   const at = `${face[0]}% ${face[1]}%`;
   return { objectPosition: at, transformOrigin: at, transform: `scale(${zoom})` } satisfies CSSProperties;
 }
+
+// The flat colour behind each candidate, so a frame around a portrait can blend into it.
+export const portraitBackdrop = (id: CandidateId) => candidates[id].backdrop;
 
 // `small` crops in on the face for round avatars.
 export function Portrait({ id, small = false }: { id: CandidateId; small?: boolean }) {

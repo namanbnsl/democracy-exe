@@ -12,13 +12,13 @@ import sharp from "sharp";
 const OUT = new URL("../public/portraits/", import.meta.url).pathname;
 const PARALLEL = 6;
 
-const style = "Flat geometric illustration built from simple shapes, like a modern editorial avatar set: solid flat colours, no outlines, minimal facial features, dot eyes. Not anime, not manga: small simple eyes, realistic Indian facial features and proportions, no glossy highlights in the hair";
+const style = "Warm, naturalistic illustration, like a hand-painted picture in a good Indian school textbook: soft matte shading, true-to-life proportions, natural Indian facial features with naturally sized brown eyes (whites and irises visible), real-looking hair. An ordinary, everyday Indian school student, not a model. Not anime, not manga, not chibi, not a cartoon, no big sparkly eyes, no spiky or gravity-defying hair, no glossy highlights"
 
 // Candidates are in Grade 12. Their posters are tall, with empty space above the head for the slogan.
 const candidates = [
-  { file: "aarav", who: "Aarav, a 17-year-old Indian boy, football captain, cocky and cheerful, light-brown skin, tousled black hair, laughing mid-sentence, head turned three-quarters, white school shirt with sleeves rolled up and navy tie loosened, a whistle on a cord round his neck", backdrop: "soft sky blue (#b9d9fa)" },
-  { file: "meera", who: "Meera, a 17-year-old Indian girl, class representative since Grade 9, serious but kind, dark brown skin, black hair in two neat buns, a small knowing smile, holding a clipboard to her chest, white school shirt and navy tie with a prefect badge", backdrop: "soft pink (#f6c7d9)" },
-  { file: "kabir", who: "Kabir, a 17-year-old Indian boy who runs a peer tutoring club, warm and thoughtful, medium-brown skin, neat short black hair, round glasses, chin resting on one hand, navy school sweater over a white collar", backdrop: "soft lavender (#ded3fc)" },
+  { file: "aarav", who: "Aarav, a 17-year-old Indian schoolboy, football captain, cheerful and a bit cocky, wheatish-brown skin, short thick black hair a little messy from practice, mid-laugh, head turned three-quarters, standard Indian school uniform: white half-sleeve shirt with a school badge on the pocket and a navy-and-maroon striped tie worn loose, a whistle on a cord round his neck", backdrop: "soft sky blue (#b9d9fa)" },
+  { file: "meera", who: "Meera, a 17-year-old Indian schoolgirl, class representative since Grade 9, serious but kind, brown skin, oiled black hair in two long neat plaits tied with navy ribbons, a small knowing smile, holding a clipboard to her chest, standard Indian school uniform: white half-sleeve shirt, navy-and-maroon striped tie, a small prefect badge pinned above the pocket", backdrop: "soft pink (#f6c7d9)" },
+  { file: "kabir", who: "Kabir, a 17-year-old Indian schoolboy who runs a peer tutoring club, warm and thoughtful, medium-brown skin, neatly side-parted short black hair, round thin-framed glasses, a slight smile, holding a few notebooks against his side, standard Indian school uniform: navy V-neck school sweater over a white shirt and a navy-and-maroon striped tie", backdrop: "soft lavender (#ded3fc)" },
 ].map(c => ({ ...c, tall: true }));
 
 // One face per name in scripts/generate-students.ts. Students are in Classes 6 to 10, so about 11 to 15.

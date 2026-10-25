@@ -58,7 +58,7 @@ function SchoolPicture({ school, model, hovered, first, picked, onPick, onMove }
   if (model !== "spectrum") {
     // A block of dots, one per student, grouped by how they ranked the candidates.
     // AI students leave room under the dots for the student card.
-    const ai = model === "ai", h = ai ? (tall ? 150 : 124) : H;
+    const ai = model === "ai", h = ai ? (tall ? 150 : 88) : H;
     const sorted = school.students.map((student, i) => ({ ...student, i })).sort((a, b) => a.order - b.order || a.i - b.i);
     const cell = Math.min(34, Math.sqrt(W * (h - 10) / n));
     const columns = Math.max(1, Math.floor(W / cell));
