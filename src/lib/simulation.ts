@@ -32,8 +32,26 @@ export function seededRandom(seed: number) {
 }
 
 // `order` indexes `orders`; `reason` is why the student put their first choice first.
-export type AiStudent = { name: string; profile: string; order: number; reason: string };
+// `trait` is the student's main trait, which decides their kind; `bio` is a one-line caption the AI wrote.
+export type AiStudent = { name: string; profile: string; trait: string; bio: string; order: number; reason: string };
 export const aiStudentPool: AiStudent[] = aiStudents.students;
+
+// The kinds of student the personality traits were written for; scripts/generate-students.ts builds
+// every profile from these. Each AI school mixes the kinds in its own proportions, so some schools are
+// sportier and some more studious, while every student keeps the vote and reason the AI gave them.
+export const crowds = {
+  carers: { label: "Caring", traits: ["finds it hard to speak up", "struggles with homework", "worries about making friends", "often left out of teams"] },
+  doers: { label: "Get it done", traits: ["likes rules and order", "thinks leaders need experience", "gets annoyed when nothing changes", "wants things to get done", "hates the queue at the water tap", "wishes the library stayed open at lunch"] },
+  sporty: { label: "Sporty", traits: ["wants the school to win trophies", "lives for the school fest", "complains about the canteen", "has lots of friends", "thinks school is boring"] },
+};
+// Traits that belong to no kind; these students turn up in every school in the same share.
+export const sharedTraits = ["cares most about fairness", "wants to be listened to", "loves organising things"];
+export type Crowd = keyof typeof crowds;
+export const crowdIds = Object.keys(crowds) as Crowd[];
+const SHARED = sharedTraits.length / (sharedTraits.length + crowdIds.reduce((sum, id) => sum + crowds[id].traits.length, 0));
+
+export const crowdOf = (student: AiStudent): Crowd | null => crowdIds.find(id => crowds[id].traits.includes(student.trait)) ?? null;
+const poolByCrowd = [...crowdIds, null].map(id => aiStudentPool.flatMap((student, i) => crowdOf(student) === id ? [i] : []));
 
 export function judge(groups: BallotGroup[]): SimulatedElection {
   const winners = { plurality: plurality(groups).winners, runoff: runoff(groups).winners, borda: positional(groups).winners };
@@ -68,7 +86,8 @@ export function explainElection(groups: BallotGroup[]) {
 // AI profiles are sampled independently from the pool. Sampling with replacement keeps
 // schools varied even when their size approaches or exceeds the number of profiles.
 export type SchoolStudent = { order: number; position?: number; student?: number };
-export type School = { groups: BallotGroup[]; students: SchoolStudent[]; spots?: Record<CandidateId, number> };
+// `mix` is each kind's share of an AI school, leaving out the students who belong to no kind.
+export type School = { groups: BallotGroup[]; students: SchoolStudent[]; spots?: Record<CandidateId, number>; mix?: Record<Crowd, number> };
 
 export function rankFrom(spots: Record<CandidateId, number>, position: number) {
   const ranking = [...candidateIds].sort((x, y) => Math.abs(spots[x] - position) - Math.abs(spots[y] - position));
@@ -82,16 +101,24 @@ export function makeSchool(seed: number, voters: number, model: VoterModel, spot
   // Keep candidates apart so their names stay readable on the line.
   const drawn = { A: .08 + random() * .84, B: .08 + random() * .84, C: .08 + random() * .84 };
   const stand = spots ?? drawn;
+  // A random mix of the three kinds, usually varied but rarely one kind alone (a Dirichlet(3, 3, 3) draw).
+  const weights = crowdIds.map(() => Array.from({ length: 3 }, () => -Math.log(1 - random())).reduce((a, b) => a + b));
+  const total = weights.reduce((sum, w) => sum + w, 0);
+  const mix = Object.fromEntries(crowdIds.map((id, i) => [id, weights[i] / total])) as Record<Crowd, number>;
+  const shares = [...crowdIds.map(id => mix[id] * (1 - SHARED)), SHARED];
   const students: SchoolStudent[] = [];
   for (let i = 0; i < voters; i++) {
     if (model === "random") students.push({ order: Math.floor(random() * orders.length) });
     else if (model === "ai") {
-      const student = Math.floor(random() * aiStudentPool.length);
+      let roll = random(), kind = 0;
+      while (kind < shares.length - 1 && roll >= shares[kind]) roll -= shares[kind++];
+      const pool = poolByCrowd[kind];
+      const student = pool[Math.floor(random() * pool.length)];
       students.push({ order: aiStudentPool[student].order, student });
     } else { const position = random(); students.push({ order: rankFrom(stand, position), position }); }
   }
   const counts = orders.map(() => 0);
   for (const student of students) counts[student.order]++;
   const groups = orders.map((ranking, i) => ({ count: counts[i], ranking })).filter(group => group.count > 0);
-  return model === "spectrum" ? { groups, students, spots: stand } : { groups, students };
+  return model === "spectrum" ? { groups, students, spots: stand } : model === "ai" ? { groups, students, mix } : { groups, students };
 }

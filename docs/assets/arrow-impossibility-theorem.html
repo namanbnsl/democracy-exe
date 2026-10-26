@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700&display=block" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eee1c4;
+    --ink: #2a231b;
+    --soft: #6b5d4a;
+    --pencil: #b4382c;
+    --c1: #b9473e; --c2: #3f6ea8; --c3: #c9962e; --c4: #4d8a52; --c5: #7a4f86;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #000; }
+  body { width: 1000px; color: var(--ink); font-family: "Balsamiq Sans", sans-serif; }
+
+  /* trifold side panel, tall strip: 1000 x 2500 (1 : 2.5) */
+  .sheet {
+    position: relative;
+    width: 1000px; height: 2500px;
+    padding: 56px 54px 56px;
+    background:
+      radial-gradient(ellipse 380px 300px at 88% 6%, rgba(160,110,40,0.10), transparent 70%),
+      radial-gradient(ellipse 320px 300px at 8% 88%, rgba(150,100,40,0.09), transparent 70%),
+      var(--paper);
+    overflow: hidden;
+  }
+  .grain, .burn, .fold { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+  .grain {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.30  0 0 0 0 0.22  0 0 0 0 0.12  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.004 0.06' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.33  0 0 0 0 0.18  0 0 0 -1.3 0.75'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+    opacity: 0.20;
+    mix-blend-mode: multiply;
+  }
+  .burn { background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 66%, rgba(110,72,25,0.22) 100%); }
+  .fold { background: linear-gradient(180deg, transparent calc(50% - 1px), rgba(90,60,20,0.06) 50%, rgba(255,255,255,0.10) calc(50% + 2px), transparent calc(50% + 6px)); }
+  .content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+
+  header { text-align: center; }
+  h1 { font-family: "Balsamiq Sans", sans-serif; font-weight: 700; margin: 0; text-transform: uppercase; line-height: 0.95; }
+  h1 .big { display: block; font-size: 112px; letter-spacing: 1px; }
+  h1 .small { display: block; font-size: 64px; margin-top: 6px; }
+  .lede { font-size: 31px; line-height: 1.28; margin: 22px auto 0; max-width: 892px; }
+  .lede b { color: var(--pencil); font-weight: 400; }
+
+  .venn-wrap { position: relative; height: 580px; flex: none; }
+  .venn-wrap svg { position: absolute; inset: 0; }
+
+  .rows { display: flex; flex-direction: column; border-top: 3px solid var(--ink); }
+  .row {
+    display: grid; grid-template-columns: 78px 1fr 372px; gap: 18px; align-items: center;
+    padding: 32px 0;
+    border-bottom: 2px dashed rgba(42,35,27,0.28);
+  }
+  .row:last-child { border-bottom: 3px solid var(--ink); }
+  .badge {
+    width: 78px; height: 78px; border-radius: 15px; align-self: start; margin-top: 2px;
+    display: grid; place-items: center;
+    font-family: "Balsamiq Sans", sans-serif; font-weight: 700; font-size: 37px; color: #fbf3e2;
+    border: 2.5px solid var(--ink);
+    transform: rotate(-3deg);
+  }
+  .row:nth-child(even) .badge { transform: rotate(2deg); }
+  .b1 { background: var(--c1); } .b2 { background: var(--c2); } .b3 { background: var(--c3); } .b4 { background: var(--c4); } .b5 { background: var(--c5); }
+  .name { font-family: "Balsamiq Sans", sans-serif; font-weight: 700; font-size: 35px; line-height: 1.05; text-transform: uppercase; }
+  .name span { font-family: "Balsamiq Sans", sans-serif; text-transform: none; font-weight: 400; font-size: 26px; color: var(--soft); display: block; margin: 3px 0 0; }
+  .text { font-size: 28px; line-height: 1.22; margin-top: 10px; }
+
+  .banner {
+    background: #1e1e1f; color: #f4ecd9;
+    padding: 20px 26px 22px;
+    text-align: center;
+    font-family: "Balsamiq Sans", sans-serif; font-weight: 700; font-size: 40px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.5px;
+    clip-path: polygon(0.8% 6%, 99.2% 0, 100% 92%, 0 100%);
+  }
+  .banner em { font-style: normal; color: #e8b84a; display: block; }
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet">
+  <div class="grain"></div><div class="burn"></div><div class="fold"></div>
+  <div class="content">
+    <header>
+      <h1><span class="big">Arrow’s</span><span class="small">Impossibility Theorem</span></h1>
+      <p class="lede">Kenneth Arrow (1951): with <b>3 or more</b> candidates, no ranking-based voting rule can satisfy <b>all five</b> conditions in every election.</p>
+    </header>
+
+    <div class="venn-wrap"><svg id="venn" viewBox="0 0 892 580" width="892" height="580"></svg></div>
+
+    <div class="rows">
+        <div class="row">
+          <div class="badge b1">01</div>
+          <div><div class="name">Unrestricted domain<span>every ballot counts</span></div>
+            <div class="text">Any honest ranking is allowed, and the rule must work for every mix of ballots.</div></div>
+          <svg id="d1" viewBox="0 0 300 128" width="372" height="159"></svg>
+        </div>
+        <div class="row">
+          <div class="badge b2">02</div>
+          <div><div class="name">Transitivity<span>no going in circles</span></div>
+            <div class="text">If the group puts Aarav above Meera and Meera above Kabir, Aarav must be above Kabir.</div></div>
+          <svg id="d2" viewBox="0 0 300 128" width="372" height="159"></svg>
+        </div>
+        <div class="row">
+          <div class="badge b3">03</div>
+          <div><div class="name">Unanimity<span>if everyone agrees, the result agrees</span></div>
+            <div class="text">If every student prefers Aarav to Meera, so must the result.</div></div>
+          <svg id="d3" viewBox="0 0 300 128" width="372" height="159"></svg>
+        </div>
+        <div class="row">
+          <div class="badge b4">04</div>
+          <div><div class="name">Non-dictatorship<span>nobody is the boss</span></div>
+            <div class="text">The rule can’t just copy one student’s ranking.</div></div>
+          <svg id="d4" viewBox="0 0 300 128" width="372" height="159"></svg>
+        </div>
+        <div class="row">
+          <div class="badge b5">05</div>
+          <div><div class="name">Independence<span>of irrelevant alternatives</span></div>
+            <div class="text">Moving Kabir shouldn’t change whether Aarav or Meera is ahead. With Borda points it does.</div></div>
+          <svg id="d5" viewBox="0 0 300 128" width="372" height="159"></svg>
+        </div>
+    </div>
+
+    <div class="banner">No perfect voting system, <em>only trade-offs</em></div>
+  </div>
+</div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const C = { A: "#b9473e", M: "#3f6ea8", K: "#4d8a52" };
+const NAME = { A: "Aarav", M: "Meera", K: "Kabir" };
+const INK = "#2a231b", SOFT = "#6b5d4a", PENCIL = "#b4382c";
+const HAND = "Balsamiq Sans", HEAD = "Balsamiq Sans";
+
+function el(parent, tag, attrs = {}, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text != null) e.textContent = text;
+  parent.appendChild(e);
+  return e;
+}
+function defs(svg) {
+  const d = el(svg, "defs");
+  const f = el(d, "filter", { id: svg.id + "-w", x: "-5%", y: "-5%", width: "110%", height: "110%" });
+  el(f, "feTurbulence", { type: "fractalNoise", baseFrequency: "0.04", numOctaves: "2", seed: "3", result: "t" });
+  el(f, "feDisplacementMap", { in: "SourceGraphic", in2: "t", scale: "2.4" });
+  for (const [id, col] of [["arr", INK], ["arrR", PENCIL]]) {
+    const m = el(d, "marker", { id: `${svg.id}-${id}`, viewBox: "0 0 10 10", refX: "8", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto" });
+    el(m, "path", { d: "M1 1 L9 5 L1 9", fill: "none", stroke: col, "stroke-width": "1.8", "stroke-linecap": "round" });
+  }
+}
+const W = (svg) => `url(#${svg.id}-w)`;
+const note = (svg, x, y, t, size = 21, anchor = "middle") =>
+  el(svg, "text", { x, y, "text-anchor": anchor, "font-family": HAND, "font-size": size, fill: PENCIL }, t);
+
+/* ballot slip */
+function slip(svg, x, y, order, label, w = 84, rot = 0) {
+  const h = 92;
+  const g = el(svg, "g", { transform: `translate(${x} ${y}) rotate(${rot} ${w / 2} ${h / 2})` });
+  el(g, "rect", { width: w, height: h, rx: 3, fill: "#f8f0de", stroke: INK, "stroke-width": 1.6, filter: W(svg) });
+  el(g, "text", { x: w / 2, y: 15, "text-anchor": "middle", "font-family": HAND, "font-size": 12.5, fill: SOFT }, label);
+  el(g, "line", { x1: 6, y1: 21, x2: w - 6, y2: 21, stroke: SOFT, "stroke-width": 1, "stroke-dasharray": "3 3" });
+  order.forEach((c, i) => {
+    const yy = 38 + i * 21;
+    el(g, "circle", { cx: 12, cy: yy, r: 5, fill: C[c] });
+    el(g, "text", { x: 22, y: yy + 6, "font-family": HAND, "font-size": 15, fill: INK }, NAME[c]);
+  });
+}
+
+/* ---------- five overlapping conditions ---------- */
+(function () {
+  const svg = document.getElementById("venn"); defs(svg);
+  const cx = 446, cy = 292;
+  const fills = ["#b9473e", "#3f6ea8", "#c9962e", "#4d8a52", "#7a4f86"];
+  const rx = 156, ry = 82, off = 86;
+  const P = (a, d) => [cx + d * Math.cos(a * Math.PI / 180), cy + d * Math.sin(a * Math.PI / 180)];
+  const g = el(svg, "g", { filter: W(svg) });
+  for (let i = 0; i < 5; i++) {
+    const a = -90 + i * 72, [ex, ey] = P(a, off);
+    el(g, "ellipse", { cx: ex, cy: ey, rx, ry, transform: `rotate(${a} ${ex} ${ey})`,
+      fill: fills[i], "fill-opacity": 0.13, stroke: fills[i], "stroke-width": 3.4, style: "mix-blend-mode: multiply" });
+  }
+  for (let i = 0; i < 5; i++) {
+    const a = -90 + i * 72, [x, y] = P(a, off + rx - 34);
+    const b = el(svg, "g", { transform: `rotate(${i % 2 ? 3 : -3} ${x} ${y})` });
+    el(b, "rect", { x: x - 25, y: y - 25, width: 50, height: 50, rx: 10, fill: fills[i], stroke: INK, "stroke-width": 2.5 });
+    el(b, "text", { x, y: y + 10, "text-anchor": "middle", "font-family": HEAD, "font-weight": 700, "font-size": 25, fill: "#fbf3e2" }, `0${i + 1}`);
+  }
+  const ring = el(svg, "g", { filter: W(svg) });
+  el(ring, "path", { d: `M${cx - 38} ${cy + 6} C ${cx - 42} ${cy - 38}, ${cx + 36} ${cy - 46}, ${cx + 40} ${cy - 2} S ${cx - 6} ${cy + 48}, ${cx - 35} ${cy + 16} L ${cx - 29} ${cy - 21}`,
+    fill: "none", stroke: PENCIL, "stroke-width": 4, "stroke-linecap": "round" });
+  el(svg, "text", { x: cx, y: cy + 15, "text-anchor": "middle", "font-family": HEAD, "font-weight": 700, "font-size": 44, fill: PENCIL }, "∅");
+  /* right note, arrow into the empty middle */
+  el(svg, "path", { d: `M${cx + 330} ${cy + 86} C ${cx + 260} ${cy + 96}, ${cx + 120} ${cy + 96}, ${cx + 46} ${cy + 30}`,
+    fill: "none", stroke: PENCIL, "stroke-width": 2.8, "stroke-linecap": "round", "marker-end": `url(#venn-arrR)` });
+  ["Where all five", "overlap, no", "voting rule fits."].forEach((t, k) =>
+    el(svg, "text", { x: 892, y: cy + 128 + k * 38, "text-anchor": "end", "font-family": HEAD, "font-weight": 700, "font-size": 32, fill: PENCIL }, t));
+  /* top-left note pointing at a petal */
+  el(svg, "path", { d: `M${cx - 330} ${cy - 196} C ${cx - 330} ${cy - 150}, ${cx - 300} ${cy - 120}, ${cx - 250} ${cy - 100}`,
+    fill: "none", stroke: SOFT, "stroke-width": 2.4, "stroke-linecap": "round", "marker-end": `url(#venn-arr)` });
+  el(svg, "text", { x: 0, y: cy - 258, "font-family": HAND, "font-size": 30, fill: SOFT }, "each petal is one");
+  el(svg, "text", { x: 0, y: cy - 222, "font-family": HAND, "font-size": 30, fill: SOFT }, "fairness condition");
+})();
+
+/* 01: two very different ballots, both counted */
+(function () {
+  const svg = document.getElementById("d1"); defs(svg);
+  slip(svg, 8, 18, ["A", "M", "K"], "Student 1", 88, -3);
+  slip(svg, 108, 14, ["K", "A", "M"], "Student 2", 88, 3);
+  el(svg, "path", { d: "M214 54 C 228 44, 240 44, 252 52", fill: "none", stroke: PENCIL, "stroke-width": 2.2, "stroke-linecap": "round" });
+  note(svg, 252, 82, "count");
+  note(svg, 252, 104, "both!");
+})();
+
+/* 02: the circle */
+(function () {
+  const svg = document.getElementById("d2"); defs(svg);
+  const P = { A: [72, 24], M: [126, 104], K: [22, 104] };
+  const r = 20;
+  const edge = (f, t, lx, ly) => {
+    const [x1, y1] = P[f], [x2, y2] = P[t];
+    const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+    const sx = x1 + ux * (r + 4), sy = y1 + uy * (r + 4), tx = x2 - ux * (r + 6), ty = y2 - uy * (r + 6);
+    const mx = (sx + tx) / 2 - uy * 9, my = (sy + ty) / 2 + ux * 9;
+    el(svg, "path", { d: `M${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}`, fill: "none", stroke: INK, "stroke-width": 2, "marker-end": `url(#d2-arr)`, filter: W(svg) });
+    el(svg, "text", { x: lx, y: ly, "text-anchor": "middle", "font-family": HAND, "font-size": 15, fill: SOFT }, "2–1");
+  };
+  edge("A", "M", 118, 54); edge("M", "K", 74, 126); edge("K", "A", 26, 54);
+  for (const [k, [x, y]] of Object.entries(P)) {
+    el(svg, "circle", { cx: x, cy: y, r, fill: C[k], "fill-opacity": 0.22, stroke: C[k], "stroke-width": 2.4, filter: W(svg) });
+    el(svg, "text", { x, y: y + 7, "text-anchor": "middle", "font-family": HEAD, "font-weight": 700, "font-size": 20, fill: INK }, k);
+  }
+  el(svg, "text", { x: 160, y: 24, "font-family": HAND, "font-size": 15.5, fill: INK }, "Aarav beats Meera");
+  el(svg, "text", { x: 160, y: 48, "font-family": HAND, "font-size": 15.5, fill: INK }, "Meera beats Kabir");
+  el(svg, "text", { x: 160, y: 72, "font-family": HAND, "font-size": 15.5, fill: INK }, "Kabir beats Aarav");
+  note(svg, 160, 100, "rock, paper,", 19, "start");
+  note(svg, 160, 122, "scissors!", 19, "start");
+})();
+
+/* 03: everyone puts Aarav above Meera */
+(function () {
+  const svg = document.getElementById("d3"); defs(svg);
+  slip(svg, 0, 18, ["A", "M", "K"], "S1", 74);
+  slip(svg, 80, 18, ["A", "K", "M"], "S2", 74);
+  slip(svg, 160, 18, ["K", "A", "M"], "S3", 74);
+  note(svg, 270, 40, "so the", 19);
+  note(svg, 270, 62, "result:", 19);
+  el(svg, "circle", { cx: 246, cy: 84, r: 6, fill: C.A });
+  el(svg, "text", { x: 255, y: 90, "font-family": HAND, "font-size": 15, fill: INK }, "Aarav");
+  el(svg, "circle", { cx: 246, cy: 108, r: 6, fill: C.M });
+  el(svg, "text", { x: 255, y: 114, "font-family": HAND, "font-size": 15, fill: INK }, "Meera");
+})();
+
+/* 04: a rule that copies Student 1 */
+(function () {
+  const svg = document.getElementById("d4"); defs(svg);
+  slip(svg, 0, 32, ["A", "M", "K"], "S1", 74);
+  slip(svg, 80, 32, ["M", "K", "A"], "S2", 74);
+  slip(svg, 160, 32, ["K", "M", "A"], "S3", 74);
+  el(svg, "path", { d: "M20 28 L24 12 L31 21 L37 8 L43 21 L50 12 L54 28 Z", fill: "#d9b04a", stroke: INK, "stroke-width": 1.4, "stroke-linejoin": "round", filter: W(svg) });
+  el(svg, "path", { d: "M14 6 L60 30 M60 6 L14 30", stroke: PENCIL, "stroke-width": 3, "stroke-linecap": "round" });
+  note(svg, 270, 70, "no", 21);
+  note(svg, 270, 92, "boss!", 21);
+})();
+
+/* 05: Borda, moving Kabir flips the pair */
+(function () {
+  const svg = document.getElementById("d5"); defs(svg);
+  const base = 100, unit = 10;
+  const bar = (x, v, c, lbl) => {
+    el(svg, "rect", { x, y: base - v * unit, width: 36, height: v * unit, fill: c, "fill-opacity": 0.85, stroke: INK, "stroke-width": 1.4, filter: W(svg) });
+    el(svg, "text", { x: x + 18, y: base - v * unit - 6, "text-anchor": "middle", "font-family": HEAD, "font-weight": 700, "font-size": 18, fill: INK }, v);
+    el(svg, "text", { x: x + 18, y: base + 19, "text-anchor": "middle", "font-family": HAND, "font-size": 13, fill: INK }, lbl);
+  };
+  el(svg, "line", { x1: 2, y1: base, x2: 298, y2: base, stroke: INK, "stroke-width": 1.6 });
+  bar(4, 7, C.M, "Meera"); bar(52, 6, C.A, "Aarav");
+  bar(208, 6, C.A, "Aarav"); bar(256, 4, C.M, "Meera");
+  el(svg, "path", { d: "M104 54 C 128 30, 172 30, 196 54", fill: "none", stroke: PENCIL, "stroke-width": 2.4, "marker-end": `url(#d5-arrR)` });
+  note(svg, 150, 22, "move Kabir", 20);
+  note(svg, 150, 80, "flipped!", 19);
+})();
+</script>
+</body>
+</html>

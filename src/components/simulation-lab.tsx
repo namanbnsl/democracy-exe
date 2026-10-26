@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { AnimatedNumber, CandidateName } from "@/components/election-visuals";
 import { Portrait, StudentPortrait } from "@/components/portrait";
-import { aiStudentPool, explainElection, judge, makeSchool, orders, type AiStudent, type School, type SimulatedElection, type VoterModel } from "@/lib/simulation";
+import { aiStudentPool, crowdIds, crowds, explainElection, judge, makeSchool, orders, type AiStudent, type School, type SimulatedElection, type VoterModel } from "@/lib/simulation";
 import { candidateIds, nameOf, scenarios, type CandidateId, type Counts } from "@/lib/elections";
 import "./simulation-lab.css";
 
@@ -135,12 +135,20 @@ function Key({ school, first, onFirst }: { school: School; first: CandidateId | 
 }
 
 // One AI student: who they are, how they ranked the candidates, and why.
+// What kind of students this AI school has; the mix is drawn fresh for every school.
+function Mix({ mix }: { mix: Record<(typeof crowdIds)[number], number> }) {
+  const percents = crowdIds.map(id => Math.round(mix[id] * 100));
+  return <div className="pg-mix" aria-label={`This school: ${crowdIds.map((id, i) => `${percents[i]}% ${crowds[id].label}`).join(", ")}`}>
+    {crowdIds.map((id, i) => <span key={id} style={{ flexGrow: mix[id] }}><b>{percents[i]}%</b>{crowds[id].label}</span>)}
+  </div>;
+}
+
 function StudentCard({ student }: { student: AiStudent }) {
   const order = orders[student.order];
   return <figure className="pg-student" aria-live="polite">
     <span className="pg-student-face"><StudentPortrait name={student.name} /></span>
     <figcaption><strong>{student.name}</strong><span className="pg-order" aria-label={order.map(nameOf).join(", then ")}>{order.map((id, rank) => <span key={id}>{rank > 0 && <ArrowRight aria-hidden="true" />}<i style={{ background: colour(id) }} />{nameOf(id)}</span>)}</span></figcaption>
-    <span className="pg-profile">{student.profile}</span>
+    <span className="pg-profile" title={student.profile}>{student.bio}</span>
     <blockquote>“{student.reason}”</blockquote>
   </figure>;
 }
@@ -227,7 +235,8 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const kind = model;
   const [size, setSize] = useState(SIMULATED_VOTERS);
   // A fixed first seed keeps the server render and hydration identical.
-  const [seed, setSeed] = useState(42);
+  // Seed 18 starts every voter model on a school where the counting methods disagree.
+  const [seed, setSeed] = useState(18);
   const [spots, setSpots] = useState<Record<CandidateId, number> | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
   const [first, setFirst] = useState<CandidateId | null>(null);
@@ -308,6 +317,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
           {kind === "spectrum" && <div className="pg-axis"><span>Sports &amp; fun</span><span className="pg-hint">Drag the candidates</span><span>Studies &amp; exams</span></div>}
           <Key school={school} first={first} onFirst={setFirst} />
           {kind === "ai" && <>
+            <Mix mix={school.mix!} />
             <StudentCard student={aiStudentPool[school.students[student].student!]} />
             <p className="pg-hint">Point at a dot to hear why. Imagined by an AI, not real students.</p>
           </>}

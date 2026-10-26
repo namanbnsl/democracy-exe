@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { orderingExample } from "./voting-lessons.ts";
 import { scenarios } from "./elections.ts";
-import { aiStudentPool, explainElection, judge, makeSchool, orders, rankFrom, seededRandom, simulate } from "./simulation.ts";
+import { aiStudentPool, crowdIds, crowdOf, crowds, explainElection, sharedTraits, judge, makeSchool, orders, rankFrom, seededRandom, simulate } from "./simulation.ts";
 
 test("the seeded generator repeats exactly and stays in [0, 1)", () => {
   const a = seededRandom(42), b = seededRandom(42);
@@ -42,10 +42,11 @@ test("classes on a spectrum never produce a circle", () => {
   assert.ok(runs.every(r => r.headToHead !== null));
 });
 
-test("every AI student has a name, a ranking and a short reason", () => {
+test("every AI student has a name, a bio, a ranking and a short reason", () => {
   assert.ok(aiStudentPool.length > 0);
   for (const student of aiStudentPool) {
-    assert.ok(student.name && student.profile, student.profile);
+    assert.ok(student.name && student.profile && student.bio.trim(), student.profile);
+    assert.ok(student.bio.split(/\s+/).length <= 30, student.bio);
     assert.ok(Number.isInteger(student.order) && student.order >= 0 && student.order < orders.length, student.profile);
     assert.ok(student.reason.trim() && student.reason.split(/\s+/).length <= 25, student.reason);
   }
@@ -62,6 +63,22 @@ test("AI schools at the pool size can have different ballot totals", () => {
   assert.ok(profiles.size > 1);
   const schools = Array.from({ length: 10 }, (_, seed) => makeSchool(seed, aiStudentPool.length, "ai"));
   assert.ok(new Set(schools.map(school => JSON.stringify(school.groups))).size > 1);
+});
+
+test("every AI student's trait belongs to one kind of student or to none", () => {
+  const traits = [...crowdIds.flatMap(id => crowds[id].traits), ...sharedTraits];
+  assert.equal(new Set(traits).size, traits.length);
+  for (const student of aiStudentPool) assert.ok(traits.includes(student.trait), student.profile);
+});
+
+test("each AI school draws its own mix of kinds and its students follow it", () => {
+  const mixes = [1, 2, 3, 4, 5].map(seed => makeSchool(seed, 10, "ai").mix!);
+  for (const mix of mixes) assert.ok(Math.abs(crowdIds.reduce((sum, id) => sum + mix[id], 0) - 1) < 1e-9);
+  assert.equal(new Set(mixes.map(mix => mix.sporty)).size, mixes.length);
+  // With enough students, each kind's share of the school sits close to the drawn mix.
+  const school = makeSchool(8, 20000, "ai");
+  const kinds = school.students.map(s => crowdOf(aiStudentPool[s.student!])).filter(kind => kind !== null);
+  for (const id of crowdIds) assert.ok(Math.abs(kinds.filter(kind => kind === id).length / kinds.length - school.mix![id]) < .02, id);
 });
 
 test("a tie under any method is kept apart from a changed winner", () => {

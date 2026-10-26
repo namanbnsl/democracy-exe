@@ -2,10 +2,11 @@
 
 ## AI playground — 2026-10-23
 
-- Generated all 500 fictional student profiles with GPT-6-Luna at medium reasoning. Each has a first name, personality, complete ranking, and a reason of at most 25 words. First choices: Aarav 205, Meera 156, Kabir 139; 30 students are new this year.
-- AI schools sample profiles with replacement, preserving each profile's generated ranking and reason. This lets schools differ even at or above the pool size. Seeds replay exactly, and reducing the student slider preserves the start of the larger school.
-- With seed 2026, 1,000 AI schools of 487 students give 333 changed winners, 33 ties, and 634 schools with the same winner across all three counts. These are fictional model outputs, not survey results.
-- All 37 tests, TypeScript, and ESLint pass, including profile-to-ballot consistency, varying AI school totals, seeded replay, transfers, and slider stability.
+- Generated all 500 fictional student profiles with GPT-6-Luna at medium reasoning. Each has a first name, a personality (class, interests, two traits, sometimes a worry or a link to a candidate), a short bio, a complete ranking, and a reason of at most 25 words. Candidate background beyond the visible cards is given only to the generator. First choices: Aarav 185, Meera 169, Kabir 146; 52 students are new this year.
+- AI schools sample profiles with replacement, preserving each profile's generated ranking and reason. Each school first draws its own mix of the three kinds of student the traits were written for (Caring, Get it done, Sporty; a Dirichlet(3, 3, 3) draw), so some schools are sportier and some more caring. Seeds replay exactly, and reducing the student slider preserves the start of the larger school.
+- With seed 2026, 1,000 AI schools of 487 students give 326 changed winners, 24 ties, and 650 schools with the same winner across all three counts. First choices most often pick Aarav (about 57%); runoff and points most often pick Kabir (about 39% and 50%); Meera wins about 20–25% under every count. These are fictional model outputs, not survey results.
+- The playground opens on seed 18, where all three voter models give different winners under different counts.
+- All 39 tests, TypeScript, and ESLint pass, including profile-to-ballot consistency, varying AI school totals, seeded replay, transfers, and slider stability.
 - The production build passes. The first restricted build stalled during compilation; rerunning outside the process sandbox completed successfully without configuration changes.
 - T3 browser checks covered the AI toggle, hover cards, the 1,000-school run, percentage totals, and opening School 17 from the results grid. The selected school preserves AI mode and its 487-student size.
 - Student cards and the 1,000-school panel fit above the footer at 1280×800 and 1366×768. A 390×844 check found no horizontal overflow. No application console errors were observed.
