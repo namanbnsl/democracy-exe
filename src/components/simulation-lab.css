@@ -27,22 +27,10 @@
 .pg-school > .pg-hint { margin: 4px 0 0; }
 
 /* School picture */
-.pg-picture { display: block; width: 100%; height: auto; touch-action: none; user-select: none; animation: pg-open 220ms ease-out both; }
+.pg-picture { display: block; width: 100%; height: auto; user-select: none; animation: pg-open 220ms ease-out both; }
 .pg-dot { transition: transform 450ms cubic-bezier(.2,.7,.2,1), fill 250ms, opacity 200ms; animation: pg-dot-in 400ms cubic-bezier(.2,.7,.2,1) both; }
 .pg-dot[data-dim="true"] { opacity: .12; }
-.pg-picture[data-dragging="true"] .pg-dot { transition: fill 150ms, opacity 200ms; }
 @keyframes pg-dot-in { from { opacity: 0; } }
-.pg-line { stroke: var(--border); stroke-width: 3; stroke-linecap: round; }
-.pg-handle { cursor: grab; outline: none; transition: transform 120ms; }
-.pg-picture[data-dragging="true"] .pg-handle { transition: none; }
-.pg-handle[data-active="true"] { cursor: grabbing; }
-.pg-handle-hit { fill: transparent; }
-.pg-handle-knob { stroke: var(--card); stroke-width: 3; filter: drop-shadow(0 1px 3px #252b3840); transition: r 150ms; }
-.pg-handle:hover .pg-handle-knob, .pg-handle[data-active="true"] .pg-handle-knob { r: 16px; }
-.pg-handle:focus-visible .pg-handle-knob { stroke: var(--ring); }
-.pg-handle-stem { stroke: var(--muted-foreground); stroke-width: 1; opacity: .35; }
-.pg-handle-letter { fill: #1d2433; font-size: 14px; font-weight: 700; pointer-events: none; }
-.pg-handle-name { fill: var(--foreground); font-size: 15px; font-weight: 600; pointer-events: none; }
 .pg-dot[data-picked="true"] { stroke: var(--foreground); stroke-width: 2.5; }
 .pg-picture .pg-dot { cursor: default; }
 .pg-mix { display: flex; gap: 3px; margin: 8px 0 0; font-size: 13px; color: var(--muted-foreground); }
@@ -56,7 +44,6 @@
 .pg-profile { font-size: 14px; color: var(--muted-foreground); }
 .pg-student blockquote { margin: 0; font-size: 16px; line-height: 1.4; }
 .pg-student .pg-order { font-size: 15px; }
-.pg-axis { display: flex; align-items: baseline; justify-content: space-between; margin-top: 4px; font-size: 14px; color: var(--muted-foreground); }
 
 .pg-picture-wrap { position: relative; }
 .pg-dot:hover { stroke: var(--foreground); stroke-width: 1.5; }
@@ -184,7 +171,7 @@
   .pg-student figcaption strong { font-size: 22px; }
   .pg-profile { font-size: 16px; }
   .pg-student blockquote { font-size: 19px; }
-  .pg-hint, .pg-axis { font-size: 16px; }
+  .pg-hint { font-size: 16px; }
   .pg-mix { font-size: 16px; }
   .pg-big strong { font-size: 72px; }
   .pg-big span { font-size: 20px; }

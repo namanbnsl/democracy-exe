@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
 import { ArrowRight, ChevronDown, Dices, Play, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -21,9 +21,6 @@ const shade = (election: SimulatedElection) => election.tie ? "tie" : String(ele
 const changedWinner = (election: SimulatedElection) => !election.tie && !election.sameWinner;
 const colour = (id: CandidateId) => `var(--candidate-${id.toLowerCase()})`;
 const single = (winners: CandidateId[]) => winners.length === 1 ? winners[0] : null;
-
-// Tiny hash so each student keeps the same height on the line.
-const jitter = (i: number) => ((i * 2654435761) >>> 0) / 4294967296;
 
 // Pictures are drawn on a 560-wide canvas, short enough that the playground fits one screen.
 // Tall screens (a vertical display) have room for taller pictures.
@@ -47,80 +44,31 @@ function Tip({ order, x, y, w, h }: { order: number; x: number; y: number; w: nu
   </div>;
 }
 
-function SchoolPicture({ school, model, hovered, first, picked, onPick, onMove }: { school: School; model: VoterModel; hovered: number | null; first: CandidateId | null; picked: number; onPick: (index: number) => void; onMove: (spots: Record<CandidateId, number>) => void }) {
-  const svg = useRef<SVGSVGElement>(null);
-  const [dragging, setDragging] = useState<CandidateId | null>(null);
+function SchoolPicture({ school, model, hovered, first, picked, onPick }: { school: School; model: VoterModel; hovered: number | null; first: CandidateId | null; picked: number; onPick: (index: number) => void }) {
   const [tip, setTip] = useState<number | null>(null);
   const tall = useTallScreen();
   const H = tall ? 320 : 240;
   const n = school.students.length;
 
-  if (model !== "spectrum") {
-    // A block of dots, one per student, grouped by how they ranked the candidates.
-    // AI students leave room under the dots for the student card.
-    const ai = model === "ai", h = ai ? (tall ? 150 : 88) : H;
-    const sorted = school.students.map((student, i) => ({ ...student, i })).sort((a, b) => a.order - b.order || a.i - b.i);
-    const cell = Math.min(34, Math.sqrt(W * (h - 10) / n));
-    const columns = Math.max(1, Math.floor(W / cell));
-    const rows = Math.ceil(n / columns);
-    const size = Math.min(W / columns, (h - 10) / rows, 34);
-    const left = (W - columns * size) / 2;
-    const place = new Map(sorted.map((student, slot) => [student.i, slot]));
-    const at = (i: number) => { const slot = place.get(i)!; return { x: left + (slot % columns + .5) * size, y: 5 + (Math.floor(slot / columns) + .5) * size }; };
-    const tipAt = tip !== null && tip < n && !ai ? at(tip) : null;
-    return <div className="pg-picture-wrap" onPointerLeave={() => setTip(null)}><svg viewBox={`0 0 ${W} ${h}`} className="pg-picture" role="img" aria-label={ai ? `${n} AI-imagined students, grouped by how they ranked the candidates.` : `${n} students, each ranking the candidates at random.`}>
-      {school.students.map((student, i) => {
-        const { x, y } = at(i);
-        return <circle key={i} className="pg-dot" r={size * .36} style={{ transform: `translate(${x}px, ${y}px)`, fill: colour(orders[student.order][0]) }} data-dim={dimmed(student.order, hovered, first)}
-          data-picked={ai && picked === i} onPointerEnter={() => ai ? onPick(i) : setTip(i)} />;
-      })}
-    </svg>{tipAt && <Tip order={school.students[tip!].order} x={tipAt.x} y={tipAt.y} w={W} h={h} />}</div>;
-  }
-
-  const spots = school.spots!;
-  const pad = 22, line = tall ? 256 : 196;
-  const x = (position: number) => pad + position * (W - 2 * pad);
-  // Stack names in rows when candidates stand close together.
-  const rows: Partial<Record<CandidateId, number>> = {};
-  const ends = [-Infinity, -Infinity, -Infinity];
-  for (const id of [...candidateIds].sort((a, b) => spots[a] - spots[b])) {
-    const row = ends.findIndex(end => x(spots[id]) - end >= 58);
-    rows[id] = row < 0 ? 2 : row;
-    ends[rows[id]!] = x(spots[id]);
-  }
-  function positionAt(clientX: number) {
-    const box = svg.current!.getBoundingClientRect();
-    const sx = (clientX - box.left) / box.width * W;
-    return Math.max(0, Math.min(1, (sx - pad) / (W - 2 * pad)));
-  }
-  function down(event: PointerEvent<SVGGElement>, id: CandidateId) {
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setDragging(id);
-  }
-  function move(event: PointerEvent<SVGGElement>, id: CandidateId) {
-    if (dragging === id) onMove({ ...spots, [id]: positionAt(event.clientX) });
-  }
-  function key(event: KeyboardEvent<SVGGElement>, id: CandidateId) {
-    const step = { ArrowLeft: -.02, ArrowRight: .02, ArrowDown: -.02, ArrowUp: .02, PageDown: -.1, PageUp: .1 }[event.key];
-    if (step === undefined) return;
-    event.preventDefault();
-    onMove({ ...spots, [id]: Math.max(0, Math.min(1, spots[id] + step)) });
-  }
-  const height = line + 40 + Math.max(...Object.values(rows) as number[]) * 18;
-  const y = (i: number) => 12 + jitter(i) * (line - 30);
-  return <div className="pg-picture-wrap" onPointerLeave={() => setTip(null)}><svg ref={svg} viewBox={`0 0 ${W} ${height}`} className="pg-picture" data-dragging={!!dragging} aria-label={`${n} students on a line from sports and fun to studies and exams.`}>
-    <line x1={pad} x2={W - pad} y1={line} y2={line} className="pg-line" />
-    {school.students.map((student, i) => <circle key={i} className="pg-dot" r={n > 400 ? 2.6 : n > 120 ? 3.4 : 4.6} style={{ transform: `translate(${x(student.position!)}px, ${y(i)}px)`, fill: colour(orders[student.order][0]) }} data-dim={dimmed(student.order, hovered, first)} onPointerEnter={() => !dragging && setTip(i)} />)}
-    {candidateIds.map(id => <g key={id} className="pg-handle" data-active={dragging === id} role="slider" tabIndex={0} aria-label={`Move ${nameOf(id)}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(spots[id] * 100)} aria-valuetext={`${nameOf(id)} is ${Math.round(spots[id] * 100)}% of the way to studies and exams`}
-      onPointerDown={event => down(event, id)} onPointerMove={event => move(event, id)} onPointerUp={() => setDragging(null)} onPointerCancel={() => setDragging(null)} onKeyDown={event => key(event, id)}
-      style={{ transform: `translateX(${x(spots[id])}px)` }}>
-      <line x1="0" x2="0" y1={line} y2={line + 14 + rows[id]! * 18} className="pg-handle-stem" />
-      <circle cy={line} r="26" className="pg-handle-hit" />
-      <circle cy={line} r="13" fill={colour(id)} className="pg-handle-knob" />
-      <text y={line + 4.5} textAnchor="middle" className="pg-handle-letter">{nameOf(id)[0]}</text>
-      <text y={line + 30 + rows[id]! * 18} textAnchor="middle" className="pg-handle-name">{nameOf(id)}</text>
-    </g>)}
-  </svg>{tip !== null && tip < n && !dragging && <Tip order={school.students[tip].order} x={x(school.students[tip].position!)} y={y(tip)} w={W} h={height} />}</div>;
+  // A block of dots, one per student, grouped by how they ranked the candidates.
+  // AI students leave room under the dots for the student card.
+  const ai = model === "ai", h = ai ? (tall ? 150 : 88) : H;
+  const sorted = school.students.map((student, i) => ({ ...student, i })).sort((a, b) => a.order - b.order || a.i - b.i);
+  const cell = Math.min(34, Math.sqrt(W * (h - 10) / n));
+  const columns = Math.max(1, Math.floor(W / cell));
+  const rows = Math.ceil(n / columns);
+  const size = Math.min(W / columns, (h - 10) / rows, 34);
+  const left = (W - columns * size) / 2;
+  const place = new Map(sorted.map((student, slot) => [student.i, slot]));
+  const at = (i: number) => { const slot = place.get(i)!; return { x: left + (slot % columns + .5) * size, y: 5 + (Math.floor(slot / columns) + .5) * size }; };
+  const tipAt = tip !== null && tip < n && !ai ? at(tip) : null;
+  return <div className="pg-picture-wrap" onPointerLeave={() => setTip(null)}><svg viewBox={`0 0 ${W} ${h}`} className="pg-picture" role="img" aria-label={ai ? `${n} AI-imagined students, grouped by how they ranked the candidates.` : `${n} students, each ranking the candidates at random.`}>
+    {school.students.map((student, i) => {
+      const { x, y } = at(i);
+      return <circle key={i} className="pg-dot" r={size * .36} style={{ transform: `translate(${x}px, ${y}px)`, fill: colour(orders[student.order][0]) }} data-dim={dimmed(student.order, hovered, first)}
+        data-picked={ai && picked === i} onPointerEnter={() => ai ? onPick(i) : setTip(i)} />;
+    })}
+  </svg>{tipAt && <Tip order={school.students[tip!].order} x={tipAt.x} y={tipAt.y} w={W} h={h} />}</div>;
 }
 
 // Dot colour is the student's first choice. Pointing at a colour picks out those students.
@@ -235,9 +183,8 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const kind = model;
   const [size, setSize] = useState(SIMULATED_VOTERS);
   // A fixed first seed keeps the server render and hydration identical.
-  // Seed 18 starts every voter model on a school where the counting methods disagree.
-  const [seed, setSeed] = useState(18);
-  const [spots, setSpots] = useState<Record<CandidateId, number> | null>(null);
+  // Seed 5961 starts every voter model on a school where the counting methods disagree.
+  const [seed, setSeed] = useState(5961);
   const [hovered, setHovered] = useState<number | null>(null);
   const [first, setFirst] = useState<CandidateId | null>(null);
   const [picked, setPicked] = useState(0);
@@ -248,7 +195,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
   const frame = useRef<number | null>(null);
   useEffect(() => () => { if (frame.current !== null) cancelAnimationFrame(frame.current); }, []);
 
-  const school = useMemo(() => makeSchool(seed, size, kind, spots ?? undefined), [seed, size, kind, spots]);
+  const school = useMemo(() => makeSchool(seed, size, kind), [seed, size, kind]);
   const election = useMemo(() => judge(school.groups), [school]);
   const student = Math.min(picked, school.students.length - 1);
   const [showBallots, setShowBallots] = useState(false);
@@ -256,11 +203,11 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
 
   function stop() { if (frame.current !== null) cancelAnimationFrame(frame.current); frame.current = null; }
   function clearRuns() { stop(); setRuns([]); setPhase("ready"); setLoaded(null); }
-  function shuffle() { setSeed(Date.now() >>> 0); setSpots(null); setLoaded(null); }
+  function shuffle() { setSeed(Date.now() >>> 0); setLoaded(null); }
   function changeModel(value: string) {
     if (!value || value === kind) return;
     onModelChange(value as VoterModel);
-    setSpots(null); clearRuns();
+    clearRuns();
   }
   function changeSize(value: number) { setSize(value); clearRuns(); }
   function start() {
@@ -280,7 +227,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
     frame.current = requestAnimationFrame(tick);
   }
   function open(index: number) {
-    setSeed((runSeed + index) >>> 0); setSpots(null); setLoaded(index); setView("one");
+    setSeed((runSeed + index) >>> 0); setLoaded(index); setView("one");
   }
 
   const changed = runs.filter(changedWinner).length;
@@ -299,7 +246,6 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
       </label>
       <ToggleGroup type="single" variant="outline" spacing={0} value={kind} onValueChange={changeModel} disabled={phase === "running"} className="pg-model" aria-label="How students choose">
         <ToggleGroupItem value="random">Random</ToggleGroupItem>
-        <ToggleGroupItem value="spectrum">On a line</ToggleGroupItem>
         <ToggleGroupItem value="ai">AI students</ToggleGroupItem>
       </ToggleGroup>
     </div>
@@ -313,8 +259,7 @@ export function SimulationLab({ model, onModelChange }: { model: VoterModel; onM
           </div>
         </div>
         {showBallots ? <OrderList school={school} hovered={hovered} onHover={setHovered} /> : <>
-          <SchoolPicture school={school} model={kind} hovered={hovered} first={first} picked={student} onPick={setPicked} onMove={next => { setSpots(next); setLoaded(null); }} />
-          {kind === "spectrum" && <div className="pg-axis"><span>Sports &amp; fun</span><span className="pg-hint">Drag the candidates</span><span>Studies &amp; exams</span></div>}
+          <SchoolPicture school={school} model={kind} hovered={hovered} first={first} picked={student} onPick={setPicked} />
           <Key school={school} first={first} onFirst={setFirst} />
           {kind === "ai" && <>
             <Mix mix={school.mix!} />

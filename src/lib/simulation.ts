@@ -1,11 +1,10 @@
-import { candidateIds, condorcet, plurality, positional, runoff, type BallotGroup, type CandidateId } from "./elections";
+import { condorcet, plurality, positional, runoff, type BallotGroup, type CandidateId } from "./elections";
 import aiStudents from "./ai-students.json";
 
 // "random": every student picks one of the six orders at random.
-// "spectrum": students and candidates sit on a line; students prefer whoever is closest.
 // "ai": students come from a pool where an LLM was given each made-up student and the candidate cards,
 // and said how that student would rank them and why (see scripts/generate-students.ts).
-export type VoterModel = "random" | "spectrum" | "ai";
+export type VoterModel = "random" | "ai";
 export type Outcome = "agree" | "disagree" | "circle";
 export type SimulatedElection = {
   groups: BallotGroup[];
@@ -82,43 +81,38 @@ export function explainElection(groups: BallotGroup[]) {
 
 // One school for the playground. The same seed always gives the same students, and a smaller
 // school is the first part of a bigger one, so dragging the size slider only adds or removes students.
-// `spots` overrides where the candidates stand on the line.
-// AI profiles are sampled independently from the pool. Sampling with replacement keeps
-// schools varied even when their size approaches or exceeds the number of profiles.
-export type SchoolStudent = { order: number; position?: number; student?: number };
+// An AI school never picks the same profile twice until its kind has run out; only then are profiles reused.
+export type SchoolStudent = { order: number; student?: number };
 // `mix` is each kind's share of an AI school, leaving out the students who belong to no kind.
-export type School = { groups: BallotGroup[]; students: SchoolStudent[]; spots?: Record<CandidateId, number>; mix?: Record<Crowd, number> };
+export type School = { groups: BallotGroup[]; students: SchoolStudent[]; mix?: Record<Crowd, number> };
 
-export function rankFrom(spots: Record<CandidateId, number>, position: number) {
-  const ranking = [...candidateIds].sort((x, y) => Math.abs(spots[x] - position) - Math.abs(spots[y] - position));
-  return orders.findIndex(order => order.join() === ranking.join());
-}
-
-export function makeSchool(seed: number, voters: number, model: VoterModel, spots?: Record<CandidateId, number>): School {
+export function makeSchool(seed: number, voters: number, model: VoterModel): School {
   if (!Number.isSafeInteger(voters) || voters < 1) throw new Error("A school needs at least one voter.");
   if (model === "ai" && !aiStudentPool.length) throw new Error("No AI students yet. Run npm run students.");
   const random = seededRandom(seed);
-  // Keep candidates apart so their names stay readable on the line.
-  const drawn = { A: .08 + random() * .84, B: .08 + random() * .84, C: .08 + random() * .84 };
-  const stand = spots ?? drawn;
   // A random mix of the three kinds, usually varied but rarely one kind alone (a Dirichlet(3, 3, 3) draw).
   const weights = crowdIds.map(() => Array.from({ length: 3 }, () => -Math.log(1 - random())).reduce((a, b) => a + b));
   const total = weights.reduce((sum, w) => sum + w, 0);
   const mix = Object.fromEntries(crowdIds.map((id, i) => [id, weights[i] / total])) as Record<Crowd, number>;
   const shares = [...crowdIds.map(id => mix[id] * (1 - SHARED)), SHARED];
+  // One deck per kind, dealt a card at a time (a lazy shuffle), so each new student is the same whatever the school size.
+  const decks = poolByCrowd.map(pool => ({ cards: [...pool], dealt: 0 }));
   const students: SchoolStudent[] = [];
   for (let i = 0; i < voters; i++) {
     if (model === "random") students.push({ order: Math.floor(random() * orders.length) });
     else if (model === "ai") {
       let roll = random(), kind = 0;
       while (kind < shares.length - 1 && roll >= shares[kind]) roll -= shares[kind++];
-      const pool = poolByCrowd[kind];
-      const student = pool[Math.floor(random() * pool.length)];
+      const deck = decks[kind];
+      if (deck.dealt === deck.cards.length) deck.dealt = 0;
+      const j = deck.dealt + Math.floor(random() * (deck.cards.length - deck.dealt));
+      [deck.cards[deck.dealt], deck.cards[j]] = [deck.cards[j], deck.cards[deck.dealt]];
+      const student = deck.cards[deck.dealt++];
       students.push({ order: aiStudentPool[student].order, student });
-    } else { const position = random(); students.push({ order: rankFrom(stand, position), position }); }
+    }
   }
   const counts = orders.map(() => 0);
   for (const student of students) counts[student.order]++;
   const groups = orders.map((ranking, i) => ({ count: counts[i], ranking })).filter(group => group.count > 0);
-  return model === "spectrum" ? { groups, students, spots: stand } : model === "ai" ? { groups, students, mix } : { groups, students };
+  return model === "ai" ? { groups, students, mix } : { groups, students };
 }

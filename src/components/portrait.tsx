@@ -28,10 +28,20 @@ export function Portrait({ id, small = false }: { id: CandidateId; small?: boole
     style={{ background: c.backdrop, ...(small ? frame(c.face, 2.1) : {}) }} />;
 }
 
-// One face per AI student name. A student without a drawing yet shows their initial instead.
+// One face per AI student name. Some names borrow the portrait of another student of the same gender,
+// so the pool can have more names than drawings. A name with no portrait at all shows its initial.
+const borrowed: Record<string, string> = {
+  Navya: "riya", Ojasvi: "ananya", Pari: "diya", Radhika: "leela", Sia: "tara", Trisha: "shreya", Urvi: "jiya",
+  Vanya: "avni", Yamini: "kavya", Zoya: "myra", Alisha: "nandini", Fatima: "aisha", Simran: "meghna",
+  Vihaan: "arjun", Abhay: "vikram", Ayaan: "ishaan", Chirag: "harsh", Darsh: "dev", Eshan: "arnav",
+  Gaurav: "om", Hrithik: "krish", Ibrahim: "farhan", Jai: "dhruv", Kartik: "kiran", Laksh: "siddharth",
+  Mihir: "reyansh", Nikhil: "rahul", Parth: "pranav", Rudra: "rohan", Shaurya: "yash", Tanish: "kunal",
+  Utkarsh: "aditya", Ved: "neel", Yuvraj: "samar", Zubin: "aryan", Aniket: "varun", Ritvik: "manav",
+  Sahil: "rohan", Joseph: "neel",
+};
 export function StudentPortrait({ name }: { name: string }) {
   const [missing, setMissing] = useState<string | null>(null);
   if (missing === name) return <span className="portrait-initial">{name[0]}</span>;
-  return <Image src={`/portraits/${name.toLowerCase()}.webp`} alt="" width={256} height={256} sizes="128px" className="portrait-img" data-small
+  return <Image src={`/portraits/${borrowed[name] ?? name.toLowerCase()}.webp`} alt="" width={256} height={256} sizes="128px" className="portrait-img" data-small
     style={{ background: "#f3ead8", ...frame([50, 38], 1.3) }} onError={() => setMissing(name)} />;
 }

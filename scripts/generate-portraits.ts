@@ -21,7 +21,8 @@ const candidates = [
   { file: "kabir", who: "Kabir, a 17-year-old Indian schoolboy who runs a peer tutoring club, warm and thoughtful, medium-brown skin, neatly side-parted short black hair, round thin-framed glasses, a slight smile, holding a few notebooks against his side, standard Indian school uniform: navy V-neck school sweater over a white shirt and a navy-and-maroon striped tie", backdrop: "soft lavender (#ded3fc)" },
 ].map(c => ({ ...c, tall: true }));
 
-// One face per name in scripts/generate-students.ts. Students are in Classes 6 to 10, so about 11 to 15.
+// Faces for names in scripts/generate-students.ts; the other names borrow one (see `borrowed` in src/components/portrait.tsx).
+// Students are in Classes 6 to 10, so about 11 to 15.
 const girls: Record<string, string> = {
   Riya: "light-brown skin, long black hair in a high ponytail, bright smile", Ananya: "medium-brown skin, shoulder-length wavy hair, small gold stud earrings",
   Diya: "brown skin, two long plaits with red ribbons, cheerful", Saanvi: "light skin, straight black bob with a fringe, curious look",
@@ -36,9 +37,15 @@ const girls: Record<string, string> = {
   Ritika: "medium skin, high bun with loose strands, energetic grin", Jiya: "brown skin, chin-length straight hair, big round glasses",
   Prisha: "light-brown skin, long straight hair with a hairband, dreamy look", Sana: "medium-brown skin, a soft grey hijab, quiet smile",
   Avni: "dark brown skin, curly hair in a side ponytail, laughing",
+  Aarohi: "light-brown skin, long hair in a loose side braid, bright eyes", Bhavya: "brown skin, short wavy bob, a small red bindi, cheerful",
+  Charvi: "medium skin, hair in a neat bun with a pencil tucked in, focused", Divya: "dark brown skin, two plaits looped up with ribbons, wide smile",
+  Esha: "light skin, straight shoulder-length hair, thin silver glasses", Gauri: "medium-brown skin, thick curly hair held back by a headband, laughing",
+  Hiral: "brown skin, long ponytail, small hoop earrings, sporty", Ishita: "light-brown skin, wavy hair with a side clip, thoughtful",
+  Juhi: "dark skin, short natural curls, warm grin", Khushi: "medium skin, round face, two high pigtails, giggling",
+  Lavanya: "brown skin, long oiled plait, small nose stud, calm", Mahira: "light-brown skin, a soft maroon hijab, bright smile",
 };
 const boys: Record<string, string> = {
-  Arjun: "medium-brown skin, short spiky hair, confident grin", Vihaan: "light skin, side-swept hair, dimples",
+  Arjun: "medium-brown skin, short spiky hair, confident grin",
   Ishaan: "brown skin, curly black hair, cheeky smile", Reyansh: "fair skin, neat short hair, tiny gap-toothed smile",
   Rohan: "medium skin, messy hair, football-player energy", Dev: "dark brown skin, buzz cut, calm half-smile",
   Kiran: "light-brown skin, wavy hair falling over his forehead, quiet look", Aditya: "brown skin, side parting, thin glasses, serious",

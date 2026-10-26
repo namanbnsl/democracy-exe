@@ -1,6 +1,6 @@
 // Builds src/lib/ai-students.json: fictional students, the ballot each one casts, and why.
 // Each student is given a personality (grade, interests, two traits, sometimes a worry or a link to a candidate) and asked, through the Codex CLI, how they'd rank the candidates.
-// Run with `npm run students` (needs `codex` logged in). `npm run students -- 10 /tmp/trial.json` makes a small trial.
+// Run with `npm run students` (needs `codex` logged in). `npm run students -- 10 /tmp/trial.json` makes a small trial; `npm run students -- 1000 /tmp/extra.json 2027` makes a fresh batch.
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -14,7 +14,9 @@ const OUTPUT = process.argv[3] ? new URL(process.argv[3], `file://${process.cwd(
 const PARALLEL = 8;
 const MAX_WORDS = 25;
 
-const names = ["Riya", "Arjun", "Ananya", "Vihaan", "Diya", "Ishaan", "Saanvi", "Reyansh", "Aditi", "Rohan", "Tara", "Dev", "Nisha", "Kiran", "Zara", "Aditya", "Pooja", "Yash", "Anika", "Siddharth", "Leela", "Neel", "Kavya", "Arnav", "Myra", "Om", "Sneha", "Krish", "Ira", "Dhruv", "Aisha", "Rahul", "Tanvi", "Varun", "Shreya", "Kunal", "Meghna", "Farhan", "Nandini", "Pranav", "Ritika", "Samar", "Jiya", "Aryan", "Prisha", "Manav", "Sana", "Vikram", "Avni", "Harsh"];
+const names = ["Riya", "Arjun", "Ananya", "Vihaan", "Diya", "Ishaan", "Saanvi", "Reyansh", "Aditi", "Rohan", "Tara", "Dev", "Nisha", "Kiran", "Zara", "Aditya", "Pooja", "Yash", "Anika", "Siddharth", "Leela", "Neel", "Kavya", "Arnav", "Myra", "Om", "Sneha", "Krish", "Ira", "Dhruv", "Aisha", "Rahul", "Tanvi", "Varun", "Shreya", "Kunal", "Meghna", "Farhan", "Nandini", "Pranav", "Ritika", "Samar", "Jiya", "Aryan", "Prisha", "Manav", "Sana", "Vikram", "Avni", "Harsh",
+  "Aarohi", "Bhavya", "Charvi", "Divya", "Esha", "Gauri", "Hiral", "Ishita", "Juhi", "Khushi", "Lavanya", "Mahira", "Navya", "Ojasvi", "Pari", "Radhika", "Sia", "Trisha", "Urvi", "Vanya", "Yamini", "Zoya", "Alisha", "Fatima", "Simran",
+  "Abhay", "Ayaan", "Chirag", "Darsh", "Eshan", "Gaurav", "Hrithik", "Ibrahim", "Jai", "Kartik", "Laksh", "Mihir", "Nikhil", "Parth", "Rudra", "Shaurya", "Tanish", "Utkarsh", "Ved", "Yuvraj", "Zubin", "Aniket", "Ritvik", "Sahil", "Joseph"];
 const grades = ["Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
 // About one student in ten is new, as in a real school.
 const time = ["new this year", "here since nursery", "here since Class 1", "here since Class 2", "here since Class 3", "here since Class 4", "here for two years", "here for three years", "here for four years", "here for five years"];
@@ -41,7 +43,8 @@ const briefs: Record<string, string> = {
   C: "Quiet and patient; better one-to-one than on a stage. His tutoring club helped 40 juniors pass maths. Some say he is new, hardly knows the seniors, and goes shy at assemblies.",
 };
 
-const random = seededRandom(2026);
+// A different seed (third argument) makes a fresh batch to add to an existing pool.
+const random = seededRandom(Number(process.argv[4] ?? 2026));
 const pick = <T,>(items: T[]) => items[Math.floor(random() * items.length)];
 function shuffle<T>(items: T[]) {
   const copy = [...items];

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { orderingExample } from "./voting-lessons.ts";
 import { scenarios } from "./elections.ts";
-import { aiStudentPool, crowdIds, crowdOf, crowds, explainElection, sharedTraits, judge, makeSchool, orders, rankFrom, seededRandom, simulate } from "./simulation.ts";
+import { aiStudentPool, crowdIds, crowdOf, crowds, explainElection, sharedTraits, judge, makeSchool, orders, seededRandom, simulate } from "./simulation.ts";
 
 test("the seeded generator repeats exactly and stays in [0, 1)", () => {
   const a = seededRandom(42), b = seededRandom(42);
@@ -14,7 +14,7 @@ test("the seeded generator repeats exactly and stays in [0, 1)", () => {
 });
 
 test("a school has the requested number of voters", () => {
-  for (const model of ["random", "spectrum", "ai"] as const) {
+  for (const model of ["random", "ai"] as const) {
     const { groups } = makeSchool(7, 101, model);
     assert.equal(groups.reduce((sum, g) => sum + g.count, 0), 101);
   }
@@ -36,12 +36,6 @@ test("random classes produce circles at roughly the known rate of about 9%", () 
   assert.ok(rate > 0.06 && rate < 0.12, `circle rate ${rate}`);
 });
 
-test("classes on a spectrum never produce a circle", () => {
-  const runs = simulate(11, 2000, 101, "spectrum");
-  assert.equal(runs.filter(r => r.outcome === "circle").length, 0);
-  assert.ok(runs.every(r => r.headToHead !== null));
-});
-
 test("every AI student has a name, a bio, a ranking and a short reason", () => {
   assert.ok(aiStudentPool.length > 0);
   for (const student of aiStudentPool) {
@@ -56,6 +50,20 @@ test("an AI school repeats with the same seed and keeps each profile's generated
   assert.deepEqual(makeSchool(3, 101, "ai"), makeSchool(3, 101, "ai"));
   const school = makeSchool(3, 1000, "ai");
   for (const student of school.students) assert.equal(student.order, aiStudentPool[student.student!].order);
+});
+
+test("an AI school only repeats a profile once its kind has run out", () => {
+  const kindOf = (i: number) => crowdOf(aiStudentPool[i]);
+  for (let seed = 0; seed < 20; seed++) {
+    const ids = makeSchool(seed, 1000, "ai").students.map(student => student.student!);
+    for (const kind of [...crowdIds, null]) {
+      const pool = aiStudentPool.filter(student => crowdOf(student) === kind).length;
+      const drawn = ids.filter(i => kindOf(i) === kind);
+      const times = new Map<number, number>();
+      for (const i of drawn) times.set(i, (times.get(i) ?? 0) + 1);
+      assert.ok(Math.max(0, ...times.values()) <= Math.ceil(drawn.length / pool), `seed ${seed}, ${kind}`);
+    }
+  }
 });
 
 test("AI schools at the pool size can have different ballot totals", () => {
@@ -114,7 +122,7 @@ test("working keeps a last-place tie distinct from an elimination", () => {
 });
 
 test("all displayed arithmetic and transfers match seeded school results", () => {
-  for (const model of ["random", "spectrum", "ai"] as const) {
+  for (const model of ["random", "ai"] as const) {
     for (const election of simulate(23, 100, 487, model)) {
       const working = explainElection(election.groups);
       assert.deepEqual(working.firstChoices.winners, election.winners.plurality);
@@ -131,16 +139,9 @@ test("all displayed arithmetic and transfers match seeded school results", () =>
 });
 
 test("a smaller playground school is the start of a bigger one", () => {
-  for (const model of ["random", "spectrum", "ai"] as const) {
+  for (const model of ["random", "ai"] as const) {
     const big = makeSchool(9, 400, model), small = makeSchool(9, 150, model);
     assert.deepEqual(small.students, big.students.slice(0, 150));
     assert.equal(small.groups.reduce((sum, group) => sum + group.count, 0), 150);
   }
-});
-
-test("moving a candidate on the line re-ranks the same students", () => {
-  const school = makeSchool(4, 300, "spectrum");
-  const moved = makeSchool(4, 300, "spectrum", { A: .1, B: .5, C: .9 });
-  assert.deepEqual(moved.students.map(s => s.position), school.students.map(s => s.position));
-  for (const student of moved.students) assert.equal(student.order, rankFrom({ A: .1, B: .5, C: .9 }, student.position!));
 });

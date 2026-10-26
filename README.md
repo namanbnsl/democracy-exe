@@ -6,7 +6,7 @@
 
 An interactive exploration of voting: the same people, the same preferences, and different winners depending on how votes are counted.
 
-Choose a candidate, rank your favourites, and compare first-choice voting, instant runoff, and points (Borda). In the playground, try one school or simulate 1,000 with random voters, voters on a spectrum, or fictional AI students who explain their choices.
+Choose a candidate, rank your favourites, and compare first-choice voting, instant runoff, and points (Borda). In the playground, try one school or simulate 1,000 with random voters or fictional AI students who explain their choices.
 
 Built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui. The app works offline once installed and built. All candidates and student data are fictional; AI student responses are generated ahead of time, with no live AI calls in the app.
 
